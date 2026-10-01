@@ -340,3 +340,6 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* Вкладчикам */
 .why .why-n{font-size:15px;font-weight:800;color:var(--go)}
 @media(max-width:640px){.why.g5{grid-template-columns:1fr}}
+.hero-art{display:flex;justify-content:center;align-items:flex-end}
+.hero-art img{display:block;width:100%;max-width:420px;height:auto;max-height:520px;object-fit:contain}
+@media(max-width:900px){.hero-art img{max-width:260px}}

@@ -135,7 +135,7 @@ ${footer}
 <div class="hero-row"><div><span class="eb" style="color:var(--go)">${t.name}</span><h1 class="h1">${x.h1}</h1>
 <p class="lead">${x.lead}</p>
 <div class="btn-row"><a class="btn btn-gold" href="donate.html">${u.donate}</a><a class="btn btn-light" href="grants.html">${x.btnGrant}</a></div></div>
-${ph(x.heroPhoto, '', null, 'hero-temp', 'center 30%')}</div>
+<div class="hero-art"><img src="${R}assets/img/photos/hero-temp.webp" alt="" width="761" height="1000"></div></div>
 <div class="stats">${x.stats.map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('')}</div>
 </div></section>
 <section class="sec bg-li"><div class="wrap split">
