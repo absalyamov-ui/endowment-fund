@@ -17,7 +17,7 @@ const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donors.html', 
 const PROG_META = [['edu', 'gold', '', 'campus'], ['sci', 'gold', '', 'lib2'], ['inn', 'gold', '', 'aisana'], ['edu', 'gold', '', 'lib1'], ['sci', 'gold', '', 'folder'], ['inn', 'gold', '', 'meet']];
 const NEWS_IMG = ['hold'];
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
-const BOARD_IMG = ['nurbek', 'turlov', 'dzhumadildaev', 'ilyasov', 'stvaev', 'kuanganov', 'madibekov', '', 'abdrakhmanov'];
+const BOARD_IMG = ['nurbek', 'turlov', 'dzhumadildaev', 'ilyasov', 'stvaev', 'kuanganov', 'madibekov', 'ashkin', 'abdrakhmanov'];
 const FILTERS = ['all', 'edu', 'sci', 'inn'];
 
 // Статика и логотипы
