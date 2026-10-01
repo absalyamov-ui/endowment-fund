@@ -71,10 +71,10 @@ function buildLang(lang, t) {
   const header = (active, file) => `<header class="hdr"><div class="wrap">
 <a class="logo" href="index.html" aria-label="${t.name} — ${u.toHome}"><img src="${logo}" alt="${t.name}" width="282" height="48"></a>
 <nav class="nav" aria-label="${u.mainMenu}">${NAV_FILES.map((f, i) => `<a href="${f}"${f === active ? ' class="active"' : ''}>${u.nav[i]}</a>`).join('')}</nav>
-<div class="hdr-act"><div class="lang">${langLinks(file)}</div><a class="btn btn-gold no-arrow" href="donate.html">${u.support}</a>
+<div class="hdr-act"><div class="lang">${langLinks(file)}</div>
 <button class="burger" aria-label="${u.menu}" aria-expanded="false"><span></span><span></span><span></span></button></div>
 </div></header>
-<nav class="mnav" aria-label="${u.mobileMenu}">${NAV_FILES.map((f, i) => `<a href="${f}">${u.nav[i]}</a>`).join('')}<a class="btn btn-gold" href="donate.html">${u.donate}</a><div class="lang">${langLinks(file)}</div></nav>`;
+<nav class="mnav" aria-label="${u.mobileMenu}">${NAV_FILES.map((f, i) => `<a href="${f}">${u.nav[i]}</a>`).join('')}<div class="lang">${langLinks(file)}</div></nav>`;
 
   const f = t.footer;
   const footer = `<footer class="ftr"><div class="wrap">
