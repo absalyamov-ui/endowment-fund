@@ -336,3 +336,4 @@ button,input,select,textarea{font:inherit;color:inherit}
 .bars .bv{font-size:14px;font-weight:700;color:var(--dp)}
 @media(max-width:900px){#charts{grid-template-columns:1fr!important}}
 .alloc .t{gap:12px} .alloc .t b{white-space:nowrap}
+.person .chair{display:block;color:var(--go);font-weight:700;margin-bottom:4px}

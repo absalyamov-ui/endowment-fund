@@ -17,7 +17,8 @@ const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'reports.html',
 const PROG_META = [['edu', 'gold', '', 'campus'], ['sci', 'gold', '', 'lib2'], ['inn', 'gold', '', 'aisana'], ['edu', 'gold', '', 'lib1'], ['sci', 'gold', '', 'folder'], ['inn', 'gold', '', 'meet']];
 const NEWS_IMG = ['hold'];
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
-const BOARD_IMG = ['nurbek', 'turlov', 'dzhumadildaev', 'ilyasov', 'stvaev', 'kuanganov', 'madibekov', 'ashkin', 'abdrakhmanov'];
+const BOARD_IMG = ['ilyasov', 'nurbek', 'turlov', 'dzhumadildaev', 'stvaev', 'kuanganov', 'madibekov', 'abdrakhmanov'];
+const EMAIL = 'endowment@alageum.com';
 const FILTERS = ['all', 'edu', 'sci', 'inn'];
 
 // Статика и логотипы
@@ -85,7 +86,7 @@ function buildLang(lang, t) {
 <div><h4>${f.fund}</h4><ul>${['about.html', 'about.html#board', 'about.html#team', 'about.html#docs', 'about.html#jobs'].map((h, i) => `<li><a href="${h}">${f.fundLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.work}</h4><ul>${['programs.html', 'grants.html', 'reports.html', 'press.html'].map((h, i) => `<li><a href="${h}">${f.workLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.donors}</h4><ul>${['donate.html'].map((h, i) => `<li><a href="${h}">${f.donorLinks[i]}</a></li>`).join('')}</ul></div>
-<div><h4>${f.contacts}</h4><ul><li><a href="tel:+77172000000">+7 (7172) 00-00-00</a></li><li><a href="mailto:info@endowment.kz">info@endowment.kz</a></li><li>${f.address}</li><li>${f.hours}</li></ul></div>
+<div><h4>${f.contacts}</h4><ul><li><a href="mailto:${EMAIL}">${EMAIL}</a></li><li>${f.address}</li><li>${f.hours}</li></ul></div>
 </div>
 <div class="ftr-bot"><span>© <span data-year>2026</span> ${t.name}</span><span><a href="#">${f.privacy}</a> · <a href="${R}sitemap.xml">${f.sitemap}</a></span></div>
 </div></footer>`;
@@ -175,13 +176,13 @@ ${phero(a.title, a.title, a.lead)}
 <section class="sec bg-wh"><div class="wrap">${head(a.histEb, a.histH)}
 <div class="tl">${a.history.map(([y, h, d], i) => `<div class="tl-i${i === a.history.length - 1 ? ' now' : ''}"><div class="tl-dot"><i></i><s></s></div><b>${y}</b><h3 class="h3">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div>
 </div></section>
-<section class="sec bg-li" id="board"><div class="wrap">${head(a.boardEb, a.boardH)}<div class="grid g3">${a.board.map(([n, r], i) => `<div class="person">${BOARD_IMG[i] ? ph(n, '', null, 'board/' + BOARD_IMG[i], 'center 20%') : ph(u.portrait, i % 2 ? '' : 'dark')}<h3 class="h3">${n}</h3><p class="txt">${r}</p></div>`).join('')}</div></div></section>
+<section class="sec bg-li" id="board"><div class="wrap">${head(a.boardEb, a.boardH)}<div class="grid g4">${a.board.map(([n, r], i) => `<div class="person">${BOARD_IMG[i] ? ph(n, '', null, 'board/' + BOARD_IMG[i], 'center 20%') : ph(u.portrait, i % 2 ? '' : 'dark')}<h3 class="h3">${n}</h3><p class="txt">${r}</p></div>`).join('')}</div></div></section>
 <section class="sec bg-wh" id="team"><div class="wrap">${head(a.teamEb, a.teamH)}<div class="grid dir-grid"><div class="person">${ph(a.director[0], 'dark', null, 'makenov', 'center 25%')}<h3 class="h3">${a.director[0]}</h3><p class="txt">${a.director[1]}</p></div>
 <div class="dir-info"><p class="lead-dk">${a.bio}</p><h3 class="h3" style="margin-top:40px">${a.govH}</h3><div class="grid g3" style="margin-top:20px">${a.gov.map(([h, d]) => `<div class="vline"><h3 class="h3" style="font-size:18px">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div></div></div></div></section>
 <section class="sec bg-li" id="docs"><div class="wrap">${head(a.docsEb, a.docsH)}
 <div>${a.docs.map(d => `<div class="rowline"><span class="pdf">PDF</span><h3 class="h3 grow">${d}</h3><a class="link" href="#">${u.download} ↓</a></div>`).join('')}</div>
 </div></section>
-<section class="band bg-go" id="jobs"><div class="wrap cta"><div><h2 class="h2 h2-sm">${a.jobsH}</h2><p style="opacity:.75;margin-top:8px">${a.jobsP}</p></div><a class="btn btn-dark" href="mailto:hr@endowment.kz">${a.jobsBtn}</a></div></section>
+<section class="band bg-go" id="jobs"><div class="wrap cta"><div><h2 class="h2 h2-sm">${a.jobsH}</h2><p style="opacity:.75;margin-top:8px">${a.jobsP}</p></div><a class="btn btn-dark" href="mailto:${EMAIL}">${a.jobsBtn}</a></div></section>
 `);
 
   // ---------- ПРОГРАММЫ ----------
@@ -287,7 +288,7 @@ ${phero(s.title, s.title, s.lead)}
 <div class="grid g3 mt-24">${[1, 2, 3, 4, 5, 6].map(newsCard).join('')}</div>
 <nav class="pager" aria-label="${u.pages}"><a href="#">←</a><a class="on" href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">→</a></nav>
 </div></section>
-<section class="sec bg-vi" style="padding:72px 0"><div class="wrap cta"><div><span class="eb">${s.journEb}</span><h2 class="h2 h2-sm">${s.journH}</h2><p style="opacity:.8;margin-top:8px"><a href="mailto:press@endowment.kz">press@endowment.kz</a> &nbsp;·&nbsp; +7 (7172) 00-00-00</p></div>
+<section class="sec bg-vi" style="padding:72px 0"><div class="wrap cta"><div><span class="eb">${s.journEb}</span><h2 class="h2 h2-sm">${s.journH}</h2><p style="opacity:.8;margin-top:8px"><a href="mailto:${EMAIL}">${EMAIL}</a></p></div>
 <form class="sub" name="subscribe" method="POST" action="/${pre}thanks.html" data-netlify="true"><input type="hidden" name="form-name" value="subscribe"><input type="hidden" name="language" value="${lang}"><label class="visually-hidden" for="sub-email">E-mail</label><input id="sub-email" type="email" name="email" placeholder="${s.subPh}" required><button class="btn btn-gold" type="submit">${s.subBtn}</button></form></div></section>
 `);
 
@@ -320,7 +321,7 @@ ${ph(n.photoCeremony, 'dark', 420, 'group')}
   page('contacts.html', c.title, c.desc, 'contacts.html', `
 ${phero(c.title, c.title, c.lead)}
 <section class="sec bg-li"><div class="wrap">
-<div class="grid g4">${c.depts.map(([h, e, tel]) => `<div class="numbox" style="background:var(--wh)"><span class="eb" style="margin-bottom:10px">${h}</span><a class="h3" style="font-size:19px;display:block" href="mailto:${e}">${e}</a><p style="font-size:16px;margin-top:6px">${tel}</p></div>`).join('')}</div>
+<div class="numbox" style="background:var(--wh)"><span class="eb" style="margin-bottom:10px">${c.allQ}</span><a class="h3" style="font-size:clamp(22px,2.4vw,32px);display:block;word-break:break-all" href="mailto:${EMAIL}">${EMAIL}</a></div>
 <div class="grid mt-24" style="grid-template-columns:minmax(0,7fr) minmax(0,5fr)">
 <div class="map"><iframe src="https://www.google.com/maps?q=51.134021,71.4337485&amp;z=16&amp;hl=${HREFLANG[lang]}&amp;output=embed" title="${c.mapAria}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 <div class="mv bg-dp" style="padding:40px"><span class="eb">${c.office}</span><h3 class="h3" style="font-size:24px">${c.addr}</h3><p class="txt">${c.hours}</p><a class="btn btn-light" style="align-self:flex-start" href="https://maps.app.goo.gl/g34qZp13ujU8Q2R17" target="_blank" rel="noopener">${c.route}</a></div>
