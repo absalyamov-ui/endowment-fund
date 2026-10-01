@@ -17,7 +17,6 @@ const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donors.html', 
 const PROG_META = [['edu', 'gold', '', 'campus'], ['sci', 'gold', '', 'lib2'], ['inn', 'gold', '', 'group'], ['edu', 'gold', '', 'lib1'], ['sci', 'gold', '', 'folder'], ['inn', 'gold', '', 'meet']];
 const NEWS_IMG = ['hold'];
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
-const PROG_DOCS = ['program-education.pdf', 'program-science.pdf', 'program-innovation.pdf'];
 const FILTERS = ['all', 'edu', 'sci', 'inn'];
 const CHART = [12, 18, 25, 31, 40, 52, 61, 74, 86, 100, 118]; // условные данные, заменить фактическими
 
@@ -189,7 +188,7 @@ ${phero(a.title, a.title, a.lead)}
   page('programs.html', p.title, p.desc, 'programs.html', `
 ${phero(p.title, p.title, p.lead)}
 <section class="sec bg-wh"><div class="wrap">${head(p.mainEb, p.mainH)}
-<div class="grid g3">${p.main.map(([cat, h, bud, per, d, l], mi) => `<div class="form prog-main" style="gap:16px"><span class="tag vi" style="align-self:flex-start">${cat}</span><h3 class="h3">${h}</h3><dl class="pm-meta"><div><dt>${p.budgetL}</dt><dd>${bud}</dd></div><div><dt>${p.periodL}</dt><dd>${per}</dd></div></dl><p class="txt">${d}</p><hr style="border:0;border-top:1px solid var(--ln);margin:4px 0;width:100%">${l.map(y => `<span class="check">${y}</span>`).join('')}<a class="btn btn-outline pm-dl" href="${R}assets/docs/${PROG_DOCS[mi]}" download>${p.dl}</a></div>`).join('')}</div>
+<div class="grid g3">${p.main.map(([cat, h, bud, per, d, l]) => `<div class="form prog-main" style="gap:16px"><span class="tag vi" style="align-self:flex-start">${cat}</span><h3 class="h3">${h}</h3><dl class="pm-meta"><div><dt>${p.budgetL}</dt><dd>${bud}</dd></div><div><dt>${p.periodL}</dt><dd>${per}</dd></div></dl><p class="txt">${d}</p><hr style="border:0;border-top:1px solid var(--ln);margin:4px 0;width:100%">${l.map(y => `<span class="check">${y}</span>`).join('')}</div>`).join('')}</div>
 </div></section>
 <section class="sec bg-li"><div class="wrap">${head(p.cardsEb, p.cardsH)}
 <div class="toolbar"><div class="chips" data-filter>${FILTERS.map((v, i) => `<button class="chip${i ? '' : ' on'}" data-value="${v}">${p.filters[i]}</button>`).join('')}</div>
