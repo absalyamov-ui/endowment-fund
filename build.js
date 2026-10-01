@@ -84,7 +84,7 @@ function buildLang(lang, t) {
 <div class="soc"><a href="#" aria-label="Instagram">IG</a><a href="#" aria-label="Facebook">FB</a><a href="#" aria-label="YouTube">YT</a><a href="#" aria-label="Telegram">TG</a><a href="#" aria-label="LinkedIn">in</a></div></div>
 <div><h4>${f.fund}</h4><ul>${['about.html', 'about.html#board', 'about.html#team', 'about.html#docs', 'about.html#jobs'].map((h, i) => `<li><a href="${h}">${f.fundLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.work}</h4><ul>${['programs.html', 'grants.html', 'reports.html', 'press.html'].map((h, i) => `<li><a href="${h}">${f.workLinks[i]}</a></li>`).join('')}</ul></div>
-<div><h4>${f.donors}</h4><ul>${['donate.html', 'donate.html', 'donors.html#companies', 'donors.html'].map((h, i) => `<li><a href="${h}">${f.donorLinks[i]}</a></li>`).join('')}</ul></div>
+<div><h4>${f.donors}</h4><ul>${['donate.html', 'donors.html#companies', 'donors.html'].map((h, i) => `<li><a href="${h}">${f.donorLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.contacts}</h4><ul><li><a href="tel:+77172000000">+7 (7172) 00-00-00</a></li><li><a href="mailto:info@endowment.kz">info@endowment.kz</a></li><li>${f.address}</li><li>${f.hours}</li></ul></div>
 </div>
 <div class="ftr-bot"><span>© <span data-year>2026</span> ${t.name}</span><span><a href="#">${f.privacy}</a> · <a href="${R}sitemap.xml">${f.sitemap}</a></span></div>

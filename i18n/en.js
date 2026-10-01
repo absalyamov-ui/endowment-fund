@@ -17,7 +17,7 @@ module.exports = {
     fund: 'The Fund', work: 'Our work', donors: 'For investors', contacts: 'Contacts',
     fundLinks: ['About the Fund', 'Board of Trustees', 'Management', 'Documents', 'Careers'],
     workLinks: ['Programmes and projects', 'How to apply', 'Reports', 'Newsroom'],
-    donorLinks: ['Make a contribution', 'Named funds', 'Corporate partners', 'Our investors'],
+    donorLinks: ['Make a contribution', 'Corporate partners', 'Our investors'],
     address: '11A Saraishyk St, Astana', hours: 'Mon–Fri, 9:00–18:00',
     privacy: 'Privacy policy', sitemap: 'Sitemap',
   },
