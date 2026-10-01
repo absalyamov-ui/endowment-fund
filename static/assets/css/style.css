@@ -355,3 +355,6 @@ button,input,select,textarea{font:inherit;color:inherit}
 .soc{gap:14px}
 .soc a.soc-ic{border:0;padding:0;color:#fff;display:inline-flex;line-height:0;transition:color .2s}
 .soc a.soc-ic:hover{color:var(--go)}
+.soc-dark{margin-top:16px}
+.soc-dark a.soc-ic{color:var(--dp)}
+.soc-dark a.soc-ic:hover{color:var(--go)}
