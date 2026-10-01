@@ -61,7 +61,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .burger{display:none;width:44px;height:44px;background:var(--dp);border:0;cursor:pointer;flex-direction:column;justify-content:center;align-items:center;gap:5px}
 .burger span{display:block;width:20px;height:2px;background:var(--wh);transition:.2s}
 .mnav{display:none}
-@media (max-width:1260px){
+@media (max-width:1400px){
   .nav,.hdr-act .btn,.hdr-act .lang{display:none}
   .burger{display:flex}
   .hdr .wrap{height:68px}.hdr .logo img{height:38px}
@@ -318,3 +318,5 @@ button,input,select,textarea{font:inherit;color:inherit}
 .card.grid{display:grid}
 @media (max-width:640px){.card.grid{grid-template-columns:1fr}}
 .numbox b{font-size:clamp(28px,2.9vw,40px);white-space:nowrap}
+
+.hdr .logo{flex:none}

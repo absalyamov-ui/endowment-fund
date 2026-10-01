@@ -43,22 +43,24 @@ document.querySelectorAll('[data-choice]').forEach(group => {
   });
 });
 
-// Форма пожертвования
-function fmt(n){ return n.toLocaleString('ru-RU').replace(/ /g,' '); }
+// Форма пожертвования (подписи берутся из data-атрибутов формы на нужном языке)
+const LOCALE = document.documentElement.lang === 'en' ? 'en-US' : 'ru-RU';
+function fmt(n){ return n.toLocaleString(LOCALE).replace(/\u00a0/g,' '); }
 function updateDonate(){
   const form = document.querySelector('#donate-form');
   if (!form) return;
+  const L = form.dataset;
   const custom = form.querySelector('[name=amount_custom]');
   const sel = form.querySelector('.amounts .on');
-  let amount = custom && custom.value ? parseInt(custom.value.replace(/\D/g,''),10) : (sel ? parseInt(sel.dataset.v,10) : 0);
+  const amount = custom && custom.value ? parseInt(custom.value.replace(/\D/g,''),10) : (sel ? parseInt(sel.dataset.v,10) : 0);
   const period = form.querySelector('.seg .on');
   const monthly = period && period.dataset.v === 'monthly';
   form.querySelector('[name=amount]').value = amount || '';
-  form.querySelector('[name=period]').value = monthly ? 'Ежемесячно' : 'Разово';
+  form.querySelector('[name=period]').value = monthly ? L.lSegMonthly : L.lSegOnce;
   const pay = form.querySelector('.pay .on');
   if (pay) form.querySelector('[name=payment]').value = pay.textContent.trim();
-  form.querySelector('.donate-title').textContent = monthly ? 'Ежемесячный взнос' : 'Разовое пожертвование';
-  form.querySelector('.donate-btn').textContent = amount ? `Пожертвовать ₸ ${fmt(amount)}${monthly?' в месяц':''}` : 'Пожертвовать';
+  form.querySelector('.donate-title').textContent = monthly ? L.lMonthly : L.lOnce;
+  form.querySelector('.donate-btn').textContent = amount ? `${L.lBtn} ₸ ${fmt(amount)}${monthly ? ' ' + L.lPermonth : ''}` : L.lBtn;
 }
 const custom = document.querySelector('[name=amount_custom]');
 if (custom) custom.addEventListener('input', () => {
