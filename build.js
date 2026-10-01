@@ -14,7 +14,8 @@ const LANGS = { ru: require('./i18n/ru'), kz: require('./i18n/kz'), en: require(
 const PREFIX = { ru: '', kz: 'kz/', en: 'en/' };
 const HREFLANG = { ru: 'ru', kz: 'kk', en: 'en' };
 const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donors.html', 'reports.html', 'press.html', 'contacts.html'];
-const PROG_META = [['grants', 'gold', ''], ['scholar', 'gold', 'dark'], ['mobility', 'gold', ''], ['infra', 'grey', 'muted'], ['grants', 'grey', 'dark'], ['scholar', 'grey', 'muted']];
+const PROG_META = [['grants', 'gold', '', 'lib2'], ['scholar', 'gold', 'dark', 'campus'], ['mobility', 'gold', '', 'group'], ['infra', 'grey', 'muted'], ['grants', 'grey', 'dark'], ['scholar', 'grey', 'muted']];
+const NEWS_IMG = ['hold']; // фото к новостям по порядку
 const FILTERS = ['all', 'grants', 'scholar', 'infra', 'mobility'];
 const CHART = [12, 18, 25, 31, 40, 52, 61, 74, 86, 100, 118]; // условные данные, заменить фактическими
 
@@ -44,7 +45,9 @@ function buildLang(lang, t) {
   const logoW = `${R}assets/img/logo-${lang}-white.svg`;
 
   // ---------- компоненты ----------
-  const ph = (label, cls = '', h) => `<div class="ph ${cls}"${h ? ` style="min-height:${h}px"` : ''} role="img" aria-label="${label}"><span>${label}</span></div>`;
+  const ph = (label, cls = '', h, img, pos) => img
+    ? `<div class="ph has-img ${cls}"${h ? ` style="min-height:${h}px"` : ''}><img src="${R}assets/img/photos/${img}.jpg" alt="${label}" loading="lazy"${pos ? ` style="object-position:${pos}"` : ''}></div>`
+    : `<div class="ph ${cls}"${h ? ` style="min-height:${h}px"` : ''} role="img" aria-label="${label}"><span>${label}</span></div>`;
   const head = (eb, h, btn) => `<div class="head"><div><span class="eb">${eb}</span><h2 class="h2">${h}</h2></div>${btn || ''}</div>`;
   const faq = items => `<div class="faq">${items.map(([q, a], i) => `<details${i === 0 ? ' open' : ''}><summary>${q}</summary><p>${a}</p></details>`).join('')}</div>`;
   const field = (label, name, p, type = 'text') => `<div class="field"><label for="f-${name}">${label}</label><input id="f-${name}" name="${name}" type="${type}" placeholder="${p}" required></div>`;
@@ -57,10 +60,10 @@ function buildLang(lang, t) {
   const langLinks = file => Object.keys(LANGS).map(l => `<a${l === lang ? ' class="on" aria-current="true"' : ''} href="${R}${PREFIX[l]}${file}" hreflang="${HREFLANG[l]}" lang="${HREFLANG[l]}">${LANGS[l].ui.langCode}</a>`).join('');
 
   const progCard = (i, withCat = true) => {
-    const [cat, tc, cls] = PROG_META[i]; const [tag, catName, h, txt] = t.progs[i];
-    return `<article class="card" data-cat="${cat}">${ph(u.progPhoto, cls)}<div class="card-b"><div class="tags"><span class="tag ${tc}">${tag}</span>${withCat ? `<span class="tag vi">${catName}</span>` : ''}</div><h3 class="h3">${h}</h3><p class="txt">${txt}</p><a class="link" href="grants.html">${u.conditions} →</a></div></article>`;
+    const [cat, tc, cls, img] = PROG_META[i]; const [tag, catName, h, txt] = t.progs[i];
+    return `<article class="card" data-cat="${cat}">${ph(t.progs[i][2], cls, null, img)}<div class="card-b"><div class="tags"><span class="tag ${tc}">${tag}</span>${withCat ? `<span class="tag vi">${catName}</span>` : ''}</div><h3 class="h3">${h}</h3><p class="txt">${txt}</p><a class="link" href="grants.html">${u.conditions} →</a></div></article>`;
   };
-  const newsCard = (i) => { const [d, cat, h] = t.news[i]; return `<article class="card">${ph(u.photo, i % 2 ? '' : 'dark')}<div class="card-b"><div class="tags"><span class="tag vi">${cat}</span><span class="date">${d}</span></div><h3 class="h3"><a href="news-item.html">${h}</a></h3></div></article>`; };
+  const newsCard = (i) => { const [d, cat, h] = t.news[i]; return `<article class="card">${ph(NEWS_IMG[i] ? h : u.photo, i % 2 ? '' : 'dark', null, NEWS_IMG[i])}<div class="card-b"><div class="tags"><span class="tag vi">${cat}</span><span class="date">${d}</span></div><h3 class="h3"><a href="news-item.html">${h}</a></h3></div></article>`; };
   const people = (n, roles) => Array.from({ length: n }, (_, i) => `<div class="person">${ph(u.portrait, i % 2 ? '' : 'dark')}<h3 class="h3">${u.fullName}</h3><p class="txt">${roles[i % roles.length]}</p></div>`).join('');
 
   const header = (active, file) => `<header class="hdr"><div class="wrap">
@@ -129,7 +132,7 @@ ${footer}
 <div class="hero-row"><div><span class="eb" style="color:var(--go)">${t.name}</span><h1 class="h1">${x.h1}</h1>
 <p class="lead">${x.lead}</p>
 <div class="btn-row"><a class="btn btn-gold" href="donate.html">${u.donate}</a><a class="btn btn-light" href="grants.html">${x.btnGrant}</a></div></div>
-${ph(x.heroPhoto)}</div>
+${ph(x.heroPhoto, '', null, 'lib1', '40% center')}</div>
 <div class="stats">${x.stats.map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('')}</div>
 </div></section>
 <section class="sec bg-li"><div class="wrap split">
@@ -188,7 +191,7 @@ ${phero(p.title, p.title, p.lead)}
 <div class="grid g3">${t.progs.map((_, i) => progCard(i)).join('')}</div>
 </div></section>
 <section class="flag bg-dp"><div class="in"><span class="eb">${p.flagEb}</span><h2 class="h2">${p.flagH}</h2><p class="lead" style="margin-top:20px;font-size:18px">${p.flagP}</p>
-<div class="kpis">${p.kpis.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('')}</div><a class="btn btn-gold" href="grants.html">${p.flagBtn}</a></div>${ph(p.flagPhoto)}</section>
+<div class="kpis">${p.kpis.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('')}</div><a class="btn btn-gold" href="grants.html">${p.flagBtn}</a></div>${ph(p.flagPhoto, '', null, 'lib2')}</section>
 <section class="sec bg-wh"><div class="wrap">${head(p.resEb, p.resH)}
 <div class="grid g4">${p.results.map(([n, d]) => `<div class="numbox"><b>${n}</b><p class="txt">${d}</p></div>`).join('')}</div></div></section>
 `);
@@ -290,7 +293,7 @@ ${phero(r.title, r.h1, r.lead)}
 ${phero(s.title, s.title, s.lead)}
 <section class="sec bg-li" style="padding-top:72px"><div class="wrap">
 <div class="chips" style="margin-bottom:40px">${s.tabs.map((y, i) => `<span class="chip${i ? '' : ' on'}">${y}</span>`).join('')}</div>
-<article class="card grid g2" style="gap:0">${ph(s.photoEvent, '', 440)}<div class="card-b" style="padding:48px;justify-content:center"><div class="tags"><span class="tag gold">${s.main}</span><span class="date">${t.news[0][0]}</span></div><h2 class="h2 h2-sm"><a href="news-item.html">${t.news[0][2]}</a></h2><p class="txt">${s.featP}</p><a class="link" href="news-item.html">${u.readMore} →</a></div></article>
+<article class="card grid g2" style="gap:0">${ph(t.news[0][2], '', 440, 'hold', 'center 35%')}<div class="card-b" style="padding:48px;justify-content:center"><div class="tags"><span class="tag gold">${s.main}</span><span class="date">${t.news[0][0]}</span></div><h2 class="h2 h2-sm"><a href="news-item.html">${t.news[0][2]}</a></h2><p class="txt">${s.featP}</p><a class="link" href="news-item.html">${u.readMore} →</a></div></article>
 <div class="grid g3 mt-24">${[1, 2, 3, 4, 5, 6].map(newsCard).join('')}</div>
 <nav class="pager" aria-label="${u.pages}"><a href="#">←</a><a class="on" href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">→</a></nav>
 </div></section>
@@ -305,7 +308,7 @@ ${phero(s.title, s.title, s.lead)}
 <div class="crumbs" style="color:var(--mu)"><a href="index.html">${u.home}</a> &nbsp;/&nbsp; <a href="press.html">${t.press.title}</a> &nbsp;/&nbsp; ${n.crumb}</div>
 <div class="tags" style="margin-bottom:24px"><span class="tag wh vi">${t.news[0][1]}</span><span class="date">${t.news[0][0]} · ${n.readTime}</span></div>
 <h1 class="h1-page" style="color:var(--dp);max-width:960px">${t.news[0][2]}</h1>
-<div class="mt-40">${ph(n.photoMain, '', 560)}</div>
+<div class="mt-40">${ph(t.news[0][2], '', 560, 'sign', 'center 40%')}</div>
 </div></section>
 <section class="bg-li"><div class="wrap article">
 <aside class="share"><small>${n.share}</small><a href="#">Telegram</a><a href="#">Facebook</a><a href="#">WhatsApp</a><a href="#">${n.link}</a></aside>
@@ -315,7 +318,9 @@ ${phero(s.title, s.title, s.lead)}
 <p>${n.p2}</p>
 <blockquote><p>${n.quote}</p><cite>${n.quoteBy}</cite></blockquote>
 <p>${n.p3}</p>
-${ph(n.photoCeremony, 'dark', 420)}</div>
+${ph(n.photoCeremony, 'dark', 420, 'group')}
+<h2 class="h3" style="font-size:28px">${n.galleryH}</h2>
+<div class="grid g2 gallery">${['hold', 'meet', 'folder', 'lib2', 'lib1', 'campus'].map(k => ph(n.photoCeremony, '', 240, k)).join('')}</div></div>
 </div></section>
 <section class="sec bg-wh"><div class="wrap">${head(t.press.title, n.alsoH, `<a class="btn btn-outline" href="press.html">${u.allNews}</a>`)}<div class="grid g3">${[1, 2, 3].map(newsCard).join('')}</div></div></section>
 `);

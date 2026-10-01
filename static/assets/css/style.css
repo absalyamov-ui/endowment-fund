@@ -320,3 +320,5 @@ button,input,select,textarea{font:inherit;color:inherit}
 .numbox b{font-size:clamp(28px,2.9vw,40px);white-space:nowrap}
 
 .hdr .logo{flex:none}
+.ph.has-img::before{content:none}
+.ph.has-img{background:var(--ln)}
