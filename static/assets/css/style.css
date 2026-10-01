@@ -324,3 +324,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .ph.has-img{background:var(--ln)}
 .partners .logo-box{display:flex;align-items:center;justify-content:center;min-height:160px;padding:32px}
 .partners .logo-box img{max-width:80%;width:auto;height:auto;object-fit:contain}
+/* Программы: три основные программы */
+.pm-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0;padding:16px 0;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln)}
+.pm-meta dt{font-size:13px;color:var(--mu,#6b6b7b);margin-bottom:4px}
+.pm-meta dd{margin:0;font-weight:700;color:var(--dp);font-size:16px}

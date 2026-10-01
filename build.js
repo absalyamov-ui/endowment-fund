@@ -14,10 +14,10 @@ const LANGS = { ru: require('./i18n/ru'), kz: require('./i18n/kz'), en: require(
 const PREFIX = { ru: '', kz: 'kz/', en: 'en/' };
 const HREFLANG = { ru: 'ru', kz: 'kk', en: 'en' };
 const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donors.html', 'reports.html', 'press.html', 'contacts.html'];
-const PROG_META = [['grants', 'gold', '', 'lib2'], ['scholar', 'gold', 'dark', 'campus'], ['mobility', 'gold', '', 'group'], ['infra', 'grey', 'muted'], ['grants', 'grey', 'dark'], ['scholar', 'grey', 'muted']];
+const PROG_META = [['edu', 'gold', '', 'campus'], ['sci', 'gold', '', 'lib2'], ['inn', 'gold', '', 'group'], ['edu', 'gold', '', 'lib1'], ['sci', 'gold', '', 'folder'], ['inn', 'gold', '', 'meet']];
 const NEWS_IMG = ['hold'];
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
-const FILTERS = ['all', 'grants', 'scholar', 'infra', 'mobility'];
+const FILTERS = ['all', 'edu', 'sci', 'inn'];
 const CHART = [12, 18, 25, 31, 40, 52, 61, 74, 86, 100, 118]; // условные данные, заменить фактическими
 
 // Статика и логотипы
@@ -187,13 +187,16 @@ ${phero(a.title, a.title, a.lead)}
   const p = t.programs;
   page('programs.html', p.title, p.desc, 'programs.html', `
 ${phero(p.title, p.title, p.lead)}
-<section class="sec bg-li" style="padding-top:72px"><div class="wrap">
+<section class="sec bg-wh"><div class="wrap">${head(p.mainEb, p.mainH)}
+<div class="grid g3">${p.main.map(([cat, h, bud, per, d, l]) => `<div class="form prog-main" style="gap:16px"><span class="tag vi" style="align-self:flex-start">${cat}</span><h3 class="h3">${h}</h3><dl class="pm-meta"><div><dt>${p.budgetL}</dt><dd>${bud}</dd></div><div><dt>${p.periodL}</dt><dd>${per}</dd></div></dl><p class="txt">${d}</p><hr style="border:0;border-top:1px solid var(--ln);margin:4px 0;width:100%">${l.map(y => `<span class="check">${y}</span>`).join('')}</div>`).join('')}</div>
+</div></section>
+<section class="sec bg-li"><div class="wrap">${head(p.cardsEb, p.cardsH)}
 <div class="toolbar"><div class="chips" data-filter>${FILTERS.map((v, i) => `<button class="chip${i ? '' : ' on'}" data-value="${v}">${p.filters[i]}</button>`).join('')}</div>
 <label class="search"><span class="visually-hidden">${p.search}</span><input id="prog-search" type="search" placeholder="${p.search}"><span aria-hidden="true">⌕</span></label></div>
 <div class="grid g3">${t.progs.map((_, i) => progCard(i)).join('')}</div>
 </div></section>
 <section class="flag bg-dp"><div class="in"><span class="eb">${p.flagEb}</span><h2 class="h2">${p.flagH}</h2><p class="lead" style="margin-top:20px;font-size:18px">${p.flagP}</p>
-<div class="kpis">${p.kpis.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('')}</div><a class="btn btn-gold" href="grants.html">${p.flagBtn}</a></div>${ph(p.flagPhoto, '', null, 'lib2')}</section>
+<div class="kpis">${p.kpis.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('')}</div><a class="btn btn-gold" href="grants.html">${p.flagBtn}</a></div>${ph(p.flagPhoto, '', null, 'sign')}</section>
 <section class="sec bg-wh"><div class="wrap">${head(p.resEb, p.resH)}
 <div class="grid g4">${p.results.map(([n, d]) => `<div class="numbox"><b>${n}</b><p class="txt">${d}</p></div>`).join('')}</div></div></section>
 `);
@@ -216,7 +219,7 @@ ${formOpen('grant-application')}
 <h3 class="h3">${g.formH}</h3><p class="txt">${g.formP}</p>
 <div class="frow">${field(g.f.name, 'name', u.namePh)}${field(g.f.org, 'org', g.f.orgPh)}</div>
 <div class="frow">${field('E-mail', 'email', 'name@mail.kz', 'email')}${field(g.f.phone, 'phone', '+7 (___) ___-__-__', 'tel')}</div>
-${select(g.f.program, 'program', t.progs.slice(0, 4).map(r => r[2]))}
+${select(g.f.program, 'program', t.programs.main.map(r => r[1]))}
 ${area(g.f.about, 'about', g.f.aboutPh)}
 ${agree}<button class="btn btn-gold" type="submit">${g.f.submit}</button></form>
 </div></section>
