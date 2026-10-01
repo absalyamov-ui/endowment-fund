@@ -340,8 +340,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* Вкладчикам */
 .why .why-n{font-size:15px;font-weight:800;color:var(--go)}
 @media(max-width:640px){.why.g5{grid-template-columns:1fr}}
-.hero-art{display:flex;justify-content:center;align-items:flex-end}
-.hero-art img{display:block;width:100%;max-width:420px;height:auto;max-height:520px;object-fit:contain}
-@media(max-width:900px){.hero-art img{max-width:260px}}
+/* Главная: фоновое изображение первого экрана */
+.hero-bg{background:linear-gradient(90deg,rgba(43,0,91,.85) 0%,rgba(43,0,91,.55) 40%,rgba(43,0,91,0) 65%),var(--dp) url(../img/hero-bg.jpg) right center/cover no-repeat;position:relative}
+.hero-space{min-height:460px}
+@media(max-width:900px){.hero-bg{background-image:linear-gradient(180deg,rgba(43,0,91,.55),rgba(43,0,91,.92) 70%),url(../img/hero-bg.jpg);background-position:center,75% top;background-size:cover,auto 520px}.hero-space{display:none}}
 .req-wide .req{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:64px}
 @media(max-width:800px){.req-wide .req{grid-template-columns:1fr}}
