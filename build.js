@@ -175,7 +175,7 @@ ${phero(a.title, a.title, a.lead)}
 <div class="tl">${a.history.map(([y, h, d], i) => `<div class="tl-i${i === a.history.length - 1 ? ' now' : ''}"><div class="tl-dot"><i></i><s></s></div><b>${y}</b><h3 class="h3">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div>
 </div></section>
 <section class="sec bg-li" id="board"><div class="wrap">${head(a.boardEb, a.boardH)}<div class="grid g3">${a.board.map(([n, r], i) => `<div class="person">${ph(u.portrait, i % 2 ? '' : 'dark')}<h3 class="h3">${n}</h3><p class="txt">${r}</p></div>`).join('')}</div></div></section>
-<section class="sec bg-wh" id="team"><div class="wrap">${head(a.teamEb, a.teamH)}<div class="grid dir-grid"><div class="person">${ph(u.portrait, 'dark')}<h3 class="h3">${a.director[0]}</h3><p class="txt">${a.director[1]}</p></div>
+<section class="sec bg-wh" id="team"><div class="wrap">${head(a.teamEb, a.teamH)}<div class="grid dir-grid"><div class="person">${ph(a.director[0], 'dark', null, 'makenov', 'center 25%')}<h3 class="h3">${a.director[0]}</h3><p class="txt">${a.director[1]}</p></div>
 <div class="dir-info"><p class="lead-dk">${a.bio}</p><h3 class="h3" style="margin-top:40px">${a.govH}</h3><div class="grid g3" style="margin-top:20px">${a.gov.map(([h, d]) => `<div class="vline"><h3 class="h3" style="font-size:18px">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div></div></div></div></section>
 <section class="sec bg-li" id="docs"><div class="wrap">${head(a.docsEb, a.docsH)}
 <div>${a.docs.map(d => `<div class="rowline"><span class="pdf">PDF</span><h3 class="h3 grow">${d}</h3><a class="link" href="#">${u.download} ↓</a></div>`).join('')}</div>
