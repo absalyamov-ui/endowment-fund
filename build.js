@@ -230,36 +230,31 @@ ${agree}<button class="btn btn-gold" type="submit">${g.f.submit}</button></form>
 
   // ---------- ПОЖЕРТВОВАНИЕ ----------
   const d = t.donate;
-  const amounts = [5000, 10000, 50000, 100000];
-  const fmt = n => n.toLocaleString(lang === 'en' ? 'en-US' : 'ru-RU').replace(/ /g, ' ');
   page('donate.html', d.title, d.desc, 'donate.html', `
 ${phero(d.title, d.h1, d.lead)}
-<section class="sec bg-li"><div class="wrap split split-5-7">
-<div class="stack" style="gap:16px"><span class="eb" style="margin:0">${d.fmtEb}</span><h2 class="h2 h2-sm" style="margin-bottom:8px">${d.fmtH}</h2>
-${d.opts.map(([h, s], i) => `<button class="opt${i === 0 ? ' on' : ''}"${i === 0 ? ' data-period="once"' : i === 1 ? ' data-period="monthly"' : ' data-href="contacts.html"'} type="button"><i></i><span><span class="h3" style="display:block;font-size:19px">${h}</span><span class="txt">${s}</span></span></button>`).join('')}
-</div>
-${formOpen('donation', ` id="donate-form" data-l-once="${d.once}" data-l-monthly="${d.monthly}" data-l-btn="${d.btn}" data-l-permonth="${d.perMonth}" data-l-seg-once="${d.segOnce}" data-l-seg-monthly="${d.segMonthly}"`)}
-<input type="hidden" name="amount"><input type="hidden" name="period"><input type="hidden" name="payment">
-<h3 class="h3 donate-title" style="font-size:28px">${d.once}</h3>
-<div class="seg" data-choice><button class="on" data-v="once">${d.segOnce}</button><button data-v="monthly">${d.segMonthly}</button></div>
-<div class="field"><label>${d.amount}</label><div class="amounts" data-choice>${amounts.map(v => `<button${v === 10000 ? ' class="on"' : ''} data-v="${v}">${fmt(v)}</button>`).join('')}</div></div>
-<div class="field"><label for="f-amount_custom">${d.other}</label><input id="f-amount_custom" name="amount_custom" inputmode="numeric" placeholder="${d.otherPh}"></div>
-<div class="frow">${field(t.grants.f.name, 'name', u.namePh)}${field(d.receipt, 'email', 'name@mail.kz', 'email')}</div>
-<div class="field"><label>${d.payLabel}</label><div class="pay" data-choice>${d.pay.map((y, i) => `<button${i === 0 ? ' class="on"' : ''}>${y}</button>`).join('')}</div></div>
-${agree}
-<button class="btn btn-gold donate-btn no-arrow" type="submit" style="align-self:stretch">${d.btn} ₸ ${fmt(10000)}</button>
-<p class="small" style="text-align:center">${d.note}</p>
-</form>
-</div></section>
-<section class="sec bg-dp"><div class="wrap">${head(d.effEb, d.effH)}
-<div class="grid g3">${d.effects.map(([n, s]) => `<div class="step"><b>${n}</b><p class="txt" style="font-size:17px">${s}</p></div>`).join('')}</div></div></section>
-<section class="sec bg-wh"><div class="wrap grid g2">
-<div class="mv bg-li"><span class="eb">${d.taxEb}</span><h3 class="h3" style="font-size:26px">${d.taxH}</h3><p class="txt">${d.taxP}</p></div>
+<section class="sec bg-li"><div class="wrap">${head(d.whyEb, d.whyH)}
+<div class="grid g5 why">${d.why.map(([h, x], i) => `<div class="vline"><b class="why-n">0${i + 1}</b><h3 class="h3" style="font-size:20px">${h}</h3><p class="txt">${x}</p></div>`).join('')}</div></div></section>
+<section class="sec bg-wh"><div class="wrap">${head(d.fmtEb, d.fmtH, `<a class="btn btn-outline" href="#apply">${d.fmtBtn}</a>`)}
+<div class="grid g3">${d.fmts.map(([h, sub, x], i) => `<div class="mv ${['bg-li', 'bg-vi', 'bg-dp'][i]}"><span style="color:var(--go);font-weight:700;font-size:15px">${sub}</span><h3 class="h3" style="font-size:28px">${h}</h3><p class="txt">${x}</p></div>`).join('')}</div></div></section>
+<section class="sec bg-li"><div class="wrap">${head(d.taxEb, d.taxH)}
+<div class="grid g3">
+<div class="mv bg-wh"><h3 class="h3" style="font-size:22px">${d.taxLegalH}</h3>${d.taxLegal.map(y => `<span class="check">${y}</span>`).join('')}</div>
+<div class="mv bg-wh"><h3 class="h3" style="font-size:22px">${d.taxIndH}</h3>${d.taxInd.map(y => `<span class="check">${y}</span>`).join('')}</div>
 <div class="mv bg-dp"><span class="eb">${d.reqEb}</span><dl class="req" style="margin:0">${d.req.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></div>
+</div></div></section>
+<section class="sec bg-wh"><div class="wrap">${head(d.faqEb, d.faqH)}${faq(d.faq)}</div></section>
+<section class="sec bg-li" id="apply"><div class="wrap split split-5-7">
+<div class="stack"><div><span class="eb">${d.formEb}</span><h2 class="h2">${d.formH}</h2></div><p class="txt">${d.formP}</p><p class="txt"><a class="link" href="mailto:${EMAIL}">${EMAIL}</a></p></div>
+${formOpen('contributor')}
+${field(d.f.name, 'name', u.namePh)}
+<div class="frow">${field(d.f.phone, 'phone', '+7 (___) ___-__-__', 'tel')}${field('E-mail', 'email', 'name@mail.kz', 'email')}</div>
+<div class="frow">${select(d.f.type, 'type', d.f.types)}${field(d.f.amount, 'amount', d.f.amountPh)}</div>
+${field(d.f.time, 'time', d.f.timePh)}
+${field(d.f.topic, 'topic', d.f.topicPh)}
+${area(d.f.message, 'message', d.f.messagePh)}
+${agree}<button class="btn btn-gold" type="submit">${d.f.submit}</button></form>
 </div></section>
-<section class="sec bg-li"><div class="wrap">${head(d.faqEb, d.faqH)}${faq(d.faq)}</div></section>
 `);
-
 
   // ---------- ОТЧЁТЫ ----------
   const r = t.reports;

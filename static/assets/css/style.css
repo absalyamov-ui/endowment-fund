@@ -337,3 +337,6 @@ button,input,select,textarea{font:inherit;color:inherit}
 @media(max-width:900px){#charts{grid-template-columns:1fr!important}}
 .alloc .t{gap:12px} .alloc .t b{white-space:nowrap}
 .person .chair{display:block;color:var(--go);font-weight:700;margin-bottom:4px}
+/* Вкладчикам */
+.why .why-n{font-size:15px;font-weight:800;color:var(--go)}
+@media(max-width:640px){.why.g5{grid-template-columns:1fr}}
