@@ -16,7 +16,7 @@ const HREFLANG = { ru: 'ru', kz: 'kk', en: 'en' };
 const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donors.html', 'reports.html', 'press.html', 'contacts.html'];
 const PROG_META = [['grants', 'gold', '', 'lib2'], ['scholar', 'gold', 'dark', 'campus'], ['mobility', 'gold', '', 'group'], ['infra', 'grey', 'muted'], ['grants', 'grey', 'dark'], ['scholar', 'grey', 'muted']];
 const NEWS_IMG = ['hold'];
-const PARTNERS = [['sdu', 'SDU University', 96], ['freedom', 'Freedom Broker', 56], ['alageum', 'Alageum Electric', 52]]; // логотип, название, макс. высота // фото к новостям по порядку
+const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
 const FILTERS = ['all', 'grants', 'scholar', 'infra', 'mobility'];
 const CHART = [12, 18, 25, 31, 40, 52, 61, 74, 86, 100, 118]; // условные данные, заменить фактическими
 
@@ -158,7 +158,7 @@ ${ph(x.heroPhoto, '', null, 'lib1', '40% center')}</div>
 <section class="sec bg-vi pat pat-bg"><div class="wrap cta"><div class="txt-col"><span class="eb">${x.ctaEb}</span><h2 class="h2">${x.ctaH}</h2><p class="lead" style="margin-top:20px">${x.ctaP}</p></div>
 <div class="stack" style="gap:16px"><a class="btn btn-gold" href="grants.html#apply">${x.ctaBtn}</a><a class="btn btn-light" href="grants.html">${x.ctaBtn2}</a></div></div></section>
 <section class="sec bg-wh" style="padding:96px 0"><div class="wrap">${head(x.donEb, x.donH, `<a class="btn btn-outline" href="donate.html">${x.donBtn}</a>`)}
-<div class="grid g3 partners">${partners}</div></div></section>
+<div class="grid g4 partners">${partners}</div></div></section>
 <section class="sec bg-li"><div class="wrap">${head(x.newsEb, x.newsH, `<a class="btn btn-outline" href="press.html">${u.allNews}</a>`)}
 <div class="grid g3">${[0, 1, 2].map(newsCard).join('')}</div></div></section>
 `);
@@ -262,7 +262,7 @@ ${phero(o.title, o.h1, o.lead)}
 <section class="sec bg-li"><div class="wrap">${head(o.tierEb, o.tierH)}
 <div class="grid g3">${o.tiers.map(([h, s, dd], i) => `<div class="mv ${['bg-wh', 'bg-vi', 'bg-dp'][i]}"><span style="color:var(--go);font-weight:700;font-size:15px">${s}</span><h3 class="h3" style="font-size:28px">${h}</h3><p class="txt">${dd}</p></div>`).join('')}</div></div></section>
 <section class="sec bg-wh" id="companies"><div class="wrap">${head(o.compEb, o.compH, `<a class="btn btn-outline" href="contacts.html">${o.compBtn}</a>`)}
-<div class="grid g3 partners">${partners}</div></div></section>
+<div class="grid g4 partners">${partners}</div></div></section>
 <section class="sec bg-li" id="named"><div class="wrap">${head(o.namedEb, o.namedH)}
 <div class="grid g3">${[0, 1, 2].map(i => `<article class="card">${ph(u.portrait, i === 1 ? '' : 'dark')}<div class="card-b"><span style="color:var(--go);font-weight:600;font-size:14px">${o.namedSince}</span><h3 class="h3">${o.namedTitle}</h3><p class="txt">${o.namedText}</p></div></article>`).join('')}</div></div></section>
 <section class="sec bg-wh"><div class="wrap">${head(o.privEb, o.privH)}
