@@ -332,8 +332,8 @@ ${phero(c.title, c.title, c.lead)}
 <section class="sec bg-li"><div class="wrap">
 <div class="grid g4">${c.depts.map(([h, e, tel]) => `<div class="numbox" style="background:var(--wh)"><span class="eb" style="margin-bottom:10px">${h}</span><a class="h3" style="font-size:19px;display:block" href="mailto:${e}">${e}</a><p style="font-size:16px;margin-top:6px">${tel}</p></div>`).join('')}</div>
 <div class="grid mt-24" style="grid-template-columns:minmax(0,7fr) minmax(0,5fr)">
-<div class="map" aria-label="${c.mapAria}"><div class="pin">${t.name}<br>${t.footer.address}</div></div>
-<div class="mv bg-dp" style="padding:40px"><span class="eb">${c.office}</span><h3 class="h3" style="font-size:24px">${c.addr}</h3><p class="txt">${c.hours}</p><a class="btn btn-light" style="align-self:flex-start" href="https://2gis.kz/astana" target="_blank" rel="noopener">${c.route}</a></div>
+<div class="map"><iframe src="https://www.google.com/maps?q=51.134021,71.4337485&amp;z=16&amp;hl=${HREFLANG[lang]}&amp;output=embed" title="${c.mapAria}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
+<div class="mv bg-dp" style="padding:40px"><span class="eb">${c.office}</span><h3 class="h3" style="font-size:24px">${c.addr}</h3><p class="txt">${c.hours}</p><a class="btn btn-light" style="align-self:flex-start" href="https://maps.app.goo.gl/g34qZp13ujU8Q2R17" target="_blank" rel="noopener">${c.route}</a></div>
 </div></div></section>
 <section class="sec bg-wh"><div class="wrap split split-5-7">
 <div class="stack"><div><span class="eb">${c.fbEb}</span><h2 class="h2">${c.fbH}</h2></div><p class="txt">${c.fbP}</p></div>
