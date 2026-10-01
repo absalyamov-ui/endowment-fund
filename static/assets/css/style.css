@@ -358,3 +358,5 @@ button,input,select,textarea{font:inherit;color:inherit}
 .soc-dark{margin-top:16px}
 .soc-dark a.soc-ic{color:var(--dp)}
 .soc-dark a.soc-ic:hover{color:var(--go)}
+.soc a.soc-ic svg{width:25px;height:25px}
+.soc{gap:10px}
