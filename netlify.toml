@@ -21,3 +21,15 @@
   from = "/en/donors.html"
   to = "/en/"
   status = 301
+[[redirects]]
+  from = "/news-item.html"
+  to = "/press.html"
+  status = 301
+[[redirects]]
+  from = "/kz/news-item.html"
+  to = "/kz/press.html"
+  status = 301
+[[redirects]]
+  from = "/en/news-item.html"
+  to = "/en/press.html"
+  status = 301

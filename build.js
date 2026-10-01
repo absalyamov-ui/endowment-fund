@@ -15,7 +15,7 @@ const PREFIX = { ru: '', kz: 'kz/', en: 'en/' };
 const HREFLANG = { ru: 'ru', kz: 'kk', en: 'en' };
 const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donate.html', 'reports.html', 'press.html', 'contacts.html'];
 const PROG_META = [['edu', 'gold', '', 'campus'], ['sci', 'gold', '', 'lib2'], ['inn', 'gold', '', 'aisana'], ['edu', 'gold', '', 'lib1'], ['sci', 'gold', '', 'folder'], ['inn', 'gold', '', 'meet']];
-const NEWS_IMG = ['hold'];
+const MEDIA = require('./media');
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
 const BOARD_IMG = ['ilyasov', 'nurbek', 'turlov', 'dzhumadildaev', 'stvaev', 'kuanganov', 'madibekov', 'abdrakhmanov'];
 const EMAIL = 'endowment@alageum.com';
@@ -65,7 +65,8 @@ function buildLang(lang, t) {
     const [cat, tc, cls, img] = PROG_META[i]; const [tag, catName, h, txt] = t.progs[i];
     return `<article class="card" data-cat="${cat}">${ph(t.progs[i][2], cls, null, img)}<div class="card-b"><div class="tags"><span class="tag ${tc}">${tag}</span>${withCat ? `<span class="tag vi">${catName}</span>` : ''}</div><h3 class="h3">${h}</h3><p class="txt">${txt}</p><a class="link" href="grants.html">${u.conditions} →</a></div></article>`;
   };
-  const newsCard = (i) => { const [d, cat, h] = t.news[i]; return `<article class="card">${ph(NEWS_IMG[i] ? h : u.photo, i % 2 ? '' : 'dark', null, NEWS_IMG[i])}<div class="card-b"><div class="tags"><span class="tag vi">${cat}</span><span class="date">${d}</span></div><h3 class="h3"><a href="news-item.html">${h}</a></h3></div></article>`; };
+  const esc = v => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const newsCard = (m) => `<article class="card media" data-cat="${m.date ? 'y' + m.date.slice(-4) : 'other'}">${m.image ? `<div class="ph has-img"><img src="${esc(m.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove('has-img');this.remove()"><span>${m.source}</span></div>` : `<div class="ph"><span>${m.source}</span></div>`}<div class="card-b"><div class="tags"><span class="tag vi">${m.source}</span>${m.date ? `<span class="date">${m.date}</span>` : ''}</div><h3 class="h3"><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.title)}</a></h3><a class="link" href="${esc(m.url)}" target="_blank" rel="noopener">${t.press.readSrc} ↗</a></div></article>`;
   const partners = PARTNERS.map(([f, n, h]) => `<div class="logo-box"><img src="${R}assets/img/partners/${f}.png" alt="${n}" style="max-height:${h}px" loading="lazy"></div>`).join('');
   const people = (n, roles) => Array.from({ length: n }, (_, i) => `<div class="person">${ph(u.portrait, i % 2 ? '' : 'dark')}<h3 class="h3">${u.fullName}</h3><p class="txt">${roles[i % roles.length]}</p></div>`).join('');
 
@@ -161,7 +162,7 @@ ${footer}
 <section class="sec bg-wh" style="padding:96px 0"><div class="wrap">${head(x.donEb, x.donH, `<a class="btn btn-outline" href="donate.html">${x.donBtn}</a>`)}
 <div class="grid g4 partners">${partners}</div></div></section>
 <section class="sec bg-li"><div class="wrap">${head(x.newsEb, x.newsH, `<a class="btn btn-outline" href="press.html">${u.allNews}</a>`)}
-<div class="grid g3">${[0, 1, 2].map(newsCard).join('')}</div></div></section>
+<div class="grid g3">${MEDIA.slice(0, 3).map(newsCard).join('')}</div></div></section>
 `);
 
   // ---------- О ФОНДЕ ----------
@@ -274,37 +275,11 @@ ${phero(r.title, r.h1, r.lead)}
   page('press.html', s.title, s.desc, 'press.html', `
 ${phero(s.title, s.title, s.lead)}
 <section class="sec bg-li" style="padding-top:72px"><div class="wrap">
-<div class="chips" style="margin-bottom:40px">${s.tabs.map((y, i) => `<span class="chip${i ? '' : ' on'}">${y}</span>`).join('')}</div>
-<article class="card grid g2" style="gap:0">${ph(t.news[0][2], '', 440, 'hold', 'center 35%')}<div class="card-b" style="padding:48px;justify-content:center"><div class="tags"><span class="tag gold">${s.main}</span><span class="date">${t.news[0][0]}</span></div><h2 class="h2 h2-sm"><a href="news-item.html">${t.news[0][2]}</a></h2><p class="txt">${s.featP}</p><a class="link" href="news-item.html">${u.readMore} →</a></div></article>
-<div class="grid g3 mt-24">${[1, 2, 3, 4, 5, 6].map(newsCard).join('')}</div>
-<nav class="pager" aria-label="${u.pages}"><a href="#">←</a><a class="on" href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">→</a></nav>
+${(() => { const ys = [...new Set(MEDIA.filter(m => m.date).map(m => m.date.slice(-4)))]; const vals = ['all', ...ys.map(y => 'y' + y), 'other']; const labs = [s.all, ...ys, s.other]; return `<div class="toolbar"><div class="chips" data-filter>${vals.map((v, i) => `<button class="chip${i ? '' : ' on'}" data-value="${v}">${labs[i]}</button>`).join('')}</div><span class="meta">${s.count}: ${MEDIA.length}</span></div>`; })()}
+<div class="grid g3">${MEDIA.map(newsCard).join('')}</div>
 </div></section>
 <section class="sec bg-vi" style="padding:72px 0"><div class="wrap cta"><div><span class="eb">${s.journEb}</span><h2 class="h2 h2-sm">${s.journH}</h2><p style="opacity:.8;margin-top:8px"><a href="mailto:${EMAIL}">${EMAIL}</a></p></div>
 <form class="sub" name="subscribe" method="POST" action="/${pre}thanks.html" data-netlify="true"><input type="hidden" name="form-name" value="subscribe"><input type="hidden" name="language" value="${lang}"><label class="visually-hidden" for="sub-email">E-mail</label><input id="sub-email" type="email" name="email" placeholder="${s.subPh}" required><button class="btn btn-gold" type="submit">${s.subBtn}</button></form></div></section>
-`);
-
-  // ---------- СТАТЬЯ ----------
-  const n = t.article;
-  page('news-item.html', t.news[0][2], n.desc, 'press.html', `
-<section class="bg-li" style="padding:56px 0 48px"><div class="wrap">
-<div class="crumbs" style="color:var(--mu)"><a href="index.html">${u.home}</a> &nbsp;/&nbsp; <a href="press.html">${t.press.title}</a> &nbsp;/&nbsp; ${n.crumb}</div>
-<div class="tags" style="margin-bottom:24px"><span class="tag wh vi">${t.news[0][1]}</span><span class="date">${t.news[0][0]} · ${n.readTime}</span></div>
-<h1 class="h1-page" style="color:var(--dp);max-width:960px">${t.news[0][2]}</h1>
-<div class="mt-40">${ph(t.news[0][2], '', 560, 'sign', 'center 40%')}</div>
-</div></section>
-<section class="bg-li"><div class="wrap article">
-<aside class="share"><small>${n.share}</small><a href="#">Telegram</a><a href="#">Facebook</a><a href="#">WhatsApp</a><a href="#">${n.link}</a></aside>
-<div class="prose"><p class="lede">${n.lede}</p>
-<p>${n.p1}</p>
-<h2 class="h3" style="font-size:28px">${n.h2}</h2>
-<p>${n.p2}</p>
-<blockquote><p>${n.quote}</p><cite>${n.quoteBy}</cite></blockquote>
-<p>${n.p3}</p>
-${ph(n.photoCeremony, 'dark', 420, 'group')}
-<h2 class="h3" style="font-size:28px">${n.galleryH}</h2>
-<div class="grid g2 gallery">${['hold', 'meet', 'folder', 'lib2', 'lib1', 'campus'].map(k => ph(n.photoCeremony, '', 240, k)).join('')}</div></div>
-</div></section>
-<section class="sec bg-wh"><div class="wrap">${head(t.press.title, n.alsoH, `<a class="btn btn-outline" href="press.html">${u.allNews}</a>`)}<div class="grid g3">${[1, 2, 3].map(newsCard).join('')}</div></div></section>
 `);
 
   // ---------- КОНТАКТЫ ----------
