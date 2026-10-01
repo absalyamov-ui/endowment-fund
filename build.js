@@ -9,7 +9,7 @@ const path = require('path');
 
 const OUT = path.join(__dirname, 'public');
 const STATIC = path.join(__dirname, 'static');
-const SITE = 'https://endowment.kz';
+const SITE = 'https://endowment-fund.kz';
 const LANGS = { ru: require('./i18n/ru'), kz: require('./i18n/kz'), en: require('./i18n/en') };
 const PREFIX = { ru: '', kz: 'kz/', en: 'en/' };
 const HREFLANG = { ru: 'ru', kz: 'kk', en: 'en' };
