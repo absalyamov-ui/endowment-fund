@@ -14,7 +14,7 @@ const LANGS = { ru: require('./i18n/ru'), kz: require('./i18n/kz'), en: require(
 const PREFIX = { ru: '', kz: 'kz/', en: 'en/' };
 const HREFLANG = { ru: 'ru', kz: 'kk', en: 'en' };
 const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donors.html', 'reports.html', 'press.html', 'contacts.html'];
-const PROG_META = [['edu', 'gold', '', 'campus'], ['sci', 'gold', '', 'lib2'], ['inn', 'gold', '', 'group'], ['edu', 'gold', '', 'lib1'], ['sci', 'gold', '', 'folder'], ['inn', 'gold', '', 'meet']];
+const PROG_META = [['edu', 'gold', '', 'campus'], ['sci', 'gold', '', 'lib2'], ['inn', 'gold', '', 'aisana'], ['edu', 'gold', '', 'lib1'], ['sci', 'gold', '', 'folder'], ['inn', 'gold', '', 'meet']];
 const NEWS_IMG = ['hold'];
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
 const FILTERS = ['all', 'edu', 'sci', 'inn'];
@@ -196,7 +196,7 @@ ${phero(p.title, p.title, p.lead)}
 <div class="grid g3">${t.progs.map((_, i) => progCard(i)).join('')}</div>
 </div></section>
 <section class="flag bg-dp"><div class="in"><span class="eb">${p.flagEb}</span><h2 class="h2">${p.flagH}</h2><p class="lead" style="margin-top:20px;font-size:18px">${p.flagP}</p>
-<div class="kpis">${p.kpis.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('')}</div><a class="btn btn-gold" href="grants.html">${p.flagBtn}</a></div>${ph(p.flagPhoto, '', null, 'sign')}</section>
+<div class="kpis">${p.kpis.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('')}</div><a class="btn btn-gold" href="grants.html">${p.flagBtn}</a></div>${ph(p.flagPhoto, '', null, 'aisana')}</section>
 <section class="sec bg-wh"><div class="wrap">${head(p.resEb, p.resH)}
 <div class="grid g4">${p.results.map(([n, d]) => `<div class="numbox"><b>${n}</b><p class="txt">${d}</p></div>`).join('')}</div></div></section>
 `);
