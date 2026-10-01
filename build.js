@@ -18,7 +18,6 @@ const PROG_META = [['edu', 'gold', '', 'campus'], ['sci', 'gold', '', 'lib2'], [
 const NEWS_IMG = ['hold'];
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
 const FILTERS = ['all', 'edu', 'sci', 'inn'];
-const CHART = [12, 18, 25, 31, 40, 52, 61, 74, 86, 100, 118]; // условные данные, заменить фактическими
 
 // Статика и логотипы
 fs.rmSync(OUT, { recursive: true, force: true });
@@ -175,10 +174,11 @@ ${phero(a.title, a.title, a.lead)}
 <section class="sec bg-wh"><div class="wrap">${head(a.histEb, a.histH)}
 <div class="tl">${a.history.map(([y, h, d], i) => `<div class="tl-i${i === a.history.length - 1 ? ' now' : ''}"><div class="tl-dot"><i></i><s></s></div><b>${y}</b><h3 class="h3">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div>
 </div></section>
-<section class="sec bg-li" id="board"><div class="wrap">${head(a.boardEb, a.boardH)}<div class="grid g4">${people(4, a.boardRoles)}</div></div></section>
-<section class="sec bg-wh" id="team"><div class="wrap">${head(a.teamEb, a.teamH)}<div class="grid g4">${people(4, a.teamRoles)}</div></div></section>
+<section class="sec bg-li" id="board"><div class="wrap">${head(a.boardEb, a.boardH)}<div class="grid g3">${a.board.map(([n, r], i) => `<div class="person">${ph(u.portrait, i % 2 ? '' : 'dark')}<h3 class="h3">${n}</h3><p class="txt">${r}</p></div>`).join('')}</div></div></section>
+<section class="sec bg-wh" id="team"><div class="wrap">${head(a.teamEb, a.teamH)}<div class="grid dir-grid"><div class="person">${ph(u.portrait, 'dark')}<h3 class="h3">${a.director[0]}</h3><p class="txt">${a.director[1]}</p></div>
+<div class="dir-info"><p class="lead-dk">${a.bio}</p><h3 class="h3" style="margin-top:40px">${a.govH}</h3><div class="grid g3" style="margin-top:20px">${a.gov.map(([h, d]) => `<div class="vline"><h3 class="h3" style="font-size:18px">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div></div></div></div></section>
 <section class="sec bg-li" id="docs"><div class="wrap">${head(a.docsEb, a.docsH)}
-<div>${a.docs.map(([d, s]) => `<div class="rowline"><span class="pdf">PDF</span><h3 class="h3 grow">${d}</h3><span class="meta">PDF · ${s}</span><a class="link" href="#">${u.download} ↓</a></div>`).join('')}</div>
+<div>${a.docs.map(d => `<div class="rowline"><span class="pdf">PDF</span><h3 class="h3 grow">${d}</h3><a class="link" href="#">${u.download} ↓</a></div>`).join('')}</div>
 </div></section>
 <section class="band bg-go" id="jobs"><div class="wrap cta"><div><h2 class="h2 h2-sm">${a.jobsH}</h2><p style="opacity:.75;margin-top:8px">${a.jobsP}</p></div><a class="btn btn-dark" href="mailto:hr@endowment.kz">${a.jobsBtn}</a></div></section>
 `);
@@ -280,12 +280,12 @@ ${phero(r.title, r.h1, r.lead)}
 <section class="sec bg-li"><div class="wrap">${head(r.keyEb, r.keyH, `<a class="btn btn-outline" href="#archive">${r.keyBtn}</a>`)}
 <div class="grid g4">${r.kpis.map(([n, s, dd]) => `<div class="numbox"><b>${n}</b><p style="font-size:16px">${s}</p><em>${dd}</em></div>`).join('')}</div>
 <div class="grid mt-40" style="grid-template-columns:minmax(0,2fr) minmax(0,1fr)" id="charts">
-<div class="form"><h3 class="h3">${r.chartH}</h3><div class="bars" role="img" aria-label="${r.chartAria}">${CHART.map((v, i) => `<div><i class="${i === CHART.length - 1 ? 'g' : i >= CHART.length - 4 ? 'r' : ''}" style="height:${Math.round(v / 118 * 100)}%"></i><span>${String(2016 + i).slice(-2)}</span></div>`).join('')}</div><p class="small">${r.chartNote}</p></div>
-<div class="mv bg-dp" style="padding:40px"><h3 class="h3">${r.allocH}</h3><div class="alloc">${r.alloc.map((l, i) => { const pc = [45, 30, 15, 10][i]; const c = ['var(--go)', '#fff', 'var(--vi)', 'var(--mu)'][i]; return `<div><div class="t"><span>${l}</span><b>${pc}%</b></div><div class="tr"><i style="width:${pc}%;background:${c}"></i></div></div>`; }).join('')}</div><div style="margin-top:auto"><p style="font-size:14px;opacity:.6">${r.totalLabel}</p><b style="font-size:36px;color:var(--go);font-weight:800">${r.total}</b></div></div>
+<div class="form"><h3 class="h3">${r.chartH}</h3><div class="bars" role="img" aria-label="${r.chartAria}">${r.chart.map(([y, v], i) => `<div><b class="bv">${v.toLocaleString('ru-RU')}</b><i class="${i === r.chart.length - 1 ? 'g' : 'r'}" style="height:${Math.round(v / Math.max(...r.chart.map(c => c[1])) * 85)}%"></i><span>${y}</span></div>`).join('')}</div><p class="small">${r.chartNote}</p></div>
+<div class="mv bg-dp" style="padding:40px"><h3 class="h3">${r.allocH}</h3><div class="alloc">${r.alloc.map(([l, val, pc], i) => { const c = ['var(--go)', '#fff', 'var(--vi)', 'var(--mu)'][i]; return `<div><div class="t"><span>${l}</span><b>${val}</b></div><div class="tr"><i style="width:${pc}%;background:${c}"></i></div></div>`; }).join('')}</div><div style="margin-top:auto"><p style="font-size:14px;opacity:.6">${r.totalLabel}</p><b style="font-size:36px;color:var(--go);font-weight:800">${r.total}</b></div></div>
 </div></div></section>
 <section class="sec bg-wh" id="archive"><div class="wrap">${head(r.archEb, r.archH)}
 <div class="chips" style="margin-bottom:32px">${r.tabs.map((y, i) => `<span class="chip${i ? '' : ' on'}">${y}</span>`).join('')}</div>
-<div class="grid g4">${['2025', '2024', '2023', '2022'].map(y => `<div class="rep"><div class="cover"><small>${r.annual}</small><b>${y}</b></div><h3 class="h3" style="font-size:20px">${r.annualOf(y)}</h3><div style="display:flex;justify-content:space-between"><span class="meta">PDF · 8,4 ${r.mb}</span><a class="link" href="#" style="font-size:15px">${u.download} ↓</a></div></div>`).join('')}</div>
+<div class="grid g4">${r.arch.map(([k, y, h]) => `<div class="rep"><div class="cover"><small>${k}</small><b>${y}</b></div><h3 class="h3" style="font-size:20px">${h}</h3><div style="display:flex;justify-content:space-between"><span class="meta">PDF</span><a class="link" href="#" style="font-size:15px">${u.download} ↓</a></div></div>`).join('')}</div>
 </div></section>
 <section class="band bg-vi" style="padding:64px 0"><div class="wrap cta"><div class="txt-col"><span class="eb">${r.auditEb}</span><h2 class="h2 h2-sm">${r.auditH}</h2></div><a class="btn btn-light" href="#">${r.auditBtn}</a></div></section>
 `);

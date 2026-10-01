@@ -328,3 +328,11 @@ button,input,select,textarea{font:inherit;color:inherit}
 .pm-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0;padding:16px 0;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln)}
 .pm-meta dt{font-size:13px;color:var(--mu,#6b6b7b);margin-bottom:4px}
 .pm-meta dd{margin:0;font-weight:700;color:var(--dp);font-size:16px}
+/* О фонде: руководство */
+.dir-grid{grid-template-columns:minmax(0,1fr) minmax(0,3fr);gap:clamp(24px,4vw,64px);align-items:start}
+.dir-info .lead-dk{font-size:clamp(18px,1.6vw,22px);line-height:1.5;color:var(--ink)}
+@media(max-width:900px){.dir-grid{grid-template-columns:1fr}.dir-info .g3{grid-template-columns:1fr}}
+/* Отчёты: подписи значений над столбцами */
+.bars .bv{font-size:14px;font-weight:700;color:var(--dp)}
+@media(max-width:900px){#charts{grid-template-columns:1fr!important}}
+.alloc .t{gap:12px} .alloc .t b{white-space:nowrap}
