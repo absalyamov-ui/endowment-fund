@@ -343,3 +343,5 @@ button,input,select,textarea{font:inherit;color:inherit}
 .hero-art{display:flex;justify-content:center;align-items:flex-end}
 .hero-art img{display:block;width:100%;max-width:420px;height:auto;max-height:520px;object-fit:contain}
 @media(max-width:900px){.hero-art img{max-width:260px}}
+.req-wide .req{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:64px}
+@media(max-width:800px){.req-wide .req{grid-template-columns:1fr}}

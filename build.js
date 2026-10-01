@@ -233,15 +233,11 @@ ${agree}<button class="btn btn-gold" type="submit">${g.f.submit}</button></form>
   page('donate.html', d.title, d.desc, 'donate.html', `
 ${phero(d.title, d.h1, d.lead)}
 <section class="sec bg-li"><div class="wrap">${head(d.whyEb, d.whyH)}
-<div class="grid g5 why">${d.why.map(([h, x], i) => `<div class="vline"><b class="why-n">0${i + 1}</b><h3 class="h3" style="font-size:20px">${h}</h3><p class="txt">${x}</p></div>`).join('')}</div></div></section>
+<div class="grid g4 why">${d.why.map(([h, x], i) => `<div class="vline"><b class="why-n">0${i + 1}</b><h3 class="h3" style="font-size:20px">${h}</h3><p class="txt">${x}</p></div>`).join('')}</div></div></section>
 <section class="sec bg-wh"><div class="wrap">${head(d.fmtEb, d.fmtH, `<a class="btn btn-outline" href="#apply">${d.fmtBtn}</a>`)}
 <div class="grid g3">${d.fmts.map(([h, sub, x], i) => `<div class="mv ${['bg-li', 'bg-vi', 'bg-dp'][i]}"><span style="color:var(--go);font-weight:700;font-size:15px">${sub}</span><h3 class="h3" style="font-size:28px">${h}</h3><p class="txt">${x}</p></div>`).join('')}</div></div></section>
-<section class="sec bg-li"><div class="wrap">${head(d.taxEb, d.taxH)}
-<div class="grid g3">
-<div class="mv bg-wh"><h3 class="h3" style="font-size:22px">${d.taxLegalH}</h3>${d.taxLegal.map(y => `<span class="check">${y}</span>`).join('')}</div>
-<div class="mv bg-wh"><h3 class="h3" style="font-size:22px">${d.taxIndH}</h3>${d.taxInd.map(y => `<span class="check">${y}</span>`).join('')}</div>
-<div class="mv bg-dp"><span class="eb">${d.reqEb}</span><dl class="req" style="margin:0">${d.req.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></div>
-</div></div></section>
+<section class="sec bg-li"><div class="wrap">${head(d.reqEb, d.reqH)}
+<div class="mv bg-dp req-wide"><dl class="req" style="margin:0">${d.req.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></div></div></section>
 <section class="sec bg-wh"><div class="wrap">${head(d.faqEb, d.faqH)}${faq(d.faq)}</div></section>
 <section class="sec bg-li" id="apply"><div class="wrap split split-5-7">
 <div class="stack"><div><span class="eb">${d.formEb}</span><h2 class="h2">${d.formH}</h2></div><p class="txt">${d.formP}</p><p class="txt"><a class="link" href="mailto:${EMAIL}">${EMAIL}</a></p></div>
