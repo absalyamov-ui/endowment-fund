@@ -13,7 +13,7 @@ const SITE = 'https://endowment.kz';
 const LANGS = { ru: require('./i18n/ru'), kz: require('./i18n/kz'), en: require('./i18n/en') };
 const PREFIX = { ru: '', kz: 'kz/', en: 'en/' };
 const HREFLANG = { ru: 'ru', kz: 'kk', en: 'en' };
-const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donors.html', 'reports.html', 'press.html', 'contacts.html'];
+const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'reports.html', 'press.html', 'contacts.html'];
 const PROG_META = [['edu', 'gold', '', 'campus'], ['sci', 'gold', '', 'lib2'], ['inn', 'gold', '', 'aisana'], ['edu', 'gold', '', 'lib1'], ['sci', 'gold', '', 'folder'], ['inn', 'gold', '', 'meet']];
 const NEWS_IMG = ['hold'];
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
@@ -84,7 +84,7 @@ function buildLang(lang, t) {
 <div class="soc"><a href="#" aria-label="Instagram">IG</a><a href="#" aria-label="Facebook">FB</a><a href="#" aria-label="YouTube">YT</a><a href="#" aria-label="Telegram">TG</a><a href="#" aria-label="LinkedIn">in</a></div></div>
 <div><h4>${f.fund}</h4><ul>${['about.html', 'about.html#board', 'about.html#team', 'about.html#docs', 'about.html#jobs'].map((h, i) => `<li><a href="${h}">${f.fundLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.work}</h4><ul>${['programs.html', 'grants.html', 'reports.html', 'press.html'].map((h, i) => `<li><a href="${h}">${f.workLinks[i]}</a></li>`).join('')}</ul></div>
-<div><h4>${f.donors}</h4><ul>${['donate.html', 'donors.html#companies', 'donors.html'].map((h, i) => `<li><a href="${h}">${f.donorLinks[i]}</a></li>`).join('')}</ul></div>
+<div><h4>${f.donors}</h4><ul>${['donate.html'].map((h, i) => `<li><a href="${h}">${f.donorLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.contacts}</h4><ul><li><a href="tel:+77172000000">+7 (7172) 00-00-00</a></li><li><a href="mailto:info@endowment.kz">info@endowment.kz</a></li><li>${f.address}</li><li>${f.hours}</li></ul></div>
 </div>
 <div class="ftr-bot"><span>© <span data-year>2026</span> ${t.name}</span><span><a href="#">${f.privacy}</a> · <a href="${R}sitemap.xml">${f.sitemap}</a></span></div>
@@ -259,20 +259,6 @@ ${agree}
 <section class="sec bg-li"><div class="wrap">${head(d.faqEb, d.faqH)}${faq(d.faq)}</div></section>
 `);
 
-  // ---------- ДОНОРЫ ----------
-  const o = t.donors;
-  page('donors.html', o.title, o.desc, 'donors.html', `
-${phero(o.title, o.h1, o.lead)}
-<section class="sec bg-li"><div class="wrap">${head(o.tierEb, o.tierH)}
-<div class="grid g3">${o.tiers.map(([h, s, dd], i) => `<div class="mv ${['bg-wh', 'bg-vi', 'bg-dp'][i]}"><span style="color:var(--go);font-weight:700;font-size:15px">${s}</span><h3 class="h3" style="font-size:28px">${h}</h3><p class="txt">${dd}</p></div>`).join('')}</div></div></section>
-<section class="sec bg-wh" id="companies"><div class="wrap">${head(o.compEb, o.compH, `<a class="btn btn-outline" href="contacts.html">${o.compBtn}</a>`)}
-<div class="grid g4 partners">${partners}</div></div></section>
-<section class="sec bg-li"><div class="wrap">${head(o.privEb, o.privH)}
-<div class="grid g4">${[0, 1, 2, 3].map(() => `<ul>${`<li style="margin-bottom:14px">${u.fullName}</li>`.repeat(6)}</ul>`).join('')}</div>
-<p class="small mt-24">${o.privNote}</p></div></section>
-<section class="sec bg-dp"><div class="wrap quote">${ph(o.quotePhoto)}<div><q>${o.quote}</q><p style="color:var(--go);font-weight:700;margin-top:24px">${o.quoteBy}</p></div></div></section>
-<section class="band bg-go"><div class="wrap cta"><div><h2 class="h2 h2-sm">${o.ctaH}</h2><p style="opacity:.75;margin-top:8px">${o.ctaP}</p></div><a class="btn btn-dark" href="donate.html">${u.donate}</a></div></section>
-`);
 
   // ---------- ОТЧЁТЫ ----------
   const r = t.reports;

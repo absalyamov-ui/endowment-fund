@@ -8,3 +8,16 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[redirects]]
+  from = "/donors.html"
+  to = "/"
+  status = 301
+[[redirects]]
+  from = "/kz/donors.html"
+  to = "/kz/"
+  status = 301
+[[redirects]]
+  from = "/en/donors.html"
+  to = "/en/"
+  status = 301

@@ -5,7 +5,7 @@ module.exports = {
   homeTitle: 'Science and Education Endowment Fund — permanent capital for Kazakhstan’s science and education',
   ui: {
     langCode: 'EN',
-    nav: ['About', 'Programmes', 'How to apply', 'Investors', 'Reports', 'Newsroom', 'Contacts'],
+    nav: ['About', 'Programmes', 'How to apply', 'Reports', 'In the media', 'Contacts'],
     support: 'Contribute', donate: 'Make a contribution', menu: 'Menu', mainMenu: 'Main menu', mobileMenu: 'Mobile menu',
     toHome: 'home page', home: 'Home', readMore: 'Read', allPrograms: 'All programmes', allNews: 'All news',
     conditions: 'Eligibility and terms', download: 'Download', photo: 'Photo', portrait: 'Portrait', logo: 'Logo', progPhoto: 'Programme photo',
@@ -16,7 +16,7 @@ module.exports = {
     about: 'Permanent capital whose income supports science and education in Kazakhstan.',
     fund: 'The Fund', work: 'Our work', donors: 'For investors', contacts: 'Contacts',
     fundLinks: ['About the Fund', 'Board of Trustees', 'Management', 'Documents', 'Careers'],
-    workLinks: ['Programmes and projects', 'How to apply', 'Reports', 'Newsroom'],
+    workLinks: ['Programmes and projects', 'How to apply', 'Reports', 'In the media'],
     donorLinks: ['Make a contribution', 'Corporate partners', 'Our investors'],
     address: '11A Saraishyk St, Astana', hours: 'Mon–Fri, 9:00–18:00',
     privacy: 'Privacy policy', sitemap: 'Sitemap',
@@ -58,7 +58,7 @@ module.exports = {
     progEb: 'Programmes and projects', progH: 'Current programmes',
     ctaEb: 'For researchers and universities', ctaH: 'Have a project in science or education?', ctaP: 'Apply now — the expert council will review your application within 30 working days. We support projects from all over Kazakhstan.', ctaBtn: 'Apply now', ctaBtn2: 'Eligibility and requirements',
     donEb: 'Trusted by', donH: 'Investors and partners', donBtn: 'Become an investor',
-    newsEb: 'Newsroom', newsH: 'Fund news',
+    newsEb: 'In the media', newsH: 'Fund news',
   },
   about: {
     gov: [['Board of Trustees', 'Supreme body: strategy, charitable programmes, investment policy'], ['Director', 'Executive body: day-to-day operations and programme delivery'], ['Internal audit service', 'Oversight body reporting to the Board of Trustees']],
@@ -162,9 +162,9 @@ module.exports = {
     auditEb: 'Independent audit', auditH: 'The annual financial statements are independently audited every year', auditBtn: 'Audit opinion',
   },
   press: {
-    title: 'Newsroom', desc: 'News from the Science and Education Endowment Fund, media coverage, photos and press office contacts.',
+    title: 'In the media', desc: 'News from the Science and Education Endowment Fund, media coverage, photos and press office contacts.',
     lead: 'Fund news, media coverage, photo archive and responses to public enquiries.',
-    tabs: ['News', 'In the media', 'Photo and video', 'Public enquiries', 'For journalists'],
+    tabs: ['News', 'Photo and video', 'Public enquiries', 'For journalists'],
     main: 'Top story', photoEvent: 'Event photo',
     featP: 'The Science and Education Endowment Fund and SDU University have signed a memorandum of cooperation. After the signing, the Fund’s delegation toured the university campus and library.',
     journEb: 'For journalists', journH: 'Press office', subPh: 'Your email to subscribe', subBtn: 'Subscribe',
