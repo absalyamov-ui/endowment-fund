@@ -5,7 +5,7 @@ module.exports = {
   homeTitle: 'Science and Education Endowment Fund — permanent capital for Kazakhstan’s science and education',
   ui: {
     langCode: 'EN',
-    nav: ['About', 'Programmes', 'How to apply', 'Reports', 'In the media', 'Contacts'],
+    nav: ['About', 'Programmes', 'How to apply', 'Contribute', 'Reports', 'In the media', 'Contacts'],
     support: 'Contribute', donate: 'Make a contribution', menu: 'Menu', mainMenu: 'Main menu', mobileMenu: 'Mobile menu',
     toHome: 'home page', home: 'Home', readMore: 'Read', allPrograms: 'All programmes', allNews: 'All news',
     conditions: 'Eligibility and terms', download: 'Download', photo: 'Photo', portrait: 'Portrait', logo: 'Logo', progPhoto: 'Programme photo',
