@@ -43,7 +43,7 @@ module.exports = {
     h1: 'Knowledge that serves the country for generations',
     lead: 'We build permanent endowment capital and direct its investment income to grants for researchers, scholarships for students and the development of universities in Kazakhstan.',
     btnGrant: 'How to apply for a grant', heroPhoto: 'Photo: researchers in a laboratory',
-    stats: [['₸ 00 bn', 'endowment capital'], ['₸ 0.0 bn', 'awarded to grants and programmes'], ['000+', 'researchers and students supported'], ['00', 'investors and partners']],
+    stats: [['₸ 2 bn', 'endowment capital'], ['₸ 30 m', 'awarded to grants and programmes'], ['200+', 'researchers and students supported'], ['15', 'investors and partners']],
     aboutEb: 'About the Fund', aboutH: 'Real change begins where support turns into opportunity',
     aboutP1: 'An endowment is capital that is never spent. Contributions are invested under a conservative strategy, and the income is directed to the Fund’s programmes every year.',
     aboutP2: 'This makes support for science and education permanent and independent of one-off budgets and market swings.',
