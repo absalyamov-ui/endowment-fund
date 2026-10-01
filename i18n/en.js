@@ -127,7 +127,7 @@ module.exports = {
     why: [['Capital is preserved', 'The principal is never spent — only investment income goes to programmes.'], ['Transparent reporting', 'Every year we publish financial statements, the audit report and programme reports in line with Kazakh law.'], ['Tax benefits', 'Contributions by organisations are deductible for corporate income tax under the Tax Code of Kazakhstan.'], ['Real impact', 'The income supports researchers, students, schoolchildren, universities and innovation projects in Kazakhstan.'], ['Professional management', 'Assets are invested by an asset manager under an investment policy approved by the Board of Trustees.']],
     fmtEb: 'Ways to take part',
     fmtH: 'Choose a format',
-    fmts: [['Endowment', 'A gift to the Fund’s capital', 'A contribution under an endowment agreement, in perpetuity or for a set term. The funds are invested and the principal stays intact.'], ['Voluntary donation', 'One-off or regular gift', 'Support for the Fund’s work and programmes, with no minimum amount.'], ['Corporate CSR partner', 'For companies', 'A contribution as part of corporate social responsibility, with joint programmes and partner recognition.']],
+    fmts: [['Endowment', 'A gift to the Fund’s capital', 'A contribution under an endowment agreement, in perpetuity or for a set term. The funds are invested and the principal stays intact.'], ['Donation', 'One-off or regular gift', 'Support for the Fund’s work and programmes, with no minimum amount.'], ['Corporate CSR partner', 'For companies', 'A contribution as part of corporate social responsibility, with joint programmes and partner recognition.']],
     fmtBtn: 'Get in touch',
     taxEb: 'Tax benefits',
     taxH: 'Benefits for contributors',
