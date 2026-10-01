@@ -15,7 +15,8 @@ const PREFIX = { ru: '', kz: 'kz/', en: 'en/' };
 const HREFLANG = { ru: 'ru', kz: 'kk', en: 'en' };
 const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donors.html', 'reports.html', 'press.html', 'contacts.html'];
 const PROG_META = [['grants', 'gold', '', 'lib2'], ['scholar', 'gold', 'dark', 'campus'], ['mobility', 'gold', '', 'group'], ['infra', 'grey', 'muted'], ['grants', 'grey', 'dark'], ['scholar', 'grey', 'muted']];
-const NEWS_IMG = ['hold']; // фото к новостям по порядку
+const NEWS_IMG = ['hold'];
+const PARTNERS = [['sdu', 'SDU University', 96], ['freedom', 'Freedom Broker', 56], ['alageum', 'Alageum Electric', 52]]; // логотип, название, макс. высота // фото к новостям по порядку
 const FILTERS = ['all', 'grants', 'scholar', 'infra', 'mobility'];
 const CHART = [12, 18, 25, 31, 40, 52, 61, 74, 86, 100, 118]; // условные данные, заменить фактическими
 
@@ -64,6 +65,7 @@ function buildLang(lang, t) {
     return `<article class="card" data-cat="${cat}">${ph(t.progs[i][2], cls, null, img)}<div class="card-b"><div class="tags"><span class="tag ${tc}">${tag}</span>${withCat ? `<span class="tag vi">${catName}</span>` : ''}</div><h3 class="h3">${h}</h3><p class="txt">${txt}</p><a class="link" href="grants.html">${u.conditions} →</a></div></article>`;
   };
   const newsCard = (i) => { const [d, cat, h] = t.news[i]; return `<article class="card">${ph(NEWS_IMG[i] ? h : u.photo, i % 2 ? '' : 'dark', null, NEWS_IMG[i])}<div class="card-b"><div class="tags"><span class="tag vi">${cat}</span><span class="date">${d}</span></div><h3 class="h3"><a href="news-item.html">${h}</a></h3></div></article>`; };
+  const partners = PARTNERS.map(([f, n, h]) => `<div class="logo-box"><img src="${R}assets/img/partners/${f}.png" alt="${n}" style="max-height:${h}px" loading="lazy"></div>`).join('');
   const people = (n, roles) => Array.from({ length: n }, (_, i) => `<div class="person">${ph(u.portrait, i % 2 ? '' : 'dark')}<h3 class="h3">${u.fullName}</h3><p class="txt">${roles[i % roles.length]}</p></div>`).join('');
 
   const header = (active, file) => `<header class="hdr"><div class="wrap">
@@ -156,7 +158,7 @@ ${ph(x.heroPhoto, '', null, 'lib1', '40% center')}</div>
 <section class="sec bg-vi pat pat-bg"><div class="wrap cta"><div class="txt-col"><span class="eb">${x.ctaEb}</span><h2 class="h2">${x.ctaH}</h2><p class="lead" style="margin-top:20px">${x.ctaP}</p></div>
 <div class="stack" style="gap:16px"><a class="btn btn-gold" href="grants.html#apply">${x.ctaBtn}</a><a class="btn btn-light" href="grants.html">${x.ctaBtn2}</a></div></div></section>
 <section class="sec bg-wh" style="padding:96px 0"><div class="wrap">${head(x.donEb, x.donH, `<a class="btn btn-outline" href="donate.html">${x.donBtn}</a>`)}
-<div class="grid g6">${`<div class="logo-box">${u.logo}</div>`.repeat(6)}</div></div></section>
+<div class="grid g3 partners">${partners}</div></div></section>
 <section class="sec bg-li"><div class="wrap">${head(x.newsEb, x.newsH, `<a class="btn btn-outline" href="press.html">${u.allNews}</a>`)}
 <div class="grid g3">${[0, 1, 2].map(newsCard).join('')}</div></div></section>
 `);
@@ -260,7 +262,7 @@ ${phero(o.title, o.h1, o.lead)}
 <section class="sec bg-li"><div class="wrap">${head(o.tierEb, o.tierH)}
 <div class="grid g3">${o.tiers.map(([h, s, dd], i) => `<div class="mv ${['bg-wh', 'bg-vi', 'bg-dp'][i]}"><span style="color:var(--go);font-weight:700;font-size:15px">${s}</span><h3 class="h3" style="font-size:28px">${h}</h3><p class="txt">${dd}</p></div>`).join('')}</div></div></section>
 <section class="sec bg-wh" id="companies"><div class="wrap">${head(o.compEb, o.compH, `<a class="btn btn-outline" href="contacts.html">${o.compBtn}</a>`)}
-<div class="grid g5">${`<div class="logo-box">${u.logo}</div>`.repeat(10)}</div></div></section>
+<div class="grid g3 partners">${partners}</div></div></section>
 <section class="sec bg-li" id="named"><div class="wrap">${head(o.namedEb, o.namedH)}
 <div class="grid g3">${[0, 1, 2].map(i => `<article class="card">${ph(u.portrait, i === 1 ? '' : 'dark')}<div class="card-b"><span style="color:var(--go);font-weight:600;font-size:14px">${o.namedSince}</span><h3 class="h3">${o.namedTitle}</h3><p class="txt">${o.namedText}</p></div></article>`).join('')}</div></div></section>
 <section class="sec bg-wh"><div class="wrap">${head(o.privEb, o.privH)}

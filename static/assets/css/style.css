@@ -322,3 +322,5 @@ button,input,select,textarea{font:inherit;color:inherit}
 .hdr .logo{flex:none}
 .ph.has-img::before{content:none}
 .ph.has-img{background:var(--ln)}
+.partners .logo-box{display:flex;align-items:center;justify-content:center;min-height:160px;padding:32px}
+.partners .logo-box img{max-width:80%;width:auto;height:auto;object-fit:contain}
