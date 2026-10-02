@@ -51,8 +51,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* Шапка */
 .hdr{position:sticky;top:0;z-index:50;background:var(--wh);border-bottom:1px solid var(--ln)}
 .hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;height:84px}
-.hdr .logo img{height:48px;width:auto}
-.nav{display:flex;gap:22px;align-items:center}
+.hdr .logo img{height:40px;width:auto}
+.nav{display:flex;gap:20px;align-items:center}
 .nav a{white-space:nowrap;font-size:15px;font-weight:600;padding:6px 0;border-bottom:2px solid transparent}
 .nav a:hover,.nav a.active{border-color:var(--go)}
 .hdr-act{display:flex;align-items:center;gap:20px}
@@ -453,3 +453,4 @@ body.fb-lock{overflow:hidden}
 [id]{scroll-margin-top:84px}
 .tpl-free{background:none;color:var(--go);font-size:16px}
 .tpl-dl{font-size:15px}
+html[lang="kk"] .nav{gap:14px}html[lang="kk"] .nav a{font-size:14.5px}

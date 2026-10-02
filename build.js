@@ -13,7 +13,7 @@ const SITE = 'https://endowment-fund.kz';
 const LANGS = { ru: require('./i18n/ru'), kz: require('./i18n/kz'), en: require('./i18n/en') };
 const PREFIX = { ru: '', kz: 'kz/', en: 'en/' };
 const HREFLANG = { ru: 'ru', kz: 'kk', en: 'en' };
-const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donate.html', 'reports.html', 'press.html', 'contacts.html'];
+const NAV_FILES = ['index.html', 'about.html', 'programs.html', 'grants.html', 'donate.html', 'reports.html', 'press.html', 'contacts.html'];
 const PROG_META = [['edu', 'gold', '', 'p-grad'], ['sci', 'gold', '', 'p-dna'], ['inn', 'gold', '', 'p-aisana'], ['edu', 'gold', '', 'p-class'], ['sci', 'gold', '', 'p-micro'], ['inn', 'gold', '', 'p-robot']];
 const MEDIA = require('./media');
 const PARTNERS_ALL = require('./partners');
@@ -92,11 +92,11 @@ function buildLang(lang, t) {
 
   const header = (active, file) => `<header class="hdr"><div class="wrap">
 <a class="logo" href="index.html" aria-label="${t.name} — ${u.toHome}"><img src="${logo}" alt="${t.name}" width="282" height="48"></a>
-<nav class="nav" aria-label="${u.mainMenu}">${NAV_FILES.map((f, i) => `<a href="${f}"${f === active ? ' class="active"' : ''}>${u.nav[i]}</a>`).join('')}</nav>
+<nav class="nav" aria-label="${u.mainMenu}">${NAV_FILES.map((f, i) => `<a href="${f}"${f === active ? ' class="active"' : ''}>${[u.home, ...u.nav][i]}</a>`).join('')}</nav>
 <div class="hdr-act"><div class="lang">${langLinks(file)}</div>
 <button class="burger" aria-label="${u.menu}" aria-expanded="false"><span></span><span></span><span></span></button></div>
 </div></header>
-<nav class="mnav" aria-label="${u.mobileMenu}">${NAV_FILES.map((f, i) => `<a href="${f}">${u.nav[i]}</a>`).join('')}<div class="lang">${langLinks(file)}</div></nav>`;
+<nav class="mnav" aria-label="${u.mobileMenu}">${NAV_FILES.map((f, i) => `<a href="${f}">${[u.home, ...u.nav][i]}</a>`).join('')}<div class="lang">${langLinks(file)}</div></nav>`;
 
   const f = t.footer;
   const footer = `<footer class="ftr"><div class="wrap">
@@ -172,7 +172,7 @@ ${['thanks.html', '404.html'].includes(file) ? '' : `<button class="fb-fab" type
 
   // ---------- ГЛАВНАЯ ----------
   const x = t.index;
-  page('index.html', u.home, x.desc, '', `
+  page('index.html', u.home, x.desc, 'index.html', `
 <section class="hero hero-bg"><div class="wrap">
 <div class="hero-row"><div><span class="eb" style="color:var(--go)">${t.name}</span><h1 class="h1">${x.h1}</h1>
 <p class="lead">${x.lead}</p>
