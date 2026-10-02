@@ -4,7 +4,7 @@
   --ink:#1B1236; --mu:#6B6480; --ln:#E7E2F0;
   --wrap:1200px; --pad:24px;
   --sec:clamp(64px,9vw,120px);
-  --font:'Manrope',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --font:'Manrope','Onest',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -364,3 +364,5 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* Главная: иконки направлений */
 .dir-ic{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:14px;background:var(--dp);color:var(--go);margin-bottom:8px}
 .dir-ic svg{width:30px;height:30px}
+/* Казахская версия: шрифт с полной поддержкой казахских букв (Ә, Ғ, Қ, Ң, Ұ и др.) */
+html[lang="kk"]{--font:'Onest',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
