@@ -154,7 +154,7 @@ window.__rv = 1;
     const sel = form.topic;
     if (topicIdx != null && sel.options[+topicIdx + 1]) sel.selectedIndex = +topicIdx + 1;
     if (msg && !form.message.value) form.message.value = msg;
-    form.page.value = location.href;
+    form.elements['Страница'].value = location.href;
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
     document.body.classList.add('fb-lock');
     setTimeout(() => form.name.focus(), 50);
@@ -169,8 +169,9 @@ window.__rv = 1;
     e.preventDefault();
     const btn = form.querySelector('[type=submit]'), label = btn.textContent;
     btn.disabled = true; btn.textContent = form.dataset.sending;
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
-      .then(r => { if (!r.ok) throw 0; form.reset(); body.hidden = true; ok.hidden = false; })
+    fetch(form.dataset.ajax, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })
+      .then(r => r.json().then(d => { if (!r.ok || String(d.success) !== 'true') throw 0; }))
+      .then(() => { form.reset(); body.hidden = true; ok.hidden = false; })
       .catch(() => { dlg.querySelector('.fb-err').hidden = false; })
       .finally(() => { btn.disabled = false; btn.textContent = label; });
   });
