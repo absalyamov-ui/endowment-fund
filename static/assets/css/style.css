@@ -524,3 +524,8 @@ html[lang="kk"] .nav{gap:14px}html[lang="kk"] .nav a{font-size:14.5px}
 .pt-grid-nl .pt-nl{min-height:72px}
 .inp-err{outline:2px solid #FF8A80!important;outline-offset:0}
 .sub{position:relative}.sub>.err-msg{position:absolute;left:0;top:100%;margin-top:8px;color:#FFD7D2;width:auto}
+.pm-cat{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--vi)}
+.dir-ic.pm-ic{width:44px;height:44px;border-radius:10px;flex:none}
+.dir-ic.pm-ic{margin-bottom:0}
+@media(min-width:1025px){@supports (grid-template-rows:subgrid){.pm-grid .prog-main{display:grid;grid-row:span 4;grid-template-rows:subgrid;row-gap:16px;align-content:start}.pm-grid{row-gap:0}}}
+.pm-rest{display:flex;flex-direction:column;gap:16px}
