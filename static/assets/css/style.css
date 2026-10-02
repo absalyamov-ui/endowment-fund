@@ -51,17 +51,26 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* Шапка */
 .hdr{position:sticky;top:0;z-index:50;background:var(--wh);border-bottom:1px solid var(--ln)}
 .hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;height:84px}
+html[lang="kk"] .hdr .wrap{max-width:1408px}
 .hdr .logo img{height:40px;width:auto}
 .nav{display:flex;gap:20px;align-items:center}
 .nav a{white-space:nowrap;font-size:15px;font-weight:600;padding:6px 0;border-bottom:2px solid transparent}
 .nav a:hover,.nav a.active{border-color:var(--go)}
 .hdr-act{display:flex;align-items:center;gap:20px}
-.lang{display:flex;gap:10px;font-size:13px;font-weight:700;color:var(--mu)}
-.lang a.on{color:var(--dp)}
+.lang{display:flex;gap:2px;padding:3px;border:1px solid var(--ln);font-size:13px;font-weight:700;color:var(--dp)}
+.lang a{padding:6px 9px;line-height:1;letter-spacing:.03em;transition:background .2s,color .2s}
+.lang a:hover{background:var(--li)}
+.lang a.on{background:var(--dp);color:var(--wh)}
 .burger{display:none;width:44px;height:44px;background:var(--dp);border:0;cursor:pointer;flex-direction:column;justify-content:center;align-items:center;gap:5px}
 .burger span{display:block;width:20px;height:2px;background:var(--wh);transition:.2s}
 .mnav{display:none}
-@media (max-width:1400px){
+@media (max-width:1399px) and (min-width:1100px){
+  .hdr .logo img{height:34px}.hdr .wrap{gap:16px}
+  .nav{gap:14px}.nav a{font-size:14px}
+  .hdr-act{gap:12px}.lang a{padding:6px 7px}
+  html[lang="kk"] .nav{gap:10px}html[lang="kk"] .nav a{font-size:13.5px}
+}
+@media (max-width:1099px){
   .nav,.hdr-act .btn,.hdr-act .lang{display:none}
   .burger{display:flex}
   .hdr .wrap{height:68px}.hdr .logo img{height:38px}
@@ -71,12 +80,34 @@ button,input,select,textarea{font:inherit;color:inherit}
   .mnav a::after{content:'→';color:var(--go)}
   .mnav .btn{margin-top:24px;width:100%}
   .mnav .btn::after{content:'→';color:inherit}
-  .mnav .lang{margin-top:24px;color:rgba(255,255,255,.6)}.mnav .lang a{border:0;padding:0}.mnav .lang a::after{content:none}.mnav .lang a.on{color:var(--go)}
+  .mnav .lang{margin-top:24px;display:inline-flex;border-color:rgba(255,255,255,.25);color:var(--wh);font-size:15px}.mnav .lang a{border:0;padding:10px 16px}.mnav .lang a::after{content:none}.mnav .lang a:hover{background:rgba(255,255,255,.08)}.mnav .lang a.on{background:var(--go);color:var(--dp)}
   body.menu-open{overflow:hidden}
   body.menu-open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   body.menu-open .burger span:nth-child(2){opacity:0}
   body.menu-open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 }
+@media (min-width:1100px) and (max-width:1279px){
+  html[lang="kk"] .nav,html[lang="kk"] .hdr-act .btn,html[lang="kk"] .hdr-act .lang{display:none}
+  html[lang="kk"] .burger{display:flex}
+  html[lang="kk"] .hdr .wrap{height:68px}
+  html[lang="kk"] .hdr .logo img{height:38px}
+  html[lang="kk"] .mnav{display:block;position:fixed;inset:68px 0 0 0;background:var(--dp);color:var(--wh);padding:24px;transform:translateX(100%);transition:transform .25s;overflow:auto;z-index:49}
+  html[lang="kk"] .mnav.open{transform:none}
+  html[lang="kk"] .mnav a{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:18px;font-weight:600}
+  html[lang="kk"] .mnav a::after{content:'→';color:var(--go)}
+  html[lang="kk"] .mnav .btn{margin-top:24px;width:100%}
+  html[lang="kk"] .mnav .btn::after{content:'→';color:inherit}
+  html[lang="kk"] .mnav .lang{margin-top:24px;display:inline-flex;border-color:rgba(255,255,255,.25);color:var(--wh);font-size:15px}
+  html[lang="kk"] .mnav .lang a{border:0;padding:10px 16px}
+  html[lang="kk"] .mnav .lang a::after{content:none}
+  html[lang="kk"] .mnav .lang a:hover{background:rgba(255,255,255,.08)}
+  html[lang="kk"] .mnav .lang a.on{background:var(--go);color:var(--dp)}
+  html[lang="kk"] body.menu-open{overflow:hidden}
+  html[lang="kk"] body.menu-open .burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  html[lang="kk"] body.menu-open .burger span:nth-child(2){opacity:0}
+  html[lang="kk"] body.menu-open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+}
+
 
 /* Паттерн и фото-заглушки */
 .pat{position:relative;overflow:hidden}
