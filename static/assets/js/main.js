@@ -89,3 +89,57 @@ if (window.PREVIEW) {
     f.innerHTML = '<h3 class="h3">Спасибо!</h3><p class="txt">Это предпросмотр: на опубликованном сайте заявка придёт в раздел Forms на Netlify.</p>';
   }));
 }
+
+// ===== Анимации =====
+window.__rv = 1;
+(function () {
+  const root = document.documentElement;
+  const motion = root.classList.contains('motion');
+  // Шапка с тенью при прокрутке
+  const hdr = document.querySelector('.hdr');
+  // Параллакс паттерна в шапках страниц
+  const phero = document.querySelector('.phero');
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      if (hdr) hdr.classList.toggle('scrolled', y > 8);
+      if (motion && phero && y < 900) phero.style.setProperty('--py', (y * 0.25).toFixed(1) + 'px');
+      ticking = false;
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  if (!motion || !('IntersectionObserver' in window)) return;
+
+  // Появление блоков при прокрутке (с лёгкой лесенкой внутри одной сетки)
+  const SEL = '.sec .head, .split > *, .grid > *, .card, .val, .pt, .person, .rowline, .numbox, .pr, .mv, .why, .doc-gh, .pt-gh, .pt-total, .req, .faq details, .empty-state, .marquee, .vline, .txt-col, .cta > *';
+  const els = [...document.querySelectorAll(SEL)].filter(e => !e.closest('.hero, .phero, .hdr, .ftr, .mnav') && !e.parentElement.closest('.rv'));
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+  }), { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  els.forEach(e => {
+    if (e.parentElement.closest('.rv')) return;
+    const sibs = [...e.parentElement.children].filter(c => els.includes(c));
+    const i = sibs.indexOf(e);
+    e.style.setProperty('--d', Math.min(i % 8, 6) * 0.08 + 's');
+    e.classList.add('rv'); io.observe(e);
+  });
+
+  // Счётчики цифр
+  const nums = document.querySelectorAll('.stat b, .numbox b, .kpi b, .pt-total b');
+  const cio = new IntersectionObserver(entries => entries.forEach(en => {
+    if (!en.isIntersecting) return; cio.unobserve(en.target);
+    const el = en.target, txt = el.textContent, m = txt.match(/\d+(?:[.,]\d+)?/);
+    if (!m) return;
+    const dec = (m[0].split(/[.,]/)[1] || '').length, sep = m[0].includes(',') ? ',' : '.';
+    const end = parseFloat(m[0].replace(',', '.')), t0 = performance.now(), dur = 1600;
+    const step = now => {
+      const p = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = txt.replace(m[0], (end * e).toFixed(dec).replace('.', sep));
+      if (p < 1) requestAnimationFrame(step); else el.textContent = txt;
+    };
+    requestAnimationFrame(step);
+  }), { threshold: 0.5 });
+  nums.forEach(n => cio.observe(n));
+})();

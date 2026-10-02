@@ -384,3 +384,42 @@ html[lang="kk"]{--font:'Onest',system-ui,-apple-system,'Segoe UI',Arial,sans-ser
 .pt-name{padding:16px 20px 20px;font-size:14px;line-height:1.45;font-weight:600;color:var(--dp)}
 @media(max-width:1000px){.pt-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.pt-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pt-logo{height:104px;padding:16px}.pt-logo img{max-height:56px}.pt-mono{width:56px;height:56px;font-size:13px}.pt-name{padding:12px 14px 14px;font-size:13px}.head-btns{width:100%}}
+/* Документы */
+.doc-group+.doc-group{margin-top:48px}
+.doc-gh{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--vi);padding-bottom:8px;border-bottom:2px solid var(--dp)}
+.doc-row{color:inherit;text-decoration:none;padding:20px 0;transition:background .2s,padding .2s}
+.doc-row:hover{background:rgba(110,63,163,.05);padding-left:12px;padding-right:12px}
+.doc-t{display:block;font-size:18px;line-height:1.35}
+.doc-meta{display:block;font-size:13px;color:var(--mu);margin-top:4px}
+@media(max-width:700px){.doc-row{gap:14px}.doc-row .link{display:none}.doc-t{font-size:16px}}
+/* ===== Анимации ===== */
+.motion .rv{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.motion .rv.in{opacity:1;transform:none}
+.motion .hero h1,.motion .hero .eb,.motion .hero .lead,.motion .hero .btn-row,.motion .phero .crumbs,.motion .phero h1,.motion .phero .lead{animation:rise 1s cubic-bezier(.2,.7,.2,1) both}
+.motion .hero .eb,.motion .phero .crumbs{animation-delay:.05s}
+.motion .hero h1,.motion .phero h1{animation-delay:.15s}
+.motion .hero .lead,.motion .phero .lead{animation-delay:.3s}
+.motion .hero .btn-row{animation-delay:.45s}
+@keyframes rise{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
+.pat-bg::before{transform:translate3d(0,var(--py,0px),0);will-change:transform}
+.hero-bg{background-attachment:scroll}
+.hdr{transition:box-shadow .3s}
+.hdr.scrolled{box-shadow:0 6px 24px rgba(43,0,91,.08)}
+.card,.val,.pt,.mv,.why,.pr{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.card:hover,.val:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(43,0,91,.10)}
+.dir-ic{transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+.val:hover .dir-ic{transform:rotate(-6deg) scale(1.08)}
+.btn{transition:transform .25s,background .25s,color .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-2px)}
+/* Бегущая лента партнёров */
+.marquee{overflow:hidden;margin-top:8px;padding:8px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq-track{display:flex;width:max-content;animation:mq 90s linear infinite}
+.marquee:hover .mq-track{animation-play-state:paused}
+.mq-set{display:flex;align-items:center;gap:20px;padding-right:20px}
+.mq-item{flex:none;display:flex;align-items:center;justify-content:center;width:220px;height:120px;border:1px solid var(--ln);background:var(--wh);padding:24px 28px;transition:border-color .25s}
+.mq-item:hover{border-color:rgba(110,63,163,.4)}
+.mq-item img{max-width:100%;max-height:64px;object-fit:contain;filter:grayscale(1);opacity:.75;transition:filter .3s,opacity .3s}
+.mq-item:hover img{filter:none;opacity:1}
+@keyframes mq{to{transform:translateX(-50%)}}
+@media(max-width:700px){.mq-item{width:160px;height:96px;padding:18px}.mq-track{animation-duration:40s}}
+@media(prefers-reduced-motion:reduce){.mq-track{animation:none}.marquee{overflow-x:auto}}

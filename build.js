@@ -17,6 +17,7 @@ const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donate.html', 
 const PROG_META = [['edu', 'gold', '', 'p-grad'], ['sci', 'gold', '', 'p-dna'], ['inn', 'gold', '', 'p-aisana'], ['edu', 'gold', '', 'p-class'], ['sci', 'gold', '', 'p-micro'], ['inn', 'gold', '', 'p-robot']];
 const MEDIA = require('./media');
 const PARTNERS_ALL = require('./partners');
+const DOCS = require('./docs');
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
 const BOARD_IMG = ['ilyasov', 'nurbek', 'turlov', 'dzhumadildaev', 'stvaev', 'kuanganov', 'madibekov', 'abdrakhmanov'];
 const DIR_ICONS = ['<path d="M2 9.5 12 4l10 5.5L12 15 2 9.5Z"/><path d="M6 11.7V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.3"/><path d="M22 9.5V15"/>', '<path d="M9 3h6"/><path d="M10 3v6.2L4.6 18.4A1.7 1.7 0 0 0 6.1 21h11.8a1.7 1.7 0 0 0 1.5-2.6L14 9.2V3"/><path d="M7.5 15h9"/>', '<path d="M12 15l-3-3c1.2-4.3 4.4-7.6 10-8.5-.9 5.6-4.2 8.8-8.5 10"/><path d="M9 12H5.5L8 8.5h4"/><path d="M12 15v3.5L15.5 16v-4"/><path d="M5.5 15.5c-1.4 1-2 3-2 5 2 0 4-.6 5-2"/><circle cx="15" cy="9" r="1.3"/>', '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-6 6.5-6s5.9 2.4 6.5 6"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M18 14.4c2 .9 3.2 2.9 3.5 5.6"/>'];
@@ -128,6 +129,7 @@ ${alt}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${R}assets/css/style.css">
+<script>(function(d){if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');setTimeout(function(){if(!window.__rv)d.classList.remove('motion')},3000)}})(document.documentElement)</script>
 </head>
 <body>
 ${header(active, file)}
@@ -156,7 +158,7 @@ ${footer}
 <div class="stack pt-44"><p class="txt" style="font-size:18px">${x.aboutP1}</p><p class="txt" style="font-size:18px">${x.aboutP2}</p><a class="link" href="about.html">${x.aboutLink} →</a></div>
 </div></section>
 <section class="sec bg-wh"><div class="wrap">${head(x.dirEb, x.dirH)}
-<div class="grid g4">${x.dirs.map(([h, d], i) => `<div class="val"><span class="dir-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${DIR_ICONS[i]}</svg></span><h3 class="h3">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div>
+<div class="grid g3">${x.dirs.map(([h, d], i) => `<div class="val"><span class="dir-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${DIR_ICONS[i]}</svg></span><h3 class="h3">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div>
 </div></section>
 <section class="sec bg-dp"><div class="wrap">${head(x.howEb, x.howH)}
 <div class="steps">${x.steps.map(([h, d], i) => `<div class="step"><b>0${i + 1}</b><h3 class="h3">${h}</h3><p class="txt">${d}</p></div>${i < 3 ? '<span class="step-arr" aria-hidden="true">→</span>' : ''}`).join('')}</div>
@@ -172,7 +174,7 @@ ${footer}
 <section class="sec bg-vi hero-bg"><div class="wrap cta"><div class="txt-col"><span class="eb">${x.ctaEb}</span><h2 class="h2">${x.ctaH}</h2><p class="lead" style="margin-top:20px">${x.ctaP}</p></div>
 <div class="stack" style="gap:16px"><a class="btn btn-gold" href="grants.html#apply">${x.ctaBtn}</a><a class="btn btn-light" href="grants.html">${x.ctaBtn2}</a></div></div></section>
 <section class="sec bg-wh" style="padding:96px 0"><div class="wrap">${head(x.donEb, x.donH, `<div class="head-btns"><a class="btn btn-outline" href="partners.html">${x.donAll}</a><a class="btn btn-gold" href="donate.html">${x.donBtn}</a></div>`)}
-<div class="grid g4 partners">${partners}</div></div></section>
+</div><div class="marquee" aria-label="${x.donH}"><div class="mq-track">${[0, 1, 2, 3].map(k => `<div class="mq-set"${k ? ' aria-hidden="true"' : ''}>${PARTNERS_ALL.items.filter(i => i.logo).filter((i, n, arr) => arr.findIndex(z => z.logo === i.logo) === n).map(i => { const src = i.logo.startsWith('local:') ? `${R}assets/img/partners/${i.logo.slice(6)}` : i.logo; return `<a class="mq-item" href="partners.html" title="${i[lang]}"><img src="${src}" alt="${k ? '' : i[lang]}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a>`; }).join('')}</div>`).join('')}</div></div></section>
 <section class="sec bg-li"><div class="wrap">${head(x.newsEb, x.newsH, `<a class="btn btn-outline" href="press.html">${u.allNews}</a>`)}
 <div class="grid g3">${MEDIA.slice(0, 3).map(newsCard).join('')}</div></div></section>
 `);
@@ -193,7 +195,7 @@ ${phero(a.title, a.title, a.lead)}
 <section class="sec bg-wh" id="team"><div class="wrap">${head(a.teamEb, a.teamH)}<div class="grid dir-grid"><div class="person">${ph(a.director[0], 'dark', null, 'makenov', 'center 25%')}<h3 class="h3">${a.director[0]}</h3><p class="txt">${a.director[1]}</p>${SOCIAL.replace('class="soc"', 'class="soc soc-dark"')}</div>
 <div class="dir-info"><p class="lead-dk">${a.bio}</p><h3 class="h3" style="margin-top:40px">${a.govH}</h3><div class="grid g3" style="margin-top:20px">${a.gov.map(([h, d]) => `<div class="vline"><h3 class="h3" style="font-size:18px">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div></div></div></div></section>
 <section class="sec bg-li" id="docs"><div class="wrap">${head(a.docsEb, a.docsH)}
-<div>${a.docs.map(d => `<div class="rowline"><span class="pdf">PDF</span><h3 class="h3 grow">${d}</h3><a class="link" href="#">${u.download} ↓</a></div>`).join('')}</div>
+${DOCS.map(grp => { const its = lang === 'kz' && grp.items[0].file === 'ustav-ru.pdf' ? [...grp.items].reverse() : grp.items; return `<div class="doc-group"><h3 class="doc-gh">${grp.g[lang]}</h3>${its.map(d => { const mb = (fs.statSync(path.join(STATIC, 'docs', d.file)).size / 1048576).toFixed(1).replace('.', lang === 'en' ? '.' : ','); return `<a class="rowline doc-row" href="/docs/${d.file}" target="_blank" rel="noopener" download><span class="pdf">PDF</span><span class="grow"><span class="h3 doc-t">${d[lang]}</span><span class="doc-meta">${d.tp ? (d.tp === 2 ? { ru: 'Первая и последняя страницы с отметкой о госрегистрации', kz: 'Мемлекеттік тіркеу белгісі бар бірінші және соңғы беттер', en: 'First and last pages with state registration stamp' } : { ru: 'Титульный лист с отметкой об утверждении', kz: 'Бекітілгені туралы белгісі бар титулдық парақ', en: 'Title page with approval stamp' })[lang] + ' · ' : ''}${mb} ${lang === 'en' ? 'MB' : 'МБ'}</span></span><span class="link">${u.download} ↓</span></a>`; }).join('')}</div>`; }).join('')}
 </div></section>
 <section class="band bg-go" id="jobs"><div class="wrap cta"><div><h2 class="h2 h2-sm">${a.jobsH}</h2><p style="opacity:.75;margin-top:8px">${a.jobsP}</p></div><a class="btn btn-dark" href="careers.html">${a.jobsBtn}</a></div></section>
 `);
