@@ -166,7 +166,7 @@ ${footer}
 <section class="sec bg-wh"><div class="wrap">${head(x.progEb, x.progH, `<a class="btn btn-outline" href="programs.html">${u.allPrograms}</a>`)}
 <div class="grid g3">${[0, 1, 2].map(i => progCard(i, false)).join('')}</div>
 </div></section>
-<section class="sec bg-vi pat pat-bg"><div class="wrap cta"><div class="txt-col"><span class="eb">${x.ctaEb}</span><h2 class="h2">${x.ctaH}</h2><p class="lead" style="margin-top:20px">${x.ctaP}</p></div>
+<section class="sec bg-vi hero-bg"><div class="wrap cta"><div class="txt-col"><span class="eb">${x.ctaEb}</span><h2 class="h2">${x.ctaH}</h2><p class="lead" style="margin-top:20px">${x.ctaP}</p></div>
 <div class="stack" style="gap:16px"><a class="btn btn-gold" href="grants.html#apply">${x.ctaBtn}</a><a class="btn btn-light" href="grants.html">${x.ctaBtn2}</a></div></div></section>
 <section class="sec bg-wh" style="padding:96px 0"><div class="wrap">${head(x.donEb, x.donH, `<a class="btn btn-outline" href="donate.html">${x.donBtn}</a>`)}
 <div class="grid g4 partners">${partners}</div></div></section>
