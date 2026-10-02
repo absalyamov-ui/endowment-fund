@@ -80,9 +80,10 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 /* Паттерн и фото-заглушки */
 .pat{position:relative;overflow:hidden}
-.pat-bg::before{content:'';position:absolute;top:-40px;right:-60px;width:min(46%,560px);height:calc(100% + 80px);background:url(../img/pattern.svg) repeat;background-size:219px 214px;opacity:.14;pointer-events:none}
+.pat-bg::before{content:'';position:absolute;top:0;right:0;width:min(46%,620px);height:100%;background:url(../img/pattern.svg) repeat;background-size:209px 203px;background-position:right top;opacity:.85;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 35%);mask-image:linear-gradient(90deg,transparent,#000 35%)}
+@media(max-width:900px){.pat-bg::before{width:60%;opacity:.3}}
 .ph{position:relative;background:var(--vi);overflow:hidden;min-height:200px;display:flex;align-items:flex-end}
-.ph::before{content:'';position:absolute;inset:0;background:url(../img/pattern.svg) repeat;background-size:219px 214px;opacity:.3}
+.ph::before{content:'';position:absolute;inset:0;background:url(../img/pattern-light.svg) repeat;background-size:209px 203px;opacity:.14}
 .ph.dark{background:var(--dp)} .ph.muted{background:var(--mu)}
 .ph span{position:relative;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.9);padding:16px 20px}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
