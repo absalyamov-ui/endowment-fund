@@ -1,7 +1,7 @@
 /* Эндаумент-фонд науки и образования — стили сайта */
 :root{
   --dp:#2B005B; --vi:#6E3FA3; --go:#D6A86A; --li:#F7F3ED; --wh:#FFFFFF;
-  --ink:#1B1236; --mu:#6B6480; --ln:#E7E2F0;
+  --ink:#1B1236; --mu:#544D68; --ln:#E7E2F0;
   --wrap:1200px; --pad:24px;
   --sec:clamp(64px,9vw,120px);
   --font:'Manrope','Onest',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
@@ -14,7 +14,8 @@ a{color:inherit;text-decoration:none}
 h1,h2,h3,h4,p{margin:0}
 ul{margin:0;padding:0;list-style:none}
 button,input,select,textarea{font:inherit;color:inherit}
-:focus-visible{outline:3px solid var(--go);outline-offset:2px}
+:focus-visible{outline:3px solid var(--vi);outline-offset:3px}
+:is(.bg-dp,.bg-vi,.hero,.phero,.ftr,.mnav,.band) :focus-visible{outline-color:var(--go)}
 
 .wrap{max-width:calc(var(--wrap) + var(--pad)*2);margin:0 auto;padding:0 var(--pad)}
 .sec{padding:var(--sec) 0}
@@ -30,7 +31,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .bg-dp .h2,.bg-vi .h2{color:var(--wh)}
 .h3{font-size:clamp(19px,1.8vw,24px);font-weight:700;line-height:1.3;color:var(--dp)}
 .bg-dp .h3,.bg-vi .h3{color:var(--wh)}
-.lead{font-size:clamp(17px,1.5vw,20px);opacity:.78;max-width:720px}
+.lead{font-size:clamp(17px,1.5vw,20px);opacity:.9;max-width:720px}
 .txt{color:var(--mu);font-size:16px}
 .bg-dp .txt,.bg-vi .txt{color:rgba(255,255,255,.72)}
 .link{font-weight:700;font-size:16px;color:var(--vi);display:inline-flex;gap:8px;align-items:center}
@@ -142,7 +143,7 @@ html[lang="kk"] .hdr .wrap{max-width:1408px}
 
 /* Шапка внутренних страниц */
 .phero{background:var(--dp);color:var(--wh);padding:56px 0 88px}
-.crumbs{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:24px}
+.crumbs{font-size:14px;color:rgba(255,255,255,.72);margin-bottom:24px}
 .crumbs a:hover{color:var(--wh)}
 .phero .lead{margin-top:24px}
 
@@ -271,7 +272,7 @@ html[lang="kk"] .hdr .wrap{max-width:1408px}
 .pay button.on{border:2px solid var(--dp)}
 @media (max-width:520px){.amounts{grid-template-columns:1fr 1fr}.pay{grid-template-columns:1fr}}
 .req div{display:grid;grid-template-columns:140px 1fr;gap:16px;font-size:15px;padding:6px 0}
-.req dt{color:rgba(255,255,255,.6)} .req dd{margin:0;font-weight:600}
+.req dt{color:rgba(255,255,255,.72)} .req dd{margin:0;font-weight:600}
 @media (max-width:520px){.req div{grid-template-columns:1fr;gap:2px}}
 
 /* FAQ */
@@ -357,7 +358,7 @@ html[lang="kk"] .hdr .wrap{max-width:1408px}
 .partners .logo-box{display:flex;align-items:center;justify-content:center;min-height:160px;padding:32px}
 .partners .logo-box img{max-width:80%;width:auto;height:auto;object-fit:contain}
 /* Программы: три основные программы */
-.pm-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0;padding:16px 0;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln)}
+.pm-meta{display:grid;grid-template-columns:1fr;gap:10px;margin:0;padding:16px 0;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln)}
 .pm-meta dt{font-size:13px;color:var(--mu,#6b6b7b);margin-bottom:4px}
 .pm-meta dd{margin:0;font-weight:700;color:var(--dp);font-size:16px}
 /* О фонде: руководство */
@@ -491,3 +492,35 @@ html[lang="kk"] .nav{gap:14px}html[lang="kk"] .nav a{font-size:14.5px}
 .fab-btn{width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--wh);color:var(--dp);border:1px solid var(--ln);box-shadow:0 8px 24px rgba(43,0,91,.14);cursor:pointer;transition:background .25s,color .25s,transform .25s}
 .fab-btn:hover{background:var(--go);color:var(--dp);transform:translateY(-2px);border-color:var(--go)}
 @media(max-width:700px){.fab-nav{right:16px;bottom:80px}.fab-btn{width:46px;height:46px}}
+
+.pm-meta>div{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+.pm-meta dt{margin-bottom:0!important;flex:none}
+.pm-meta dd{text-align:right}
+.pm-more summary{list-style:none;cursor:pointer;color:var(--vi);font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:8px;padding:4px 0}
+.pm-more summary::-webkit-details-marker{display:none}
+.pm-more summary::after{content:'';width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-3px);transition:transform .25s}
+.pm-more[open] summary::after{transform:rotate(-135deg) translateY(-1px)}
+.pm-more .pm-close,.pm-more[open] .pm-open{display:none}
+.pm-more[open] .pm-close{display:inline}
+.pm-list{display:flex;flex-direction:column;gap:16px;margin-top:12px}
+
+/* Формы: обязательные поля, ошибки, галочка согласия */
+.field:has(:required)>label::after{content:' *';color:#B3261E}
+.has-err input,.has-err select,.has-err textarea{border-color:#B3261E!important;background:#FFF7F6}
+.err-msg{display:block;font-size:13px;font-weight:600;color:#B3261E;margin-top:2px;width:100%}
+.agree{flex-wrap:wrap;cursor:pointer;padding:6px 0;line-height:1.4}
+.agree input{width:22px;height:22px;flex:none;margin:0;accent-color:var(--dp);cursor:pointer}
+.agree.has-err input{outline:2px solid #B3261E;outline-offset:2px}
+.agree .err-msg{flex-basis:100%;padding-left:34px}
+
+.pg-hide{display:none!important}
+.more-wrap{display:flex;justify-content:center;margin-top:48px}
+.more-wrap[hidden]{display:none}
+/* Партнёры без логотипа — компактная карточка с названием */
+.pt-nl{justify-content:center;border-left:3px solid var(--go);min-height:88px}
+.pt-nl .pt-name{padding:18px 20px}
+.pt-grid+.pt-grid{margin-top:16px}
+.pt-grid-nl{align-items:stretch}
+.pt-grid-nl .pt-nl{min-height:72px}
+.inp-err{outline:2px solid #FF8A80!important;outline-offset:0}
+.sub{position:relative}.sub>.err-msg{position:absolute;left:0;top:100%;margin-top:8px;color:#FFD7D2;width:auto}

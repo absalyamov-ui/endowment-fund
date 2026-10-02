@@ -1,3 +1,37 @@
+// ===== Проверка форм с фирменными подсказками =====
+(function () {
+  const L = { ru: { req: 'Заполните это поле', email: 'Укажите корректный e-mail', agree: 'Нужно согласие на обработку данных', file: 'Прикрепите файл', sel: 'Выберите вариант' },
+    kk: { req: 'Бұл өрісті толтырыңыз', email: 'Дұрыс e-mail көрсетіңіз', agree: 'Деректерді өңдеуге келісім қажет', file: 'Файлды тіркеңіз', sel: 'Нұсқаны таңдаңыз' },
+    en: { req: 'Please fill in this field', email: 'Please enter a valid e-mail', agree: 'Please give your consent to data processing', file: 'Please attach a file', sel: 'Please choose an option' } }[document.documentElement.lang] || {};
+  const msg = el => el.type === 'checkbox' ? L.agree : el.type === 'file' ? L.file : el.tagName === 'SELECT' ? L.sel : (el.type === 'email' && el.value) ? L.email : L.req;
+  const box = el => el.closest('.field, .agree');
+  const clear = el => {
+    el.removeAttribute('aria-invalid'); el.classList.remove('inp-err');
+    const b = box(el);
+    if (b) { b.classList.remove('has-err'); const m = b.querySelector(':scope > .err-msg'); if (m) m.remove(); }
+    else if (el.form) { const n = el.form.querySelector(':scope > .err-msg'); if (n) n.remove(); }
+  };
+  const mark = el => {
+    clear(el); el.setAttribute('aria-invalid', 'true');
+    const m = document.createElement('span'); m.className = 'err-msg'; m.setAttribute('role', 'alert'); m.textContent = msg(el);
+    const b = box(el);
+    if (b) { b.classList.add('has-err'); b.appendChild(m); } else { el.classList.add('inp-err'); el.form.appendChild(m); }
+  };
+  document.querySelectorAll('form').forEach(f => {
+    f.setAttribute('novalidate', '');
+    f.addEventListener('input', e => { if (e.target.checkValidity && e.target.checkValidity()) clear(e.target); });
+    f.addEventListener('change', e => { if (e.target.checkValidity && e.target.checkValidity()) clear(e.target); });
+  });
+  document.addEventListener('submit', e => {
+    const f = e.target; if (!(f instanceof HTMLFormElement)) return;
+    const bad = [...f.elements].filter(el => el.willValidate && !el.checkValidity() && el.name !== '_honey');
+    if (!bad.length) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    bad.forEach(mark); bad[0].focus({ preventScroll: true });
+    bad[0].scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }, true);
+})();
+
 // ===== Аналитика: цели (Яндекс Метрика + Google Analytics, если подключены) =====
 window.track = function (goal, params) {
   try { if (window.ym && window.__ym) ym(window.__ym, 'reachGoal', goal, params || {}); } catch (e) {}
@@ -252,4 +286,19 @@ document.querySelectorAll('form[action*="formsubmit.co"]:not(.fb-form)').forEach
     window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     track && track('click_top');
   });
+})();
+
+// ===== «Показать ещё» для длинных списков (Масс-медиа) =====
+(function () {
+  const grid = document.querySelector('[data-paged]'); if (!grid) return;
+  const step = +grid.dataset.paged, btn = document.querySelector('.more-btn'); let limit = step;
+  const apply = () => {
+    const vis = [...grid.children].filter(c => c.style.display !== 'none');
+    vis.forEach((c, i) => c.classList.toggle('pg-hide', i >= limit));
+    grid.querySelectorAll('.pg-hide.rv').forEach(c => c.classList.add('in'));
+    btn.parentElement.hidden = vis.length <= limit;
+  };
+  btn.addEventListener('click', () => { limit += step; apply(); });
+  document.querySelectorAll('[data-filter] .chip').forEach(ch => ch.addEventListener('click', () => setTimeout(() => { limit = step; apply(); }, 0)));
+  apply();
 })();

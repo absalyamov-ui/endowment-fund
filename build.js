@@ -141,7 +141,7 @@ ${alt}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="${SITE}/assets/img/og-${lang}-v2.jpg">
 <meta name="theme-color" content="#2B005B">
-<link rel="icon" href="${R}favicon.svg" type="image/svg+xml">
+<link rel="icon" href="${R}favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="theme-color" content="#2B005B">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${R}assets/css/style.css">
@@ -237,7 +237,7 @@ ${DOCS.map(grp => { const its = lang === 'kz' && grp.items[0].file === 'ustav-ru
   page('programs.html', p.title, p.desc, 'programs.html', `
 ${phero(p.title, p.title, p.lead)}
 <section class="sec bg-wh"><div class="wrap">${head(p.mainEb, p.mainH)}
-<div class="grid g3">${p.main.map(([cat, h, bud, per, d, l]) => `<div class="form prog-main" style="gap:16px"><span class="tag vi" style="align-self:flex-start">${cat}</span><h3 class="h3">${h}</h3><dl class="pm-meta"><div><dt>${p.budgetL}</dt><dd>${bud}</dd></div><div><dt>${p.periodL}</dt><dd>${per}</dd></div></dl><p class="txt">${d}</p><hr style="border:0;border-top:1px solid var(--ln);margin:4px 0;width:100%">${l.map(y => `<span class="check">${y}</span>`).join('')}</div>`).join('')}</div>
+<div class="grid g3">${p.main.map(([cat, h, bud, per, d, l]) => `<div class="form prog-main" style="gap:16px"><span class="tag vi" style="align-self:flex-start">${cat}</span><h3 class="h3">${h}</h3><dl class="pm-meta"><div><dt>${p.budgetL}</dt><dd>${bud}</dd></div><div><dt>${p.periodL}</dt><dd>${per}</dd></div></dl><p class="txt">${d}</p><hr style="border:0;border-top:1px solid var(--ln);margin:4px 0;width:100%">${l.slice(0, 3).map(y => `<span class="check">${y}</span>`).join('')}${l.length > 3 ? `<details class="pm-more"><summary><span class="pm-open">${{ ru: 'Подробнее', kz: 'Толығырақ', en: 'More' }[lang]} (${l.length - 3})</span><span class="pm-close">${{ ru: 'Свернуть', kz: 'Жасыру', en: 'Less' }[lang]}</span></summary><div class="pm-list">${l.slice(3).map(y => `<span class="check">${y}</span>`).join('')}</div></details>` : ''}</div>`).join('')}</div>
 </div></section>
 <section class="sec bg-li"><div class="wrap">${head(p.cardsEb, p.cardsH)}
 <div class="toolbar"><div class="chips" data-filter>${FILTERS.map((v, i) => `<button class="chip${i ? '' : ' on'}" data-value="${v}">${p.filters[i]}</button>`).join('')}</div>
@@ -325,7 +325,8 @@ ${phero(r.title, r.h1, r.lead)}
 ${phero(s.title, s.title, s.lead)}
 <section class="sec bg-li" style="padding-top:72px"><div class="wrap">
 ${(() => { const ys = [...new Set(MEDIA.filter(m => m.date).map(m => m.date.slice(-4)))]; const vals = ['all', ...ys.map(y => 'y' + y), 'other']; const labs = [s.all, ...ys, s.other]; return `<div class="toolbar"><div class="chips" data-filter>${vals.map((v, i) => `<button class="chip${i ? '' : ' on'}" data-value="${v}">${labs[i]}</button>`).join('')}</div><span class="meta">${s.count}: ${MEDIA.length}</span></div>`; })()}
-<div class="grid g3">${MEDIA.map(newsCard).join('')}</div>
+<div class="grid g3" data-paged="12">${MEDIA.map(newsCard).join('')}</div>
+<div class="more-wrap"><button class="btn btn-outline more-btn" type="button">${{ ru: 'Показать ещё', kz: 'Тағы көрсету', en: 'Show more' }[lang]}</button></div>
 </div></section>
 <section class="sec bg-vi" style="padding:72px 0"><div class="wrap cta"><div><span class="eb">${s.journEb}</span><h2 class="h2 h2-sm">${s.journH}</h2><p style="opacity:.8;margin-top:8px"><a href="mailto:${EMAIL}">${EMAIL}</a></p></div>
 <form class="sub" name="subscribe" method="POST" action="${FS}">${hidden('subscribe')}<label class="visually-hidden" for="sub-email">E-mail</label><input id="sub-email" type="email" name="email" placeholder="${s.subPh}" required><button class="btn btn-gold" type="submit">${s.subBtn}</button></form></div></section>
@@ -335,14 +336,14 @@ ${(() => { const ys = [...new Set(MEDIA.filter(m => m.date).map(m => m.date.slic
   const pp = t.partnersPage;
   const ptCard = it => {
     const src = it.logo ? (it.logo.startsWith('local:') ? `${R}assets/img/partners/${it.logo.slice(6)}` : it.logo) : '';
-    const img = src ? `<img src="${src}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
-    return `<div class="pt"><div class="pt-logo">${img}<span class="pt-mono" aria-hidden="true">${it.mono}</span></div><p class="pt-name">${it[lang]}</p></div>`;
+    if (!src) return `<div class="pt pt-nl"><p class="pt-name">${it[lang]}</p></div>`;
+    return `<div class="pt"><div class="pt-logo"><img src="${src}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="var c=this.closest('.pt'),g=c.closest('.pt-group'),n=g.querySelector('.pt-grid-nl');if(!n){n=document.createElement('div');n.className='pt-grid pt-grid-nl';g.appendChild(n)}c.classList.add('pt-nl');this.parentNode.remove();n.appendChild(c)"></div><p class="pt-name">${it[lang]}</p></div>`;
   };
   page('partners.html', pp.title, pp.desc, '', `
 ${phero(pp.title, pp.title, pp.lead)}
 <section class="sec bg-li"><div class="wrap">
 <p class="pt-total"><b>${PARTNERS_ALL.items.length}</b> ${pp.count}</p>
-${PARTNERS_ALL.groups.map(g => { const its = PARTNERS_ALL.items.filter(i => i.g === g.id); return `<div class="pt-group"><h2 class="h3 pt-gh">${g[lang]} <span>${its.length}</span></h2><div class="pt-grid">${its.map(ptCard).join('')}</div></div>`; }).join('')}
+${PARTNERS_ALL.groups.map(g => { const its = PARTNERS_ALL.items.filter(i => i.g === g.id).sort((a, b) => (b.logo ? 1 : 0) - (a.logo ? 1 : 0)); return `<div class="pt-group"><h2 class="h3 pt-gh">${g[lang]} <span>${its.length}</span></h2>${its.some(i => i.logo) ? `<div class="pt-grid">${its.filter(i => i.logo).map(ptCard).join('')}</div>` : ''}${its.some(i => !i.logo) ? `<div class="pt-grid pt-grid-nl">${its.filter(i => !i.logo).map(ptCard).join('')}</div>` : ''}</div>`; }).join('')}
 </div></section>
 `);
 
