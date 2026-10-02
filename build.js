@@ -113,6 +113,13 @@ ${alt}
 <meta property="og:title" content="${full}">
 <meta property="og:description" content="${desc}">
 <meta property="og:locale" content="${t.og}">
+<meta property="og:url" content="${url}">
+<meta property="og:site_name" content="${t.name}">
+<meta property="og:image" content="${SITE}/assets/img/og-${lang}.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${SITE}/assets/img/og-${lang}.jpg">
 <meta name="theme-color" content="#2B005B">
 <link rel="icon" href="${R}favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
