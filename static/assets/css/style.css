@@ -361,3 +361,6 @@ button,input,select,textarea{font:inherit;color:inherit}
 .soc a.soc-ic svg{width:25px;height:25px}
 .soc{gap:10px}
 .empty-state{border-left:4px solid var(--go)}
+/* Главная: иконки направлений */
+.dir-ic{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:14px;background:var(--dp);color:var(--go);margin-bottom:8px}
+.dir-ic svg{width:30px;height:30px}
