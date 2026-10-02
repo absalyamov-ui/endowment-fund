@@ -450,3 +450,4 @@ body.fb-lock{overflow:hidden}
 .tpl-row:hover{background:rgba(110,63,163,.06);padding-left:10px!important;padding-right:10px!important}
 .tpl-ext{font-size:10px;font-weight:800;letter-spacing:.04em;color:var(--go);background:var(--dp);padding:5px 6px;min-width:40px;text-align:center}
 .tpl-dl{font-size:18px}
+[id]{scroll-margin-top:84px}

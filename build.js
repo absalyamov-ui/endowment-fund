@@ -298,7 +298,7 @@ ${agree}<button class="btn btn-gold" type="submit">${d.f.submit}</button></form>
   const r = t.reports;
   page('reports.html', r.title, r.desc, 'reports.html', `
 ${phero(r.title, r.h1, r.lead)}
-<section class="sec bg-li"><div class="wrap">${head(r.keyEb, r.keyH, `<a class="btn btn-outline" href="#archive">${r.keyBtn}</a>`)}
+<section class="sec bg-li"><div class="wrap">${head(r.keyEb, r.keyH, `<a class="btn btn-outline" href="about.html#docs">${r.keyBtn}</a>`)}
 <div class="grid g4">${r.kpis.map(([n, s, dd]) => `<div class="numbox"><b>${n}</b><p style="font-size:16px">${s}</p><em>${dd}</em></div>`).join('')}</div>
 <div class="grid mt-40" style="grid-template-columns:minmax(0,2fr) minmax(0,1fr)" id="charts">
 <div class="form"><h3 class="h3">${r.chartH}</h3><div class="bars" role="img" aria-label="${r.chartAria}">${r.chart.map(([y, v], i) => `<div><b class="bv">${v.toLocaleString('ru-RU')}</b><i class="${i === r.chart.length - 1 ? 'g' : 'r'}" style="height:${Math.round(v / Math.max(...r.chart.map(c => c[1])) * 85)}%"></i><span>${y}</span></div>`).join('')}</div><p class="small">${r.chartNote}</p></div>
