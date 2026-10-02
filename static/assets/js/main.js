@@ -1,3 +1,22 @@
+// ===== Аналитика: цели (Яндекс Метрика + Google Analytics, если подключены) =====
+window.track = function (goal, params) {
+  try { if (window.ym && window.__ym) ym(window.__ym, 'reachGoal', goal, params || {}); } catch (e) {}
+  try { if (window.gtag) gtag('event', goal, params || {}); } catch (e) {}
+};
+document.addEventListener('click', e => {
+  const a = e.target.closest('a, button'); if (!a) return;
+  const h = a.getAttribute('href') || '';
+  if (a.hasAttribute('download') || /\.(pdf|docx|xlsx|zip)$/i.test(h)) track('download', { file: h.split('/').pop() });
+  else if (/donate\.html/.test(h)) track('click_donate');
+  else if (/grants\.html#apply/.test(h)) track('click_apply');
+  else if (/^mailto:/.test(h)) track('click_email');
+  else if (a.matches('[data-fb]')) track('open_feedback');
+}, true);
+document.addEventListener('submit', e => {
+  const n = e.target.getAttribute('name');
+  if (n) track('form_' + n.replace(/-/g, '_'));
+}, true);
+
 // Мобильное меню
 const burger = document.querySelector('.burger');
 const mnav = document.querySelector('.mnav');
