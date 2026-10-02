@@ -367,3 +367,20 @@ button,input,select,textarea{font:inherit;color:inherit}
 .dir-ic svg{width:30px;height:30px}
 /* Казахская версия: шрифт с полной поддержкой казахских букв (Ә, Ғ, Қ, Ң, Ұ и др.) */
 html[lang="kk"]{--font:'Onest',system-ui,-apple-system,'Segoe UI',Arial,sans-serif}
+/* Партнёры */
+.head-btns{display:flex;gap:12px;flex-wrap:wrap}
+.pt-total{font-size:15px;color:var(--mu);margin-bottom:8px}
+.pt-total b{font-size:40px;color:var(--dp);font-weight:800;margin-right:6px;vertical-align:-4px}
+.pt-group{margin-top:56px}
+.pt-gh{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.pt-gh span{font-size:13px;font-weight:700;color:var(--vi,#6E3FA3);background:rgba(110,63,163,.1);border-radius:20px;padding:3px 10px}
+.pt-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.pt{background:var(--wh);border:1px solid var(--ln);display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s}
+.pt:hover{border-color:rgba(110,63,163,.35);box-shadow:0 8px 24px rgba(43,0,91,.06)}
+.pt-logo{height:132px;display:flex;align-items:center;justify-content:center;padding:24px 28px;border-bottom:1px solid var(--ln)}
+.pt-logo img{max-width:100%;max-height:72px;width:auto;height:auto;object-fit:contain}
+.pt-logo img+.pt-mono{display:none}
+.pt-mono{width:72px;height:72px;border-radius:50%;background:var(--li);border:1px solid rgba(110,63,163,.18);color:var(--vi);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;letter-spacing:.02em;text-align:center;line-height:1}
+.pt-name{padding:16px 20px 20px;font-size:14px;line-height:1.45;font-weight:600;color:var(--dp)}
+@media(max-width:1000px){.pt-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.pt-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pt-logo{height:104px;padding:16px}.pt-logo img{max-height:56px}.pt-mono{width:56px;height:56px;font-size:13px}.pt-name{padding:12px 14px 14px;font-size:13px}.head-btns{width:100%}}

@@ -48,7 +48,7 @@ module.exports = {
     principles: [['Independence', 'The Board of Trustees brings together representatives of government, business, the financial sector and science, and decisions are made collectively.'], ['Impartiality', 'Applications are assessed by independent experts against open criteria.'], ['Transparency', 'Every year we publish financial statements, the audit report and programme implementation reports.'], ['Accountability', 'The internal audit service reports to the Board of Trustees, and the accounts are independently audited.']],
     progEb: 'Programmes and projects', progH: 'Current programmes',
     ctaEb: 'For researchers and universities', ctaH: 'Have a project in science or education?', ctaP: 'Apply now — the expert council will review your application within 30 working days. We support projects from all over Kazakhstan.', ctaBtn: 'Apply now', ctaBtn2: 'Eligibility and requirements',
-    donEb: 'Trusted by', donH: 'Contributors and partners', donBtn: 'Become a contributor',
+    donEb: 'Trusted by', donH: 'Contributors and partners', donAll: 'All partners', donBtn: 'Become a contributor',
     newsEb: 'Media', newsH: 'Fund news',
   },
   about: {
@@ -163,6 +163,7 @@ module.exports = {
     fbEb: 'Feedback', fbH: 'Write to us', fbP: 'We reply within 3 working days. Official public enquiries are handled within the time limits set by the law of Kazakhstan.',
     f: { name: 'Name', topic: 'Topic', topics: ['General question', 'Contribution', 'Partnership', 'Grant programmes', 'Public enquiry', 'Media'], message: 'Message', messagePh: 'Your message', submit: 'Send' },
   },
+  partnersPage: { title: 'Partners', desc: 'Partners of the Science and Education Endowment Fund: companies, government and research organizations, universities and endowment funds of Kazakhstan.', lead: 'Companies, government and research organizations, universities and endowment funds we work with.', count: 'partners' },
   careers: { title: 'Careers', desc: 'Vacancies and internships at the Science and Education Endowment Fund.', lead: 'This is where we publish the Fund’s open positions and internships.', eb: 'Open positions', emptyH: 'There are no open vacancies at the moment', emptyP: 'Please check this page for updates. If you would like to work at the Fund, send us your CV by email and we will consider it when a suitable position opens.', btn: 'Send your CV', subject: 'CV' },
   thanks: { title: 'Thank you!', p: 'We have received your message and will get back to you within 3 working days.', btn: 'Back to home' },
   nf: { title: 'Page not found', h1: '404 — page not found', p: 'It may have moved. Start from the home page.' },

@@ -16,6 +16,7 @@ const HREFLANG = { ru: 'ru', kz: 'kk', en: 'en' };
 const NAV_FILES = ['about.html', 'programs.html', 'grants.html', 'donate.html', 'reports.html', 'press.html', 'contacts.html'];
 const PROG_META = [['edu', 'gold', '', 'p-grad'], ['sci', 'gold', '', 'p-dna'], ['inn', 'gold', '', 'p-aisana'], ['edu', 'gold', '', 'p-class'], ['sci', 'gold', '', 'p-micro'], ['inn', 'gold', '', 'p-robot']];
 const MEDIA = require('./media');
+const PARTNERS_ALL = require('./partners');
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
 const BOARD_IMG = ['ilyasov', 'nurbek', 'turlov', 'dzhumadildaev', 'stvaev', 'kuanganov', 'madibekov', 'abdrakhmanov'];
 const DIR_ICONS = ['<path d="M2 9.5 12 4l10 5.5L12 15 2 9.5Z"/><path d="M6 11.7V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.3"/><path d="M22 9.5V15"/>', '<path d="M9 3h6"/><path d="M10 3v6.2L4.6 18.4A1.7 1.7 0 0 0 6.1 21h11.8a1.7 1.7 0 0 0 1.5-2.6L14 9.2V3"/><path d="M7.5 15h9"/>', '<path d="M12 15l-3-3c1.2-4.3 4.4-7.6 10-8.5-.9 5.6-4.2 8.8-8.5 10"/><path d="M9 12H5.5L8 8.5h4"/><path d="M12 15v3.5L15.5 16v-4"/><path d="M5.5 15.5c-1.4 1-2 3-2 5 2 0 4-.6 5-2"/><circle cx="15" cy="9" r="1.3"/>', '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-6 6.5-6s5.9 2.4 6.5 6"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M18 14.4c2 .9 3.2 2.9 3.5 5.6"/>'];
@@ -168,7 +169,7 @@ ${footer}
 </div></section>
 <section class="sec bg-vi hero-bg"><div class="wrap cta"><div class="txt-col"><span class="eb">${x.ctaEb}</span><h2 class="h2">${x.ctaH}</h2><p class="lead" style="margin-top:20px">${x.ctaP}</p></div>
 <div class="stack" style="gap:16px"><a class="btn btn-gold" href="grants.html#apply">${x.ctaBtn}</a><a class="btn btn-light" href="grants.html">${x.ctaBtn2}</a></div></div></section>
-<section class="sec bg-wh" style="padding:96px 0"><div class="wrap">${head(x.donEb, x.donH, `<a class="btn btn-outline" href="donate.html">${x.donBtn}</a>`)}
+<section class="sec bg-wh" style="padding:96px 0"><div class="wrap">${head(x.donEb, x.donH, `<div class="head-btns"><a class="btn btn-outline" href="partners.html">${x.donAll}</a><a class="btn btn-gold" href="donate.html">${x.donBtn}</a></div>`)}
 <div class="grid g4 partners">${partners}</div></div></section>
 <section class="sec bg-li"><div class="wrap">${head(x.newsEb, x.newsH, `<a class="btn btn-outline" href="press.html">${u.allNews}</a>`)}
 <div class="grid g3">${MEDIA.slice(0, 3).map(newsCard).join('')}</div></div></section>
@@ -289,6 +290,21 @@ ${(() => { const ys = [...new Set(MEDIA.filter(m => m.date).map(m => m.date.slic
 </div></section>
 <section class="sec bg-vi" style="padding:72px 0"><div class="wrap cta"><div><span class="eb">${s.journEb}</span><h2 class="h2 h2-sm">${s.journH}</h2><p style="opacity:.8;margin-top:8px"><a href="mailto:${EMAIL}">${EMAIL}</a></p></div>
 <form class="sub" name="subscribe" method="POST" action="/${pre}thanks.html" data-netlify="true"><input type="hidden" name="form-name" value="subscribe"><input type="hidden" name="language" value="${lang}"><label class="visually-hidden" for="sub-email">E-mail</label><input id="sub-email" type="email" name="email" placeholder="${s.subPh}" required><button class="btn btn-gold" type="submit">${s.subBtn}</button></form></div></section>
+`);
+
+  // ---------- ПАРТНЁРЫ ----------
+  const pp = t.partnersPage;
+  const ptCard = it => {
+    const src = it.logo ? (it.logo.startsWith('local:') ? `${R}assets/img/partners/${it.logo.slice(6)}` : it.logo) : '';
+    const img = src ? `<img src="${src}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
+    return `<div class="pt"><div class="pt-logo">${img}<span class="pt-mono" aria-hidden="true">${it.mono}</span></div><p class="pt-name">${it[lang]}</p></div>`;
+  };
+  page('partners.html', pp.title, pp.desc, '', `
+${phero(pp.title, pp.title, pp.lead)}
+<section class="sec bg-li"><div class="wrap">
+<p class="pt-total"><b>${PARTNERS_ALL.items.length}</b> ${pp.count}</p>
+${PARTNERS_ALL.groups.map(g => { const its = PARTNERS_ALL.items.filter(i => i.g === g.id); return `<div class="pt-group"><h2 class="h3 pt-gh">${g[lang]} <span>${its.length}</span></h2><div class="pt-grid">${its.map(ptCard).join('')}</div></div>`; }).join('')}
+</div></section>
 `);
 
   // ---------- ВАКАНСИИ ----------
