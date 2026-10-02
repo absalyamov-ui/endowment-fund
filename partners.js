@@ -33,12 +33,12 @@ module.exports = {
     { g: 'fin', mono: 'FF', logo: L('freedom.png'), ru: 'АО «Фридом Финанс»', kz: '«Фридом Финанс» АҚ', en: 'Freedom Finance JSC' },
     { g: 'fin', mono: 'FFG', logo: L('freedom.png'), ru: 'Freedom Finance Global PLC', kz: 'Freedom Finance Global PLC', en: 'Freedom Finance Global PLC' },
     // Университеты
-    { g: 'uni', mono: 'ЕНУ', logo: 'https://enu.kz/_nuxt/logo30t.BJQsH-tE.svg', ru: 'Евразийский национальный университет имени Л.Н. Гумилева', kz: 'Л.Н. Гумилев атындағы Еуразия ұлттық университеті', en: 'L.N. Gumilyov Eurasian National University' },
+    { g: 'uni', mono: 'ЕНУ', logo: L('enu.png'), ru: 'Евразийский национальный университет имени Л.Н. Гумилева', kz: 'Л.Н. Гумилев атындағы Еуразия ұлттық университеті', en: 'L.N. Gumilyov Eurasian National University' },
     { g: 'uni', mono: 'SDU', logo: L('sdu.png'), ru: 'SDU University', kz: 'SDU University', en: 'SDU University' },
     // Эндаумент-фонды
     { g: 'end', mono: 'НАЭФ', ru: 'Национальная ассоциация эндаумент-фондов Казахстана', kz: 'Қазақстанның эндаумент-қорлары ұлттық қауымдастығы', en: 'National Association of Endowment Funds of Kazakhstan' },
     { g: 'end', mono: 'iQ', noMq: 1, logo: 'https://iqanat.kz/iqanat/images/iqanat-logo-2023.svg', ru: 'Образовательный фонд iQanat', kz: 'iQanat білім беру қоры', en: 'iQanat Endowment Foundation' },
-    { g: 'end', mono: 'ENU', logo: 'https://enu.kz/_nuxt/logo30t.BJQsH-tE.svg', ru: 'ENU Endowment Fund', kz: 'ENU Endowment Fund', en: 'ENU Endowment Fund' },
+    { g: 'end', mono: 'ENU', logo: L('enu.png'), ru: 'ENU Endowment Fund', kz: 'ENU Endowment Fund', en: 'ENU Endowment Fund' },
     { g: 'end', mono: 'SEF', ru: 'Shoqan Endowment Fund', kz: 'Shoqan Endowment Fund', en: 'Shoqan Endowment Fund' },
     { g: 'end', mono: 'YEF', noMq: 1, logo: 'https://yessenovfoundation.org/wp-content/themes/yessenovfoundation/images/logo_new.png', ru: 'Yessenov Endowment Fund', kz: 'Yessenov Endowment Fund', en: 'Yessenov Endowment Fund' },
     { g: 'end', mono: 'ISEF', logo: 'https://inclusive-endowment.kz/wp-content/uploads/2026/04/Artboard-1.svg', ru: 'Inclusive Sport Endowment Foundation', kz: 'Inclusive Sport Endowment Foundation', en: 'Inclusive Sport Endowment Foundation' },
