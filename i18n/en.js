@@ -34,7 +34,7 @@ module.exports = {
     h1: 'Knowledge that serves the country for generations',
     lead: 'We build permanent endowment capital and direct its investment income to supporting education, science and innovation in Kazakhstan.',
     btnGrant: 'How to apply for a grant', heroPhoto: 'Photo: researchers in a laboratory',
-    stats: [['₸ 2 bn', 'endowment capital'], ['₸ 30 m', 'awarded to grants and programmes'], ['200+', 'researchers and students supported'], ['15', 'partners']],
+    stats: [['₸ 2 bn', 'endowment capital'], ['₸ 30 m', 'awarded to grants and programmes'], ['200+', 'researchers and students supported'], ['44', 'partners']],
     aboutEb: 'About the Fund', aboutH: 'Real change begins where support turns into opportunity',
     aboutP1: 'The Science and Education Endowment Fund is the first endowment fund in Kazakhstan created under the new legal model. It was founded by Alageum Electric with initial capital of ₸ 2 bn.',
     aboutP2: 'The Fund’s core principle: preserve the capital, use only the income. This keeps support for science, education and innovation independent of budget cycles.',
