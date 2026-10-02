@@ -19,7 +19,7 @@ const MEDIA = require('./media');
 const PARTNERS_ALL = require('./partners');
 // Типографика: короткие предлоги/союзы не остаются в конце строки (неразрывный пробел после них), тире не переносится в начало строки
 const SHORT = {
-  ru: 'в|во|без|до|из|изо|к|ко|на|над|о|об|обо|от|ото|по|под|при|про|с|со|у|за|для|и|а|но|не|ни|да|или|что|как|же|ли|бы|из-за|из-под',
+  ru: 'в|во|без|до|из|изо|к|ко|на|над|о|об|обо|от|ото|по|под|при|про|с|со|у|за|для|и|а|но|не|ни|да|или|что|как|из-за|из-под',
   kz: 'және|мен|бен|пен|не|да|де|та|те|ал|бұл|сол|осы|әр|бір|ҚР',
   en: 'a|an|the|of|to|in|on|at|by|for|and|or|but|nor|as|is|be|with|from|into|via|per|no|not|our|its|it|we|up',
 };
@@ -35,6 +35,7 @@ function typo(html, lang) {
     if (skip || !part.trim()) return part;
     let s = part;
     for (let k = 0; k < 2; k++) s = s.replace(re, (m, a, w) => `${a}${w} `); // дважды — для цепочек «и в»
+    if (lang === 'ru') s = s.replace(/ (ли|же|бы|ль|ж|б)(?=[\s,.?!:;)»]|$)/gu, '\u00A0$1');
     return s.replace(/ ([—–]) /g, ' $1 ').replace(/(\d) (₸|%|млн|млрд|тыс|m|bn)/g, '$1 $2').replace(/₸ (\d)/g, '₸ $1');
   }).join('');
 }
@@ -391,7 +392,7 @@ ${agree}<button class="btn btn-gold" type="submit">${v.btn}</button></form></div
 ${phero(c.title, c.title, c.lead)}
 <section class="sec bg-li"><div class="wrap">
 <div class="numbox" style="background:var(--wh)"><span class="eb" style="margin-bottom:10px">${c.allQ}</span><a class="h3" style="font-size:clamp(22px,2.4vw,32px);display:block;word-break:break-all" href="mailto:${EMAIL}">${EMAIL}</a></div>
-<div class="grid mt-24" style="grid-template-columns:minmax(0,7fr) minmax(0,5fr)">
+<div class="grid mt-24 map-grid" style="grid-template-columns:minmax(0,7fr) minmax(0,5fr)">
 <div class="map"><iframe src="https://www.google.com/maps?q=51.134021,71.4337485&amp;z=16&amp;hl=${HREFLANG[lang]}&amp;output=embed" title="${c.mapAria}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
 <div class="mv bg-dp" style="padding:40px"><span class="eb">${c.office}</span><h3 class="h3" style="font-size:24px">${c.addr}</h3><p class="txt">${c.hours}</p><a class="btn btn-light" style="align-self:flex-start" href="https://maps.app.goo.gl/g34qZp13ujU8Q2R17" target="_blank" rel="noopener">${c.route}</a></div>
 </div></div></section>

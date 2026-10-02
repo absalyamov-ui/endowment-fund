@@ -529,3 +529,29 @@ html[lang="kk"] .nav{gap:14px}html[lang="kk"] .nav a{font-size:14.5px}
 .dir-ic.pm-ic{margin-bottom:0}
 @media(min-width:1025px){@supports (grid-template-rows:subgrid){.pm-grid .prog-main{display:grid;grid-row:span 4;grid-template-rows:subgrid;row-gap:16px;align-content:start}.pm-grid{row-gap:0}}}
 .pm-rest{display:flex;flex-direction:column;gap:16px}
+/* ===== Мобильная адаптация ===== */
+@media (max-width:640px){
+  :root{--sec:56px;--pad:20px}
+  body{font-size:17px}
+  .hero .btn-row,.head-btns{display:grid;grid-template-columns:1fr;gap:12px;width:100%}
+  .hero .btn-row .btn,.head-btns .btn,.head>.btn,.cta .btn,.cta .stack .btn{width:100%;justify-content:center}
+  .head{margin-bottom:32px;gap:16px}
+  #board .grid.g4{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
+  #board .person .ph{min-height:0;aspect-ratio:3/4}
+  #board .person h3{font-size:15px;margin-top:10px;line-height:1.3}
+  #board .person .txt{font-size:13px;line-height:1.45}
+  .ftr-top{grid-template-columns:1fr 1fr!important;gap:32px 20px}
+  .ftr-top>div:first-child{grid-column:1/-1}
+  .ftr-top>div:last-child{grid-column:1/-1}
+  .tpl-row{flex-wrap:nowrap!important}
+  .tpl-row .tpl-dl{font-size:0}.tpl-row .tpl-dl::after{content:'↓';font-size:20px}
+  .rep,.card-b{padding-bottom:4px}
+  .phero{padding-top:40px!important}
+  .h1-page{font-size:clamp(30px,8.5vw,40px)}
+  .stats{gap:28px 16px}
+  .faq summary{font-size:17px}
+  input,select,textarea{font-size:16px!important}
+}
+@media (max-width:900px){.map-grid{grid-template-columns:1fr!important}.map-grid .map iframe{min-height:280px}}
+@media (max-width:640px){.sub{flex-direction:column;width:100%;gap:10px}.sub input,.sub .btn{width:100%}.sub>.err-msg{position:static}}
+@media (max-width:640px){.numbox a.h3{font-size:20px!important;word-break:normal!important;overflow-wrap:anywhere}}
