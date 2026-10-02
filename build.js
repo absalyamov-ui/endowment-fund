@@ -17,6 +17,27 @@ const NAV_FILES = ['index.html', 'about.html', 'programs.html', 'grants.html', '
 const PROG_META = [['edu', 'gold', '', 'p-grad'], ['sci', 'gold', '', 'p-dna'], ['inn', 'gold', '', 'p-aisana'], ['edu', 'gold', '', 'p-class'], ['sci', 'gold', '', 'p-micro'], ['inn', 'gold', '', 'p-robot']];
 const MEDIA = require('./media');
 const PARTNERS_ALL = require('./partners');
+// Типографика: короткие предлоги/союзы не остаются в конце строки (неразрывный пробел после них), тире не переносится в начало строки
+const SHORT = {
+  ru: 'в|во|без|до|из|изо|к|ко|на|над|о|об|обо|от|ото|по|под|при|про|с|со|у|за|для|и|а|но|не|ни|да|или|что|как|же|ли|бы|из-за|из-под',
+  kz: 'және|мен|бен|пен|не|да|де|та|те|ал|бұл|сол|осы|әр|бір|ҚР',
+  en: 'a|an|the|of|to|in|on|at|by|for|and|or|but|nor|as|is|be|with|from|into|via|per|no|not|our|its|it|we|up',
+};
+function typo(html, lang) {
+  const re = new RegExp(`(^|[\\s(«“"„>—–])(${SHORT[lang]})\\s+(?=[^\\s<])`, 'giu');
+  let skip = false;
+  return html.split(/(<[^>]+>)/).map(part => {
+    if (part.startsWith('<')) {
+      if (/^<(script|style|textarea)\b/i.test(part)) skip = true;
+      else if (/^<\/(script|style|textarea)>/i.test(part)) skip = false;
+      return part;
+    }
+    if (skip || !part.trim()) return part;
+    let s = part;
+    for (let k = 0; k < 2; k++) s = s.replace(re, (m, a, w) => `${a}${w} `); // дважды — для цепочек «и в»
+    return s.replace(/ ([—–]) /g, ' $1 ').replace(/(\d) (₸|%|млн|млрд|тыс|m|bn)/g, '$1 $2').replace(/₸ (\d)/g, '₸ $1');
+  }).join('');
+}
 const DOCS = require('./docs');
 const TPLT = require('./templates/texts');
 const TPL = Object.fromEntries(Object.entries(TPLT).map(([l, x]) => [l, [x.app.file, x.desc.file, x.budget.file, x.cv.file, x.letter.file]]));
@@ -117,7 +138,7 @@ ${SOCIAL}</div>
     const alt = Object.keys(LANGS).map(l => `<link rel="alternate" hreflang="${HREFLANG[l]}" href="${SITE}/${PREFIX[l]}${file === 'index.html' ? '' : file}">`).join('\n');
     const url = `${SITE}/${pre}${file === 'index.html' ? '' : file}`;
     if (!['thanks.html', '404.html'].includes(file)) sitemap.push(url);
-    fs.writeFileSync(path.join(DIR, file), `<!doctype html>
+    fs.writeFileSync(path.join(DIR, file), typo(`<!doctype html>
 <html lang="${t.html}">
 <head>
 <meta charset="utf-8">
@@ -167,7 +188,7 @@ ${['thanks.html', '404.html'].includes(file) ? '' : `<dialog class="fb-dlg" aria
 <script src="${R}assets/js/main.js" defer></script>
 </body>
 </html>
-`);
+`, lang));
   }
 
   // ---------- ГЛАВНАЯ ----------
