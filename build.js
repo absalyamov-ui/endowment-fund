@@ -64,8 +64,8 @@ const BOARD_IMG = ['ilyasov', 'nurbek', 'turlov', 'dzhumadildaev', 'stvaev', 'ku
 const DIR_ICONS = ['<path d="M2 9.5 12 4l10 5.5L12 15 2 9.5Z"/><path d="M6 11.7V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.3"/><path d="M22 9.5V15"/>', '<path d="M9 3h6"/><path d="M10 3v6.2L4.6 18.4A1.7 1.7 0 0 0 6.1 21h11.8a1.7 1.7 0 0 0 1.5-2.6L14 9.2V3"/><path d="M7.5 15h9"/>', '<path d="M12 15l-3-3c1.2-4.3 4.4-7.6 10-8.5-.9 5.6-4.2 8.8-8.5 10"/><path d="M9 12H5.5L8 8.5h4"/><path d="M12 15v3.5L15.5 16v-4"/><path d="M5.5 15.5c-1.4 1-2 3-2 5 2 0 4-.6 5-2"/><circle cx="15" cy="9" r="1.3"/>', '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-6 6.5-6s5.9 2.4 6.5 6"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M18 14.4c2 .9 3.2 2.9 3.5 5.6"/>'];
 const EMAIL = 'endowment@alageum.com';
 // Аналитика: вставьте номера счётчиков — код появится на всех страницах автоматически
-const YM_ID = ''; // Яндекс Метрика, например '98765432'
-const GA_ID = ''; // Google Analytics 4, например 'G-XXXXXXXXXX'
+const YM_ID = '113322591'; // Яндекс Метрика, например '98765432'
+const GA_ID = 'G-1W1CD3PB50'; // Google Analytics 4, например 'G-XXXXXXXXXX'
 const ANALYTICS = (YM_ID ? `<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');ym(${YM_ID},'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});window.__ym=${YM_ID};</script><noscript><div><img src="https://mc.yandex.ru/watch/${YM_ID}" style="position:absolute;left:-9999px" alt=""></div></noscript>\n` : '')
   + (GA_ID ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');</script>\n` : '');
 const FS = 'https://formsubmit.co/' + EMAIL; // пересылка форм на почту (FormSubmit)
