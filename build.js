@@ -18,6 +18,9 @@ const PROG_META = [['edu', 'gold', '', 'p-grad'], ['sci', 'gold', '', 'p-dna'], 
 const MEDIA = require('./media');
 const PARTNERS_ALL = require('./partners');
 const DOCS = require('./docs');
+const TPLT = require('./templates/texts');
+const TPL = Object.fromEntries(Object.entries(TPLT).map(([l, x]) => [l, [x.app.file, x.desc.file, x.budget.file, x.cv.file, x.letter.file]]));
+const TPLZIP = Object.fromEntries(Object.entries(TPLT).map(([l, x]) => [l, x.zip]));
 const FBT = {
   ru: { btn: 'Написать нам', h: 'Напишите нам', p: 'Ответим в течение 3 рабочих дней на указанную почту.', close: 'Закрыть', ok: 'Ваша заявка принята. Спасибо!', okP: 'Мы ответим вам на указанную почту.', err: 'Не удалось отправить. Попробуйте ещё раз или напишите на', sending: 'Отправляем…', audit: 'Прошу предоставить аудиторское заключение фонда.', cvH: 'Отправить резюме', pos: 'Желаемая позиция', posPh: 'Например, аналитик программ', cv: 'Резюме (PDF или Word, до 8 МБ)', cvMsg: 'Сопроводительное письмо', cvMsgPh: 'Коротко о себе и почему хотите работать в фонде' },
   kz: { btn: 'Бізге жазыңыз', h: 'Бізге жазыңыз', p: 'Көрсетілген поштаға 3 жұмыс күні ішінде жауап береміз.', close: 'Жабу', ok: 'Өтініміңіз қабылданды. Рақмет!', okP: 'Көрсетілген поштаға жауап береміз.', err: 'Жіберу мүмкін болмады. Қайталап көріңіз немесе мына поштаға жазыңыз:', sending: 'Жіберілуде…', audit: 'Қордың аудиторлық есебін беруіңізді сұраймын.', cvH: 'Түйіндеме жіберу', pos: 'Қалаған лауазым', posPh: 'Мысалы, бағдарламалар талдаушысы', cv: 'Түйіндеме (PDF немесе Word, 8 МБ-қа дейін)', cvMsg: 'Ілеспе хат', cvMsgPh: 'Өзіңіз туралы және неге қорда жұмыс істегіңіз келетіні туралы қысқаша' },
@@ -254,8 +257,8 @@ ${phero(g.title, g.title, g.lead)}
 </div></section>
 <section class="sec bg-li" id="apply"><div class="wrap split split-5-7">
 <div class="stack"><div><span class="eb">${g.docsEb}</span><h2 class="h2 h2-sm">${g.docsH}</h2></div>
-<div>${g.docs.map(y => `<div class="rowline" style="padding:14px 0"><span style="color:var(--go);font-weight:700">—</span><span class="grow" style="font-size:16px">${y}</span></div>`).join('')}</div>
-<a class="link" href="#">${g.tpl} ↓</a></div>
+<div>${g.docs.map((y, i) => { const f = TPL[lang][i]; return `<a class="rowline tpl-row" href="/docs/templates/${lang}/${f}" download><span class="tpl-ext">${f.split('.').pop().toUpperCase()}</span><span class="grow" style="font-size:16px">${y}</span><span class="link tpl-dl">↓</span></a>`; }).join('')}</div>
+<a class="link" href="/docs/templates/${lang}/${TPLZIP[lang]}" download>${g.tpl} (ZIP) ↓</a></div>
 ${formOpen('grant-application')}
 <h3 class="h3">${g.formH}</h3><p class="txt">${g.formP}</p>
 <div class="frow">${field(g.f.name, 'name', u.namePh)}${field(g.f.org, 'org', g.f.orgPh)}</div>
@@ -301,9 +304,11 @@ ${phero(r.title, r.h1, r.lead)}
 <div class="form"><h3 class="h3">${r.chartH}</h3><div class="bars" role="img" aria-label="${r.chartAria}">${r.chart.map(([y, v], i) => `<div><b class="bv">${v.toLocaleString('ru-RU')}</b><i class="${i === r.chart.length - 1 ? 'g' : 'r'}" style="height:${Math.round(v / Math.max(...r.chart.map(c => c[1])) * 85)}%"></i><span>${y}</span></div>`).join('')}</div><p class="small">${r.chartNote}</p></div>
 <div class="mv bg-dp" style="padding:40px"><h3 class="h3">${r.allocH}</h3><div class="alloc">${r.alloc.map(([l, val, pc], i) => { const c = ['var(--go)', '#fff', 'var(--vi)', 'var(--mu)'][i]; return `<div><div class="t"><span>${l}</span><b>${val}</b></div><div class="tr"><i style="width:${pc}%;background:${c}"></i></div></div>`; }).join('')}</div><div style="margin-top:auto"><p style="font-size:14px;opacity:.6">${r.totalLabel}</p><b style="font-size:36px;color:var(--go);font-weight:800">${r.total}</b></div></div>
 </div></div></section>
-<section class="sec bg-wh" id="archive"><div class="wrap">${head(r.archEb, r.archH)}
-<div class="chips" style="margin-bottom:32px">${r.tabs.map((y, i) => `<span class="chip${i ? '' : ' on'}">${y}</span>`).join('')}</div>
-<div class="grid g4">${r.arch.map(([k, y, h]) => `<div class="rep"><div class="cover"><small>${k}</small><b>${y}</b></div><h3 class="h3" style="font-size:20px">${h}</h3><div style="display:flex;justify-content:space-between"><span class="meta">PDF</span><a class="link" href="#" style="font-size:15px">${u.download} ↓</a></div></div>`).join('')}</div>
+<section class="sec bg-wh" id="archive"><div class="wrap">${(() => {
+  const R1 = { ru: ['Отчёты', 'Годовой отчёт', 'Годовой отчёт за 2026 год', 'Скоро'], kz: ['Есептер', 'Жылдық есеп', '2026 жылғы жылдық есеп', 'Жақында'], en: ['Reports', 'Annual report', 'Annual report 2026', 'Coming soon'] }[lang];
+  const f = 'otchet-2026.pdf', has = fs.existsSync(path.join(STATIC, 'docs', f));
+  return `<h2 class="h2" style="margin-bottom:40px">${R1[0]}</h2><div class="grid g4"><div class="rep"><div class="cover"><small>${R1[1]}</small><b>2026</b></div><h3 class="h3" style="font-size:20px">${R1[2]}</h3><div style="display:flex;justify-content:space-between"><span class="meta">PDF</span>${has ? `<a class="link" href="/docs/${f}" download style="font-size:15px">${u.download} ↓</a>` : `<span class="meta">${R1[3]}</span>`}</div></div></div>`;
+})()}
 </div></section>
 <section class="band bg-vi" style="padding:64px 0"><div class="wrap cta"><div class="txt-col"><span class="eb">${r.auditEb}</span><h2 class="h2 h2-sm">${r.auditH}</h2></div><button class="btn btn-light" type="button" data-fb data-fb-topic="0" data-fb-msg="${FBT[lang].audit}">${r.auditBtn}</button></div></section>
 `);
