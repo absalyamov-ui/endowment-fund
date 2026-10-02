@@ -423,3 +423,23 @@ html[lang="kk"]{--font:'Onest',system-ui,-apple-system,'Segoe UI',Arial,sans-ser
 @keyframes mq{to{transform:translateX(-50%)}}
 @media(max-width:700px){.mq-item{width:160px;height:96px;padding:18px}.mq-track{animation-duration:40s}}
 @media(prefers-reduced-motion:reduce){.mq-track{animation:none}.marquee{overflow-x:auto}}
+/* Обратная связь */
+.fb-fab{position:fixed;right:24px;bottom:24px;z-index:60;display:flex;align-items:center;gap:10px;background:var(--dp);color:var(--wh);border:0;padding:14px 20px;font:600 15px var(--font);cursor:pointer;box-shadow:0 10px 30px rgba(43,0,91,.28);transition:transform .25s,background .25s}
+.fb-fab:hover{transform:translateY(-3px);background:var(--vi)}
+.fb-fab svg{color:var(--go)}
+.fb-dlg{border:0;padding:0;width:min(620px,calc(100vw - 32px));max-height:calc(100vh - 32px);background:transparent;overflow:visible}
+.fb-dlg::backdrop{background:rgba(20,0,45,.6);backdrop-filter:blur(3px)}
+.fb-dlg[open]{animation:fbIn .35s cubic-bezier(.2,.7,.2,1)}
+@keyframes fbIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.fb-box{position:relative;background:var(--wh);padding:clamp(24px,4vw,44px);max-height:calc(100vh - 32px);overflow:auto;border-top:4px solid var(--go)}
+.fb-x{position:absolute;top:12px;right:12px;width:40px;height:40px;border:0;background:none;font-size:30px;line-height:1;color:var(--dp);cursor:pointer}
+.fb-body .txt{margin:8px 0 20px}
+.fb-form{display:flex;flex-direction:column;gap:16px}
+.fb-form .btn{align-self:flex-start}
+.fb-form textarea{min-height:110px}
+.fb-err{color:#B3261E;font-size:14px}
+.fb-ok{text-align:center;padding:24px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.fb-ok[hidden]{display:none}
+.fb-ok-ic{width:64px;height:64px;border-radius:50%;background:var(--li);color:var(--vi);font-size:30px;display:flex;align-items:center;justify-content:center}
+body.fb-lock{overflow:hidden}
+@media(max-width:700px){.fb-fab{right:16px;bottom:16px;padding:14px}.fb-fab span{display:none}.fb-box .frow{grid-template-columns:1fr}}

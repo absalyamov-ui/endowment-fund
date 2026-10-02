@@ -18,6 +18,12 @@ const PROG_META = [['edu', 'gold', '', 'p-grad'], ['sci', 'gold', '', 'p-dna'], 
 const MEDIA = require('./media');
 const PARTNERS_ALL = require('./partners');
 const DOCS = require('./docs');
+const FBT = {
+  ru: { btn: 'Написать нам', h: 'Напишите нам', p: 'Ответим в течение 3 рабочих дней на указанную почту.', close: 'Закрыть', ok: 'Спасибо! Обращение отправлено.', okP: 'Мы ответим вам на указанную почту.', err: 'Не удалось отправить. Попробуйте ещё раз или напишите на', sending: 'Отправляем…', audit: 'Прошу предоставить аудиторское заключение фонда.', cvH: 'Отправить резюме', pos: 'Желаемая позиция', posPh: 'Например, аналитик программ', cv: 'Резюме (PDF или Word, до 8 МБ)', cvMsg: 'Сопроводительное письмо', cvMsgPh: 'Коротко о себе и почему хотите работать в фонде' },
+  kz: { btn: 'Бізге жазыңыз', h: 'Бізге жазыңыз', p: 'Көрсетілген поштаға 3 жұмыс күні ішінде жауап береміз.', close: 'Жабу', ok: 'Рақмет! Өтініш жіберілді.', okP: 'Көрсетілген поштаға жауап береміз.', err: 'Жіберу мүмкін болмады. Қайталап көріңіз немесе мына поштаға жазыңыз:', sending: 'Жіберілуде…', audit: 'Қордың аудиторлық есебін беруіңізді сұраймын.', cvH: 'Түйіндеме жіберу', pos: 'Қалаған лауазым', posPh: 'Мысалы, бағдарламалар талдаушысы', cv: 'Түйіндеме (PDF немесе Word, 8 МБ-қа дейін)', cvMsg: 'Ілеспе хат', cvMsgPh: 'Өзіңіз туралы және неге қорда жұмыс істегіңіз келетіні туралы қысқаша' },
+  en: { btn: 'Contact us', h: 'Write to us', p: 'We reply within 3 working days to the email you provide.', close: 'Close', ok: 'Thank you! Your message has been sent.', okP: 'We will reply to the email you provided.', err: 'Could not send. Please try again or email', sending: 'Sending…', audit: 'Please send me the Fund’s audit report.', cvH: 'Send your CV', pos: 'Position of interest', posPh: 'e.g. Programme analyst', cv: 'CV (PDF or Word, up to 8 MB)', cvMsg: 'Cover letter', cvMsgPh: 'A few words about yourself and why you want to join the Fund' },
+};
+
 const PARTNERS = [['alageum', 'Alageum Electric', 48], ['mnvo', 'Министерство науки и высшего образования РК', 70], ['freedom', 'Freedom Broker', 52], ['sdu', 'SDU University', 92]]; // логотип, название, макс. высота // фото к новостям по порядку
 const BOARD_IMG = ['ilyasov', 'nurbek', 'turlov', 'dzhumadildaev', 'stvaev', 'kuanganov', 'madibekov', 'abdrakhmanov'];
 const DIR_ICONS = ['<path d="M2 9.5 12 4l10 5.5L12 15 2 9.5Z"/><path d="M6 11.7V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.3"/><path d="M22 9.5V15"/>', '<path d="M9 3h6"/><path d="M10 3v6.2L4.6 18.4A1.7 1.7 0 0 0 6.1 21h11.8a1.7 1.7 0 0 0 1.5-2.6L14 9.2V3"/><path d="M7.5 15h9"/>', '<path d="M12 15l-3-3c1.2-4.3 4.4-7.6 10-8.5-.9 5.6-4.2 8.8-8.5 10"/><path d="M9 12H5.5L8 8.5h4"/><path d="M12 15v3.5L15.5 16v-4"/><path d="M5.5 15.5c-1.4 1-2 3-2 5 2 0 4-.6 5-2"/><circle cx="15" cy="9" r="1.3"/>', '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-6 6.5-6s5.9 2.4 6.5 6"/><path d="M15.5 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M18 14.4c2 .9 3.2 2.9 3.5 5.6"/>'];
@@ -137,6 +143,17 @@ ${header(active, file)}
 ${body}
 </main>
 ${footer}
+${['thanks.html', '404.html'].includes(file) ? '' : `<button class="fb-fab" type="button" data-fb aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg><span>${FBT[lang].btn}</span></button>
+<dialog class="fb-dlg" aria-labelledby="fb-h"><div class="fb-box"><button class="fb-x" type="button" aria-label="${FBT[lang].close}">×</button>
+<div class="fb-body"><span class="eb">${t.contacts.fbEb}</span><h2 class="h2 h2-sm" id="fb-h">${FBT[lang].h}</h2><p class="txt">${FBT[lang].p}</p>
+<form class="fb-form" name="feedback" method="POST" action="/${pre}thanks.html" data-netlify="true" netlify-honeypot="bot-field" data-sending="${FBT[lang].sending}"><input type="hidden" name="form-name" value="feedback"><input type="hidden" name="language" value="${lang}"><input type="hidden" name="page" value=""><p class="visually-hidden"><label>${u.honeypot}: <input name="bot-field"></label></p>
+<div class="frow"><div class="field"><label for="fb-name">${t.contacts.f.name}</label><input id="fb-name" name="name" required placeholder="${u.namePh}"></div><div class="field"><label for="fb-email">E-mail</label><input id="fb-email" name="email" type="email" required placeholder="name@mail.kz"></div></div>
+<div class="field"><label for="fb-topic">${t.contacts.f.topic}</label><select id="fb-topic" name="topic" required><option value="">${u.choose}</option>${t.contacts.f.topics.map(o => `<option>${o}</option>`).join('')}</select></div>
+<div class="field"><label for="fb-msg">${t.contacts.f.message}</label><textarea id="fb-msg" name="message" required placeholder="${t.contacts.f.messagePh}"></textarea></div>
+<label class="agree"><input type="checkbox" required> ${u.agree}</label><button class="btn btn-gold" type="submit">${t.contacts.f.submit}</button>
+<p class="fb-err" hidden>${FBT[lang].err} <a href="mailto:${EMAIL}">${EMAIL}</a></p></form></div>
+<div class="fb-ok" hidden><span class="fb-ok-ic" aria-hidden="true">✓</span><h2 class="h2 h2-sm">${FBT[lang].ok}</h2><p class="txt">${FBT[lang].okP}</p><button class="btn btn-outline fb-close2" type="button">${FBT[lang].close}</button></div>
+</div></dialog>`}
 <script src="${R}assets/js/main.js" defer></script>
 </body>
 </html>
@@ -281,7 +298,7 @@ ${phero(r.title, r.h1, r.lead)}
 <div class="chips" style="margin-bottom:32px">${r.tabs.map((y, i) => `<span class="chip${i ? '' : ' on'}">${y}</span>`).join('')}</div>
 <div class="grid g4">${r.arch.map(([k, y, h]) => `<div class="rep"><div class="cover"><small>${k}</small><b>${y}</b></div><h3 class="h3" style="font-size:20px">${h}</h3><div style="display:flex;justify-content:space-between"><span class="meta">PDF</span><a class="link" href="#" style="font-size:15px">${u.download} ↓</a></div></div>`).join('')}</div>
 </div></section>
-<section class="band bg-vi" style="padding:64px 0"><div class="wrap cta"><div class="txt-col"><span class="eb">${r.auditEb}</span><h2 class="h2 h2-sm">${r.auditH}</h2></div><a class="btn btn-light" href="#">${r.auditBtn}</a></div></section>
+<section class="band bg-vi" style="padding:64px 0"><div class="wrap cta"><div class="txt-col"><span class="eb">${r.auditEb}</span><h2 class="h2 h2-sm">${r.auditH}</h2></div><button class="btn btn-light" type="button" data-fb data-fb-topic="0" data-fb-msg="${FBT[lang].audit}">${r.auditBtn}</button></div></section>
 `);
 
   // ---------- ПРЕСС-ЦЕНТР ----------
@@ -317,7 +334,14 @@ ${PARTNERS_ALL.groups.map(g => { const its = PARTNERS_ALL.items.filter(i => i.g 
 ${phero(v.title, v.title, v.lead)}
 <section class="sec bg-li"><div class="wrap">
 <div class="mv bg-wh empty-state"><span class="eb">${v.eb}</span><h2 class="h2 h2-sm">${v.emptyH}</h2><p class="txt" style="max-width:640px">${v.emptyP}</p>
-<a class="btn btn-gold" style="align-self:flex-start" href="mailto:${EMAIL}?subject=${encodeURIComponent(v.subject)}">${v.btn}</a><p class="small">${EMAIL}</p></div>
+<p class="small">${EMAIL}</p></div>
+<div class="mv bg-wh mt-24" id="cv"><h2 class="h2 h2-sm">${FBT[lang].cvH}</h2>
+<form class="form" style="padding:0;background:none;margin-top:24px" name="resume" method="POST" action="/${pre}thanks.html" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">${hidden('resume')}
+<div class="frow">${field(t.contacts.f.name, 'name', u.namePh)}${field('E-mail', 'email', 'name@mail.kz', 'email')}</div>
+${field(FBT[lang].pos, 'position', FBT[lang].posPh)}
+<div class="field"><label for="f-cv">${FBT[lang].cv}</label><input id="f-cv" name="cv" type="file" accept=".pdf,.doc,.docx" required></div>
+<div class="field"><label for="f-cvmsg">${FBT[lang].cvMsg}</label><textarea id="f-cvmsg" name="message" placeholder="${FBT[lang].cvMsgPh}"></textarea></div>
+${agree}<button class="btn btn-gold" type="submit">${v.btn}</button></form></div>
 </div></section>
 `);
 

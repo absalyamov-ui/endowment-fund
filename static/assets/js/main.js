@@ -143,3 +143,35 @@ window.__rv = 1;
   }), { threshold: 0.5 });
   nums.forEach(n => cio.observe(n));
 })();
+
+// ===== Обратная связь (окно «Написать нам») =====
+(function () {
+  const dlg = document.querySelector('.fb-dlg');
+  if (!dlg) return;
+  const form = dlg.querySelector('.fb-form'), body = dlg.querySelector('.fb-body'), ok = dlg.querySelector('.fb-ok');
+  const open = (topicIdx, msg) => {
+    body.hidden = false; ok.hidden = true; dlg.querySelector('.fb-err').hidden = true;
+    const sel = form.topic;
+    if (topicIdx != null && sel.options[+topicIdx + 1]) sel.selectedIndex = +topicIdx + 1;
+    if (msg && !form.message.value) form.message.value = msg;
+    form.page.value = location.href;
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    document.body.classList.add('fb-lock');
+    setTimeout(() => form.name.focus(), 50);
+  };
+  const close = () => { dlg.close ? dlg.close() : dlg.removeAttribute('open'); };
+  dlg.addEventListener('close', () => document.body.classList.remove('fb-lock'));
+  document.querySelectorAll('[data-fb]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); open(b.dataset.fbTopic, b.dataset.fbMsg); }));
+  dlg.querySelectorAll('.fb-x, .fb-close2').forEach(b => b.addEventListener('click', close));
+  dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
+  if (location.hash === '#write') open();
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = form.querySelector('[type=submit]'), label = btn.textContent;
+    btn.disabled = true; btn.textContent = form.dataset.sending;
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+      .then(r => { if (!r.ok) throw 0; form.reset(); body.hidden = true; ok.hidden = false; })
+      .catch(() => { dlg.querySelector('.fb-err').hidden = false; })
+      .finally(() => { btn.disabled = false; btn.textContent = label; });
+  });
+})();
