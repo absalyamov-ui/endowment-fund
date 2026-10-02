@@ -242,3 +242,14 @@ document.querySelectorAll('form[action*="formsubmit.co"]:not(.fb-form)').forEach
     if (track.scrollWidth / 2 < mq.clientWidth) track.innerHTML += set(1) + set(1);
   });
 })();
+
+// ===== Кнопки «наверх» и «на главную» появляются после прокрутки =====
+(function () {
+  const nav = document.querySelector('.fab-nav'); if (!nav) return;
+  const upd = () => nav.classList.toggle('show', window.scrollY > 600);
+  window.addEventListener('scroll', upd, { passive: true }); upd();
+  nav.querySelector('.fab-top').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    track && track('click_top');
+  });
+})();

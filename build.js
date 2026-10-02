@@ -153,6 +153,7 @@ ${header(active, file)}
 ${body}
 </main>
 ${footer}
+<div class="fab-nav" aria-hidden="false">${file === 'index.html' ? '' : `<a class="fab-btn" href="index.html" aria-label="${u.home}" title="${u.home}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></a>`}<button class="fab-btn fab-top" type="button" aria-label="${{ ru: 'Наверх', kz: 'Жоғары', en: 'Back to top' }[lang]}" title="${{ ru: 'Наверх', kz: 'Жоғары', en: 'Back to top' }[lang]}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button></div>
 ${['thanks.html', '404.html'].includes(file) ? '' : `<button class="fb-fab" type="button" data-fb aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg><span>${FBT[lang].btn}</span></button>
 <dialog class="fb-dlg" aria-labelledby="fb-h"><div class="fb-box"><button class="fb-x" type="button" aria-label="${FBT[lang].close}">×</button>
 <div class="fb-body"><span class="eb">${t.contacts.fbEb}</span><h2 class="h2 h2-sm" id="fb-h">${FBT[lang].h}</h2><p class="txt">${FBT[lang].p}</p>
