@@ -165,6 +165,6 @@ module.exports = {
   },
   partnersPage: { title: 'Partners', desc: 'Partners of the Science and Education Endowment Fund: companies, government and research organizations, universities and endowment funds of Kazakhstan.', lead: 'Companies, government and research organizations, universities and endowment funds we work with.', count: 'partners' },
   careers: { title: 'Careers', desc: 'Vacancies and internships at the Science and Education Endowment Fund.', lead: 'This is where we publish the Fund’s open positions and internships.', eb: 'Open positions', emptyH: 'There are no open vacancies at the moment', emptyP: 'Please check this page for updates. If you would like to work at the Fund, send us your CV by email and we will consider it when a suitable position opens.', btn: 'Send your CV', subject: 'CV' },
-  thanks: { title: 'Thank you!', p: 'We have received your message and will get back to you within 3 working days.', btn: 'Back to home' },
+  thanks: { title: 'Your request has been received', p: 'Thank you! We have received your message and will reply to the email you provided within 3 working days.', btn: 'Back to home' },
   nf: { title: 'Page not found', h1: '404 — page not found', p: 'It may have moved. Start from the home page.' },
 };

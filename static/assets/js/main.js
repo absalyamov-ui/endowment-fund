@@ -176,3 +176,17 @@ window.__rv = 1;
       .finally(() => { btn.disabled = false; btn.textContent = label; });
   });
 })();
+
+// ===== Фоновая отправка форм (без перехода на страницы FormSubmit) =====
+document.querySelectorAll('form[action*="formsubmit.co"]:not(.fb-form)').forEach(f => {
+  if (f.querySelector('input[type=file]')) return; // формы с файлом отправляются обычным способом
+  f.addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = f.querySelector('[type=submit]');
+    if (btn) btn.disabled = true;
+    const next = f.querySelector('[name=_next]');
+    fetch(f.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(f) })
+      .then(r => r.json().then(d => { if (!r.ok || String(d.success) !== 'true') throw 0; location.href = next ? next.value : '/thanks.html'; }))
+      .catch(() => { if (btn) btn.disabled = false; f.submit(); });
+  });
+});
