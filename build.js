@@ -105,6 +105,7 @@ ${SOCIAL}</div>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="V7ffDn1bHGTTOfkTkZstXrfHQqtrApGwDvL6qk_sNV8">
 <title>${full}</title>
 <meta name="description" content="${desc}">
 <link rel="canonical" href="${url}">
