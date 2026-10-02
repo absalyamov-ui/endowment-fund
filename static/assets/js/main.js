@@ -190,3 +190,25 @@ document.querySelectorAll('form[action*="formsubmit.co"]:not(.fb-form)').forEach
       .catch(() => { if (btn) btn.disabled = false; f.submit(); });
   });
 });
+
+// ===== Лента партнёров: показываем только логотипы, которые реально загрузились =====
+(function () {
+  const mq = document.querySelector('.marquee[data-logos]');
+  if (!mq) return;
+  let list; try { list = JSON.parse(mq.dataset.logos); } catch (e) { return; }
+  Promise.all(list.map(o => new Promise(res => {
+    const im = new Image(); im.referrerPolicy = 'no-referrer';
+    const t = setTimeout(() => res(null), 8000);
+    im.onload = () => { clearTimeout(t); res(im.naturalWidth > 1 && im.naturalHeight > 1 ? o : null); };
+    im.onerror = () => { clearTimeout(t); res(null); };
+    im.src = o.s;
+  }))).then(ok => {
+    ok = ok.filter(Boolean);
+    if (ok.length <= mq.querySelectorAll('.mq-set:first-child .mq-item').length) return;
+    const esc = v => String(v).replace(/[&"<>]/g, c => ({ '&': '&amp;', '"': '&quot;', '<': '&lt;', '>': '&gt;' }[c]));
+    const set = hid => `<div class="mq-set"${hid ? ' aria-hidden="true"' : ''}>${ok.map(o => `<a class="mq-item" href="partners.html" title="${esc(o.t)}"><img src="${esc(o.s)}" alt="${hid ? '' : esc(o.t)}" referrerpolicy="no-referrer"></a>`).join('')}</div>`;
+    const track = mq.querySelector('.mq-track');
+    track.innerHTML = set(0) + set(1);
+    if (track.scrollWidth / 2 < mq.clientWidth) track.innerHTML += set(1) + set(1);
+  });
+})();

@@ -193,7 +193,12 @@ ${['thanks.html', '404.html'].includes(file) ? '' : `<button class="fb-fab" type
 <section class="sec bg-vi hero-bg"><div class="wrap cta"><div class="txt-col"><span class="eb">${x.ctaEb}</span><h2 class="h2">${x.ctaH}</h2><p class="lead" style="margin-top:20px">${x.ctaP}</p></div>
 <div class="stack" style="gap:16px"><a class="btn btn-gold" href="grants.html#apply">${x.ctaBtn}</a><a class="btn btn-light" href="grants.html">${x.ctaBtn2}</a></div></div></section>
 <section class="sec bg-wh" style="padding:96px 0"><div class="wrap">${head(x.donEb, x.donH, `<div class="head-btns"><a class="btn btn-outline" href="partners.html">${x.donAll}</a><a class="btn btn-gold" href="donate.html">${x.donBtn}</a></div>`)}
-</div><div class="marquee" aria-label="${x.donH}"><div class="mq-track">${[0, 1, 2, 3].map(k => `<div class="mq-set"${k ? ' aria-hidden="true"' : ''}>${PARTNERS_ALL.items.filter(i => i.logo).filter((i, n, arr) => arr.findIndex(z => z.logo === i.logo) === n).map(i => { const src = i.logo.startsWith('local:') ? `${R}assets/img/partners/${i.logo.slice(6)}` : i.logo; return `<a class="mq-item" href="partners.html" title="${i[lang]}"><img src="${src}" alt="${k ? '' : i[lang]}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a>`; }).join('')}</div>`).join('')}</div></div></section>
+</div>${(() => {
+  const L = PARTNERS_ALL.items.filter(i => i.logo).filter((i, n, arr) => arr.findIndex(z => z.logo === i.logo) === n).map(i => ({ s: i.logo.startsWith('local:') ? `${R}assets/img/partners/${i.logo.slice(6)}` : i.logo, t: i[lang], l: i.logo.startsWith('local:') }));
+  const item = (o, hid) => `<a class="mq-item" href="partners.html" title="${o.t}"><img src="${o.s}" alt="${hid ? '' : o.t}" referrerpolicy="no-referrer"></a>`;
+  const local = L.filter(o => o.l);
+  return `<div class="marquee" aria-label="${x.donH}" data-logos='${JSON.stringify(L).replace(/'/g, '&#39;')}'><div class="mq-track">${[0, 1, 2, 3].map(k => `<div class="mq-set"${k ? ' aria-hidden="true"' : ''}>${local.map(o => item(o, k)).join('')}</div>`).join('')}</div></div>`;
+})()}</section>
 <section class="sec bg-li"><div class="wrap">${head(x.newsEb, x.newsH, `<a class="btn btn-outline" href="press.html">${u.allNews}</a>`)}
 <div class="grid g3">${MEDIA.slice(0, 3).map(newsCard).join('')}</div></div></section>
 `);
