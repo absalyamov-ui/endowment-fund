@@ -262,8 +262,9 @@ ${phero(g.title, g.title, g.lead)}
 </div></section>
 <section class="sec bg-li" id="apply"><div class="wrap split split-5-7">
 <div class="stack"><div><span class="eb">${g.docsEb}</span><h2 class="h2 h2-sm">${g.docsH}</h2></div>
-<div>${g.docs.map((y, i) => { const f = TPL[lang][i]; return `<a class="rowline tpl-row" href="/docs/templates/${lang}/${f}" download><span class="tpl-ext">${f.split('.').pop().toUpperCase()}</span><span class="grow" style="font-size:16px">${y}</span><span class="link tpl-dl">↓</span></a>`; }).join('')}</div>
-<a class="link" href="/docs/templates/${lang}/${TPLZIP[lang]}" download>${g.tpl} (ZIP) ↓</a></div>
+<div>${g.docs.map((y, i) => i === 0
+  ? `<a class="rowline tpl-row" href="/docs/templates/${lang}/${TPL[lang][0]}" download><span class="tpl-ext">DOCX</span><span class="grow" style="font-size:16px">${y}</span><span class="link tpl-dl">${u.download} ↓</span></a>`
+  : `<div class="rowline" style="padding:14px 0"><span class="tpl-ext tpl-free" aria-hidden="true">—</span><span class="grow" style="font-size:16px">${y}<span class="doc-meta">${{ ru: 'в свободной форме', kz: 'еркін нысанда', en: 'free format' }[lang]}</span></span></div>`).join('')}</div></div>
 ${formOpen('grant-application')}
 <h3 class="h3">${g.formH}</h3><p class="txt">${g.formP}</p>
 <div class="frow">${field(g.f.name, 'name', u.namePh)}${field(g.f.org, 'org', g.f.orgPh)}</div>
