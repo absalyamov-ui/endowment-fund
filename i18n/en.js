@@ -68,7 +68,7 @@ module.exports = {
     teamEb: 'Governance', teamH: 'Management', teamRoles: ['Chief Executive Officer', 'Chief Investment Officer', 'Director of Programmes', 'Director of Development'],
     docsEb: 'Governing documents', docsH: 'Fund documents',
     docs: ['Charter of the Fund', 'Charitable programme “Support for Education”', 'Charitable programme “Support for Science, Research and Technology”', 'Charitable programme “Support for Innovation and Technology Commercialisation”', 'Investment policy statement'],
-    jobsH: 'Want to work at the Fund?', jobsP: 'Open positions and internships for graduates', jobsBtn: 'View vacancies',
+    jobsH: 'Want to work at the Fund?', jobsP: 'Vacancies and internships at the Fund', jobsBtn: 'View vacancies',
   },
   programs: {
     title: 'Programmes and projects',
@@ -163,6 +163,7 @@ module.exports = {
     fbEb: 'Feedback', fbH: 'Write to us', fbP: 'We reply within 3 working days. Official public enquiries are handled within the time limits set by the law of Kazakhstan.',
     f: { name: 'Name', topic: 'Topic', topics: ['General question', 'Contribution', 'Partnership', 'Grant programmes', 'Public enquiry', 'Media'], message: 'Message', messagePh: 'Your message', submit: 'Send' },
   },
+  careers: { title: 'Careers', desc: 'Vacancies and internships at the Science and Education Endowment Fund.', lead: 'This is where we publish the Fund’s open positions and internships.', eb: 'Open positions', emptyH: 'There are no open vacancies at the moment', emptyP: 'Please check this page for updates. If you would like to work at the Fund, send us your CV by email and we will consider it when a suitable position opens.', btn: 'Send your CV', subject: 'CV' },
   thanks: { title: 'Thank you!', p: 'We have received your message and will get back to you within 3 working days.', btn: 'Back to home' },
   nf: { title: 'Page not found', h1: '404 — page not found', p: 'It may have moved. Start from the home page.' },
 };

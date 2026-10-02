@@ -85,7 +85,7 @@ function buildLang(lang, t) {
 <div><a class="logo" href="index.html"><img src="${logoW}" alt="${t.name}" width="306" height="52"></a>
 <p>${f.about}</p>
 ${SOCIAL}</div>
-<div><h4>${f.fund}</h4><ul>${['about.html', 'about.html#board', 'about.html#team', 'about.html#docs', 'about.html#jobs'].map((h, i) => `<li><a href="${h}">${f.fundLinks[i]}</a></li>`).join('')}</ul></div>
+<div><h4>${f.fund}</h4><ul>${['about.html', 'about.html#board', 'about.html#team', 'about.html#docs', 'careers.html'].map((h, i) => `<li><a href="${h}">${f.fundLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.work}</h4><ul>${['programs.html', 'grants.html', 'reports.html', 'press.html'].map((h, i) => `<li><a href="${h}">${f.workLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.donors}</h4><ul>${['donate.html'].map((h, i) => `<li><a href="${h}">${f.donorLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.contacts}</h4><ul><li><a href="mailto:${EMAIL}">${EMAIL}</a></li><li>${f.address}</li><li>${f.hours}</li></ul></div>
@@ -184,7 +184,7 @@ ${phero(a.title, a.title, a.lead)}
 <section class="sec bg-li" id="docs"><div class="wrap">${head(a.docsEb, a.docsH)}
 <div>${a.docs.map(d => `<div class="rowline"><span class="pdf">PDF</span><h3 class="h3 grow">${d}</h3><a class="link" href="#">${u.download} ↓</a></div>`).join('')}</div>
 </div></section>
-<section class="band bg-go" id="jobs"><div class="wrap cta"><div><h2 class="h2 h2-sm">${a.jobsH}</h2><p style="opacity:.75;margin-top:8px">${a.jobsP}</p></div><a class="btn btn-dark" href="mailto:${EMAIL}">${a.jobsBtn}</a></div></section>
+<section class="band bg-go" id="jobs"><div class="wrap cta"><div><h2 class="h2 h2-sm">${a.jobsH}</h2><p style="opacity:.75;margin-top:8px">${a.jobsP}</p></div><a class="btn btn-dark" href="careers.html">${a.jobsBtn}</a></div></section>
 `);
 
   // ---------- ПРОГРАММЫ ----------
@@ -281,6 +281,16 @@ ${(() => { const ys = [...new Set(MEDIA.filter(m => m.date).map(m => m.date.slic
 </div></section>
 <section class="sec bg-vi" style="padding:72px 0"><div class="wrap cta"><div><span class="eb">${s.journEb}</span><h2 class="h2 h2-sm">${s.journH}</h2><p style="opacity:.8;margin-top:8px"><a href="mailto:${EMAIL}">${EMAIL}</a></p></div>
 <form class="sub" name="subscribe" method="POST" action="/${pre}thanks.html" data-netlify="true"><input type="hidden" name="form-name" value="subscribe"><input type="hidden" name="language" value="${lang}"><label class="visually-hidden" for="sub-email">E-mail</label><input id="sub-email" type="email" name="email" placeholder="${s.subPh}" required><button class="btn btn-gold" type="submit">${s.subBtn}</button></form></div></section>
+`);
+
+  // ---------- ВАКАНСИИ ----------
+  const v = t.careers;
+  page('careers.html', v.title, v.desc, 'about.html', `
+${phero(v.title, v.title, v.lead)}
+<section class="sec bg-li"><div class="wrap">
+<div class="mv bg-wh empty-state"><span class="eb">${v.eb}</span><h2 class="h2 h2-sm">${v.emptyH}</h2><p class="txt" style="max-width:640px">${v.emptyP}</p>
+<a class="btn btn-gold" style="align-self:flex-start" href="mailto:${EMAIL}?subject=${encodeURIComponent(v.subject)}">${v.btn}</a><p class="small">${EMAIL}</p></div>
+</div></section>
 `);
 
   // ---------- КОНТАКТЫ ----------

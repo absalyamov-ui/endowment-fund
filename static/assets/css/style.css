@@ -360,3 +360,4 @@ button,input,select,textarea{font:inherit;color:inherit}
 .soc-dark a.soc-ic:hover{color:var(--go)}
 .soc a.soc-ic svg{width:25px;height:25px}
 .soc{gap:10px}
+.empty-state{border-left:4px solid var(--go)}
