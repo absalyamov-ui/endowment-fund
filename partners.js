@@ -37,10 +37,10 @@ module.exports = {
     { g: 'uni', mono: 'SDU', logo: L('sdu.png'), ru: 'SDU University', kz: 'SDU University', en: 'SDU University' },
     // Эндаумент-фонды
     { g: 'end', mono: 'НАЭФ', ru: 'Национальная ассоциация эндаумент-фондов Казахстана', kz: 'Қазақстанның эндаумент-қорлары ұлттық қауымдастығы', en: 'National Association of Endowment Funds of Kazakhstan' },
-    { g: 'end', mono: 'iQ', logo: 'https://iqanat.kz/iqanat/images/iqanat-logo-2023.svg', ru: 'Образовательный фонд iQanat', kz: 'iQanat білім беру қоры', en: 'iQanat Endowment Foundation' },
+    { g: 'end', mono: 'iQ', noMq: 1, logo: 'https://iqanat.kz/iqanat/images/iqanat-logo-2023.svg', ru: 'Образовательный фонд iQanat', kz: 'iQanat білім беру қоры', en: 'iQanat Endowment Foundation' },
     { g: 'end', mono: 'ENU', logo: 'https://enu.kz/_nuxt/logo30t.BJQsH-tE.svg', ru: 'ENU Endowment Fund', kz: 'ENU Endowment Fund', en: 'ENU Endowment Fund' },
     { g: 'end', mono: 'SEF', ru: 'Shoqan Endowment Fund', kz: 'Shoqan Endowment Fund', en: 'Shoqan Endowment Fund' },
-    { g: 'end', mono: 'YEF', logo: 'https://yessenovfoundation.org/wp-content/themes/yessenovfoundation/images/logo_new.png', ru: 'Yessenov Endowment Fund', kz: 'Yessenov Endowment Fund', en: 'Yessenov Endowment Fund' },
+    { g: 'end', mono: 'YEF', noMq: 1, logo: 'https://yessenovfoundation.org/wp-content/themes/yessenovfoundation/images/logo_new.png', ru: 'Yessenov Endowment Fund', kz: 'Yessenov Endowment Fund', en: 'Yessenov Endowment Fund' },
     { g: 'end', mono: 'ISEF', logo: 'https://inclusive-endowment.kz/wp-content/uploads/2026/04/Artboard-1.svg', ru: 'Inclusive Sport Endowment Foundation', kz: 'Inclusive Sport Endowment Foundation', en: 'Inclusive Sport Endowment Foundation' },
     { g: 'end', mono: 'AIU', logo: 'https://aiu.kz/logo/logo_1.svg', ru: 'Фонд целевого капитала Astana International University', kz: 'Astana International University нысаналы капитал қоры', en: 'Astana International University Endowment Fund' },
     { g: 'end', mono: 'АА', ru: 'Корпоративный фонд «Аврора-Ала»', kz: '«Аврора-Ала» корпоративтік қоры', en: 'Aurora-Ala Corporate Foundation' },

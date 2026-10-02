@@ -197,10 +197,21 @@ document.querySelectorAll('form[action*="formsubmit.co"]:not(.fb-form)').forEach
   if (!mq) return;
   let list; try { list = JSON.parse(mq.dataset.logos); } catch (e) { return; }
   Promise.all(list.map(o => new Promise(res => {
-    const im = new Image(); im.referrerPolicy = 'no-referrer';
     const t = setTimeout(() => res(null), 8000);
-    im.onload = () => { clearTimeout(t); res(im.naturalWidth > 1 && im.naturalHeight > 1 ? o : null); };
-    im.onerror = () => { clearTimeout(t); res(null); };
+    const done = v => { clearTimeout(t); res(v); };
+    const plain = () => { const im = new Image(); im.referrerPolicy = 'no-referrer'; im.onload = () => done(im.naturalWidth > 1 && im.naturalHeight > 1 ? o : null); im.onerror = () => done(null); im.src = o.s; };
+    // Если сервер разрешает чтение пикселей — отсеиваем белые/пустые логотипы, невидимые на белом фоне
+    const im = new Image(); im.crossOrigin = 'anonymous'; im.referrerPolicy = 'no-referrer';
+    im.onload = () => {
+      try {
+        const w = 120, h = Math.max(1, Math.round(120 * im.naturalHeight / im.naturalWidth)) || 60, c = document.createElement('canvas');
+        c.width = w; c.height = h; const x = c.getContext('2d'); x.drawImage(im, 0, 0, w, h);
+        const d = x.getImageData(0, 0, w, h).data; let vis = 0;
+        for (let k = 0; k < d.length; k += 4) if (d[k + 3] > 60 && (d[k] * .3 + d[k + 1] * .59 + d[k + 2] * .11) < 215) vis++;
+        done(vis / (w * h) > 0.01 ? o : null);
+      } catch (e) { plain(); }
+    };
+    im.onerror = plain;
     im.src = o.s;
   }))).then(ok => {
     ok = ok.filter(Boolean);
