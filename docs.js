@@ -7,6 +7,7 @@ module.exports = [
   { g: { ru: 'Благотворительные программы', kz: 'Қайырымдылық бағдарламалары', en: 'Charitable programmes' }, items: [
     { file: 'programma-obrazovanie.pdf', ru: 'Благотворительная программа «Поддержка образования»', kz: '«Білім беруді қолдау» қайырымдылық бағдарламасы', en: 'Charitable programme “Support for Education”' },
     { file: 'programma-nauka.pdf', ru: 'Благотворительная программа «Поддержка науки, научной и научно-технической деятельности»', kz: '«Ғылымды, ғылыми және ғылыми-техникалық қызметті қолдау» қайырымдылық бағдарламасы', en: 'Charitable programme “Support for Science, Research and Technology”' },
+    { file: 'programma-innovacii.pdf', ru: 'Благотворительная программа «Поддержка инновационной деятельности и коммерциализации технологий»', kz: '«Инновациялық қызметті қолдау және технологияларды коммерцияландыру» қайырымдылық бағдарламасы', en: 'Charitable programme “Support for Innovation and Technology Commercialisation”' },
   ] },
   { g: { ru: 'Внутренние документы', kz: 'Ішкі құжаттар', en: 'Internal regulations' }, items: [
     { file: 'polozhenie-popechitelskij-sovet.pdf', tp: 1, ru: 'Положение о Попечительском совете', kz: 'Қамқоршылық кеңес туралы ереже', en: 'Regulations on the Board of Trustees' },
