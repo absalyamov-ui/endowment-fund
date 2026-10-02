@@ -180,7 +180,7 @@ window.__rv = 1;
   });
 
   // Счётчики цифр
-  const nums = document.querySelectorAll('.stat b, .numbox b, .kpi b, .pt-total b');
+  const nums = document.querySelectorAll('.stat b, .numbox b, .kpi b, .pt-total b, .bn-num');
   const cio = new IntersectionObserver(entries => entries.forEach(en => {
     if (!en.isIntersecting) return; cio.unobserve(en.target);
     const el = en.target, txt = el.textContent, m = txt.match(/\d+(?:[.,]\d+)?/);
@@ -301,4 +301,106 @@ document.querySelectorAll('form[action*="formsubmit.co"]:not(.fb-form)').forEach
   btn.addEventListener('click', () => { limit += step; apply(); });
   document.querySelectorAll('[data-filter] .chip').forEach(ch => ch.addEventListener('click', () => setTimeout(() => { limit = step; apply(); }, 0)));
   apply();
+})();
+
+// ===== Тёмная тема =====
+(function () {
+  const root = document.documentElement;
+  const sync = () => {
+    const dark = root.getAttribute('data-theme') === 'dark';
+    document.querySelectorAll('[data-theme-toggle]').forEach(b => {
+      const l = dark ? b.dataset.lLight : b.dataset.lDark;
+      b.setAttribute('aria-label', l); b.title = l; b.setAttribute('aria-pressed', dark);
+      const s = b.querySelector('.lbl'); if (s) s.textContent = l;
+    });
+    const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = dark ? '#120A24' : '#2B005B';
+  };
+  document.querySelectorAll('[data-theme-toggle]').forEach(b => b.addEventListener('click', () => {
+    const dark = root.getAttribute('data-theme') !== 'dark';
+    if (dark) root.setAttribute('data-theme', 'dark'); else root.removeAttribute('data-theme');
+    try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+    sync(); window.track && track(dark ? 'theme_dark' : 'theme_light');
+  }));
+  sync();
+})();
+
+// ===== Версия для слабовидящих =====
+(function () {
+  const root = document.documentElement, bar = document.querySelector('.a11y-bar');
+  if (!bar) return;
+  let S; try { S = JSON.parse(localStorage.getItem('a11y') || 'null'); } catch (e) {}
+  S = S || { on: false, fs: 0, sc: '', im: '1' };
+  const apply = () => {
+    root.classList.toggle('a11y', !!S.on);
+    ['fs-1', 'fs-2', 'sc-bw', 'sc-wb', 'sc-bl', 'im-0'].forEach(c => root.classList.remove(c));
+    if (S.on) { if (+S.fs) root.classList.add('fs-' + S.fs); if (S.sc) root.classList.add('sc-' + S.sc); if (S.im === '0') root.classList.add('im-0'); }
+    bar.hidden = !S.on;
+    document.querySelectorAll('[data-a11y-toggle]').forEach(b => b.setAttribute('aria-expanded', !!S.on));
+    bar.querySelectorAll('[data-fs]').forEach(b => b.classList.toggle('on', +b.dataset.fs === +S.fs));
+    bar.querySelectorAll('[data-sc]').forEach(b => b.classList.toggle('on', b.dataset.sc === S.sc));
+    bar.querySelectorAll('[data-im]').forEach(b => b.classList.toggle('on', b.dataset.im === S.im));
+    try { localStorage.setItem('a11y', JSON.stringify(S)); } catch (e) {}
+  };
+  document.querySelectorAll('[data-a11y-toggle]').forEach(b => b.addEventListener('click', () => {
+    S.on = !S.on; if (S.on && !+S.fs) S.fs = 1; apply();
+    const mn = document.querySelector('.mnav.open'); if (mn) document.querySelector('.burger').click();
+    window.track && track(S.on ? 'a11y_on' : 'a11y_off');
+  }));
+  bar.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.fs != null) S.fs = +b.dataset.fs;
+    if (b.dataset.sc != null) S.sc = b.dataset.sc;
+    if (b.dataset.im != null) S.im = b.dataset.im;
+    if (b.hasAttribute('data-a11y-off')) S = { on: false, fs: 0, sc: '', im: '1' };
+    apply();
+  });
+  apply();
+})();
+
+// ===== Поиск по сайту =====
+(function () {
+  const dlg = document.querySelector('.sr-dlg'); if (!dlg) return;
+  const inp = dlg.querySelector('.sr-in'), res = dlg.querySelector('.sr-res'), hint = res.innerHTML;
+  let idx = null, cur = -1;
+  const norm = s => s.toLowerCase().replace(/ё/g, 'е').replace(/ /g, ' ');
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const hl = (s, qs) => { let h = esc(s); qs.forEach(q => { if (q.length > 1) h = h.replace(new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi'), '<mark>$1</mark>'); }); return h; };
+  const load = () => idx ? Promise.resolve(idx) : fetch(dlg.dataset.index).then(r => r.json()).then(d => (idx = d.map(x => Object.assign(x, { n: norm(x.t + ' ' + (x.p || '') + ' ' + (x.d || '')) }))));
+  const render = () => {
+    const q = norm(inp.value.trim());
+    if (q.length < 2) { res.innerHTML = hint; cur = -1; return; }
+    const qs = q.split(/\s+/).filter(Boolean);
+    load().then(list => {
+      const hits = list.map(x => { let sc = 0; for (const w of qs) { const i = x.n.indexOf(w); if (i < 0) return null; sc += (norm(x.t).includes(w) ? 10 : 2) + (i === 0 ? 3 : 0); } return [sc + (x.w || 0), x]; }).filter(Boolean).sort((a, b) => b[0] - a[0]).slice(0, 30);
+      cur = -1;
+      res.innerHTML = hits.length ? hits.map(([, x]) => `<a class="sr-item" href="${esc(x.u)}"${/^https?:/.test(x.u) ? ' target="_blank" rel="noopener"' : ''}><b><span class="sr-kind">${esc(x.k)}</span>${hl(x.t, qs)}</b>${x.p ? `<small>${hl(x.p, qs)}</small>` : ''}</a>`).join('') : `<p class="sr-none">${esc(dlg.dataset.none || '')}</p>`;
+    }).catch(() => {});
+  };
+  dlg.dataset.none = (document.documentElement.lang === 'kk' ? 'Ештеңе табылмады. Басқа сөзді көріңіз.' : document.documentElement.lang === 'en' ? 'Nothing found. Try another word.' : 'Ничего не найдено. Попробуйте другое слово.');
+  const open = () => { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', ''); document.body.classList.add('fb-lock'); load(); setTimeout(() => inp.focus(), 30); window.track && track('search_open'); };
+  const close = () => dlg.close ? dlg.close() : dlg.removeAttribute('open');
+  dlg.addEventListener('close', () => document.body.classList.remove('fb-lock'));
+  document.querySelectorAll('[data-search]').forEach(b => b.addEventListener('click', open));
+  dlg.querySelector('.sr-x').addEventListener('click', close);
+  dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
+  let tmr; inp.addEventListener('input', () => { clearTimeout(tmr); tmr = setTimeout(render, 80); });
+  inp.addEventListener('keydown', e => {
+    const items = [...res.querySelectorAll('.sr-item')]; if (!items.length) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); cur = (cur + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length; items.forEach((it, i) => it.classList.toggle('on', i === cur)); items[cur].scrollIntoView({ block: 'nearest' }); }
+    if (e.key === 'Enter') { e.preventDefault(); (items[cur] || items[0]).click(); }
+  });
+  document.addEventListener('keydown', e => { if ((e.key === '/' || (e.key === 'k' && (e.metaKey || e.ctrlKey))) && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); open(); } });
+})();
+
+// ===== «Как работает эндаумент»: активный шаг при прокрутке =====
+(function () {
+  const steps = [...document.querySelectorAll('.how-step')]; if (!steps.length || !('IntersectionObserver' in window)) return;
+  const cur = document.querySelector('.how-cur'), bar = document.querySelector('.how-bar i');
+  const set = i => {
+    steps.forEach((s, k) => s.classList.toggle('on', k === i));
+    if (cur) cur.textContent = '0' + (i + 1);
+    if (bar) bar.style.width = ((i + 1) / steps.length * 100) + '%';
+  };
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) set(+e.target.dataset.i); }), { rootMargin: '-45% 0px -45% 0px' });
+  steps.forEach(s => io.observe(s));
 })();

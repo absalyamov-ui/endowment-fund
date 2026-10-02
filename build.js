@@ -39,6 +39,16 @@ function typo(html, lang) {
     return s.replace(/ ([—–]) /g, ' $1 ').replace(/(\d) (₸|%|млн|млрд|тыс|m|bn)/g, '$1 $2').replace(/₸ (\d)/g, '₸ $1');
   }).join('');
 }
+const TOOLS = {
+  ru: { search: 'Поиск по сайту', searchPh: 'Программы, документы, публикации…', none: 'Ничего не найдено. Попробуйте другое слово.', hint: 'Начните вводить запрос — например, «грант», «устав» или «AI Sana».', dark: 'Тёмная тема', light: 'Светлая тема', a11y: 'Версия для слабовидящих', a11yOff: 'Обычная версия', font: 'Размер шрифта', colors: 'Цвет', imgs: 'Изображения', on: 'Вкл', off: 'Выкл', schemes: ['Обычная', 'Чёрным по белому', 'Белым по чёрному', 'Синяя'], close: 'Закрыть', doc: 'Документ', news: 'Публикация', page: 'Страница' },
+  kz: { search: 'Сайттан іздеу', searchPh: 'Бағдарламалар, құжаттар, жарияланымдар…', none: 'Ештеңе табылмады. Басқа сөзді көріңіз.', hint: 'Сұрауды теріңіз — мысалы, «грант», «жарғы» немесе «AI Sana».', dark: 'Қараңғы тақырып', light: 'Жарық тақырып', a11y: 'Нашар көретіндерге арналған нұсқа', a11yOff: 'Қалыпты нұсқа', font: 'Қаріп өлшемі', colors: 'Түс', imgs: 'Суреттер', on: 'Қосу', off: 'Өшіру', schemes: ['Қалыпты', 'Ақ фонда қара', 'Қара фонда ақ', 'Көк'], close: 'Жабу', doc: 'Құжат', news: 'Жарияланым', page: 'Бет' },
+  en: { search: 'Search the site', searchPh: 'Programmes, documents, publications…', none: 'Nothing found. Try another word.', hint: 'Start typing — e.g. “grant”, “charter” or “AI Sana”.', dark: 'Dark theme', light: 'Light theme', a11y: 'Low-vision version', a11yOff: 'Standard version', font: 'Font size', colors: 'Colours', imgs: 'Images', on: 'On', off: 'Off', schemes: ['Standard', 'Black on white', 'White on black', 'Blue'], close: 'Close', doc: 'Document', news: 'Publication', page: 'Page' },
+};
+const IC = {
+  search: '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>',
+  moon: '<svg class="i-moon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>',
+  eye: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+};
 const DOCS = require('./docs');
 const TPLT = require('./templates/texts');
 const TPL = Object.fromEntries(Object.entries(TPLT).map(([l, x]) => [l, [x.app.file, x.desc.file, x.budget.file, x.cv.file, x.letter.file]]));
@@ -84,6 +94,9 @@ function buildLang(lang, t) {
   const R = pre ? '../' : '';
   const DIR = path.join(OUT, pre);
   fs.mkdirSync(DIR, { recursive: true });
+  const SIDX = [], SEEN = new Set();
+  const sAdd = o => { const k = o.t + '|' + o.u; if (!o.t || SEEN.has(k)) return; SEEN.add(k); SIDX.push(o); };
+  const strip = h => h.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/\s+/g, ' ').trim();
   const u = t.ui;
   const logo = `${R}assets/img/logo-${lang}.svg`;
   const logoW = `${R}assets/img/logo-${lang}-white.svg`;
@@ -112,13 +125,17 @@ function buildLang(lang, t) {
   const partners = PARTNERS.map(([f, n, h]) => `<div class="logo-box"><img src="${R}assets/img/partners/${f}.png" alt="${n}" style="max-height:${h}px" loading="lazy"></div>`).join('');
   const people = (n, roles) => Array.from({ length: n }, (_, i) => `<div class="person">${ph(u.portrait, i % 2 ? '' : 'dark')}<h3 class="h3">${u.fullName}</h3><p class="txt">${roles[i % roles.length]}</p></div>`).join('');
 
+  const TL = TOOLS[lang];
+  const a11yBar = `<div class="a11y-bar" hidden><div class="wrap"><div class="a11y-g"><span>${TL.font}</span><button type="button" data-fs="0" aria-label="${TL.font} 100%">A</button><button type="button" data-fs="1" aria-label="${TL.font} 125%" style="font-size:19px">A</button><button type="button" data-fs="2" aria-label="${TL.font} 150%" style="font-size:23px">A</button></div><div class="a11y-g"><span>${TL.colors}</span>${['', 'bw', 'wb', 'bl'].map((v, i) => `<button type="button" data-sc="${v}" class="sc-${v || 'n'}" aria-label="${TL.schemes[i]}" title="${TL.schemes[i]}">${i ? 'Ц' : 'Ц'}</button>`).join('')}</div><div class="a11y-g"><span>${TL.imgs}</span><button type="button" data-im="1">${TL.on}</button><button type="button" data-im="0">${TL.off}</button></div><button type="button" class="a11y-off" data-a11y-off>${TL.a11yOff}</button></div></div>`;
+  const searchDlg = `<dialog class="sr-dlg" aria-label="${TL.search}" data-index="${R}${pre}search.json"><div class="sr-box"><div class="sr-top">${IC.search}<input type="search" class="sr-in" placeholder="${TL.searchPh}" aria-label="${TL.search}" autocomplete="off"><button type="button" class="sr-x" aria-label="${TL.close}">Esc</button></div><div class="sr-res" role="listbox"><p class="sr-hint">${TL.hint}</p></div></div></dialog>`;
   const header = (active, file) => `<header class="hdr"><div class="wrap">
-<a class="logo" href="index.html" aria-label="${t.name} — ${u.toHome}"><img src="${logo}" alt="${t.name}" width="282" height="48"></a>
+<a class="logo" href="index.html" aria-label="${t.name} — ${u.toHome}"><img class="logo-l" src="${logo}" alt="${t.name}" width="282" height="48"><img class="logo-d" src="${logoW}" alt="" width="282" height="48"></a>
 <nav class="nav" aria-label="${u.mainMenu}">${NAV_FILES.map((f, i) => `<a href="${f}"${f === active ? ' class="active"' : ''}>${[u.home, ...u.nav][i]}</a>`).join('')}</nav>
-<div class="hdr-act"><div class="lang">${langLinks(file)}</div>
+<div class="hdr-act"><div class="tools"><button class="tool" type="button" data-search aria-label="${TOOLS[lang].search}" title="${TOOLS[lang].search}">${IC.search}</button><button class="tool tool-wide" type="button" data-theme-toggle aria-label="${TOOLS[lang].dark}" title="${TOOLS[lang].dark}" data-l-dark="${TOOLS[lang].dark}" data-l-light="${TOOLS[lang].light}">${IC.moon}</button><button class="tool tool-wide" type="button" data-a11y-toggle aria-label="${TOOLS[lang].a11y}" title="${TOOLS[lang].a11y}" aria-expanded="false">${IC.eye}</button></div><div class="lang">${langLinks(file)}</div>
 <button class="burger" aria-label="${u.menu}" aria-expanded="false"><span></span><span></span><span></span></button></div>
 </div></header>
-<nav class="mnav" aria-label="${u.mobileMenu}">${NAV_FILES.map((f, i) => `<a href="${f}">${[u.home, ...u.nav][i]}</a>`).join('')}<div class="lang">${langLinks(file)}</div></nav>`;
+<nav class="mnav" aria-label="${u.mobileMenu}">${NAV_FILES.map((f, i) => `<a href="${f}">${[u.home, ...u.nav][i]}</a>`).join('')}<div class="lang">${langLinks(file)}</div><div class="mtools"><button type="button" data-theme-toggle data-l-dark="${TOOLS[lang].dark}" data-l-light="${TOOLS[lang].light}">${IC.moon}<span class="lbl">${TOOLS[lang].dark}</span></button><button type="button" data-a11y-toggle>${IC.eye}<span>${TOOLS[lang].a11y}</span></button></div></nav>
+${a11yBar}${searchDlg}`;
 
   const f = t.footer;
   const footer = `<footer class="ftr"><div class="wrap">
@@ -139,6 +156,16 @@ ${SOCIAL}</div>
     const alt = Object.keys(LANGS).map(l => `<link rel="alternate" hreflang="${HREFLANG[l]}" href="${SITE}/${PREFIX[l]}${file === 'index.html' ? '' : file}">`).join('\n');
     const url = `${SITE}/${pre}${file === 'index.html' ? '' : file}`;
     if (!['thanks.html', '404.html'].includes(file)) sitemap.push(url);
+    if (!['thanks.html', '404.html'].includes(file)) {
+      const TLk = TOOLS[lang];
+      sAdd({ k: TLk.page, t: title, u: file, d: desc, w: 6 });
+      for (const m of body.matchAll(/<section([^>]*)>([\s\S]*?)<\/section>/g)) {
+        const id = (m[1].match(/id="([^"]+)"/) || [])[1];
+        for (const h of m[2].matchAll(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/g)) sAdd({ k: TLk.page, t: strip(h[1]), p: title, u: file + (id ? '#' + id : ''), w: 2 });
+        for (const q of m[2].matchAll(/<summary>([\s\S]*?)<\/summary>\s*<p>([\s\S]*?)<\/p>/g)) sAdd({ k: 'FAQ', t: strip(q[1]), p: title, d: strip(q[2]), u: file + (id ? '#' + id : ''), w: 1 });
+        for (const n of m[2].matchAll(/<p class="pt-name">([\s\S]*?)<\/p>/g)) sAdd({ k: TLk.page, t: strip(n[1]), p: title, u: file, w: 0 });
+      }
+    }
     fs.writeFileSync(path.join(DIR, file), typo(`<!doctype html>
 <html lang="${t.html}">
 <head>
@@ -167,7 +194,7 @@ ${alt}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${R}assets/css/style.css">
-${ANALYTICS}<script>(function(d){if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');setTimeout(function(){if(!window.__rv)d.classList.remove('motion')},3000)}})(document.documentElement)</script>
+${ANALYTICS}<script>(function(d){try{var th=localStorage.getItem('theme');if(th==='dark')d.setAttribute('data-theme','dark');var A=JSON.parse(localStorage.getItem('a11y')||'null');if(A&&A.on){d.classList.add('a11y');if(A.fs)d.classList.add('fs-'+A.fs);if(A.sc)d.classList.add('sc-'+A.sc);if(A.im==='0')d.classList.add('im-0')}}catch(e){}if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&!d.classList.contains('a11y')){d.classList.add('motion');setTimeout(function(){if(!window.__rv)d.classList.remove('motion')},3000)}})(document.documentElement)</script>
 </head>
 <body>
 ${header(active, file)}
@@ -207,11 +234,19 @@ ${['thanks.html', '404.html'].includes(file) ? '' : `<dialog class="fb-dlg" aria
 <div class="stack pt-44"><p class="txt" style="font-size:18px">${x.aboutP1}</p><p class="txt" style="font-size:18px">${x.aboutP2}</p><a class="link" href="about.html">${x.aboutLink} →</a></div>
 </div></section>
 <section class="sec bg-wh"><div class="wrap">${head(x.dirEb, x.dirH)}
-<div class="grid g3">${x.dirs.map(([h, d], i) => `<div class="val"><span class="dir-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${DIR_ICONS[i]}</svg></span><h3 class="h3">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div>
+${(() => {
+  const B = { ru: { capEb: 'Целевой капитал', capN: '₸ 2 млрд', capS: 'Цель — до ₸ 10 млрд к 2029 году. Основная сумма не тратится — работает только доход.', n21: ['21', 'направление поддержки в трёх программах'], n300: ['до ₸ 300 млн', 'лимит расходов на программы в 2026 году'], inf: ['∞', 'программы бессрочные — поддержка не зависит от бюджетных циклов'], more: 'Подробнее' },
+    kz: { capEb: 'Нысаналы капитал', capN: '₸ 2 млрд', capS: '2029 жылға қарай ₸ 10 млрд-қа дейін жеткізу мақсаты. Негізгі сома жұмсалмайды — тек табыс жұмыс істейді.', n21: ['21', 'үш бағдарламадағы қолдау бағыты'], n300: ['₸ 300 млн-ға дейін', '2026 жылғы бағдарламалар шығыстарының лимиті'], inf: ['∞', 'бағдарламалар мерзімсіз — қолдау бюджеттік циклдерге тәуелді емес'], more: 'Толығырақ' },
+    en: { capEb: 'Endowment capital', capN: '₸ 2 bn', capS: 'Target: up to ₸ 10 bn by 2029. The principal is never spent — only the income works.', n21: ['21', 'areas of support across three programmes'], n300: ['up to ₸ 300 m', 'programme spending limit for 2026'], inf: ['∞', 'open-ended programmes — support does not depend on budget cycles'], more: 'Learn more' } }[lang];
+  const ic = i => `<span class="dir-ic ic-${i}" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${DIR_ICONS[i]}</svg></span>`;
+  const dir = i => `<a class="bt bt-dir val" href="programs.html">${ic(i)}<h3 class="h3">${x.dirs[i][0]}</h3><p class="txt">${x.dirs[i][1]}</p><span class="bt-more">${B.more} →</span></a>`;
+  const num = (cls, [n, l]) => `<div class="bt bt-num ${cls}"><b class="bn-num">${n}</b><span>${l}</span></div>`;
+  return `<div class="bento"><div class="bt bt-cap pat-bg"><span class="eb">${B.capEb}</span><b class="bn-num">${B.capN}</b><p>${B.capS}</p></div>${dir(0)}${dir(1)}${dir(2)}${num('bt-go', B.n21)}${num('bt-vi', B.n300)}${num('bt-li', B.inf)}</div>`;
+})()}
 </div></section>
-<section class="sec bg-dp"><div class="wrap">${head(x.howEb, x.howH)}
-<div class="steps">${x.steps.map(([h, d], i) => `<div class="step"><b>0${i + 1}</b><h3 class="h3">${h}</h3><p class="txt">${d}</p></div>${i < 3 ? '<span class="step-arr" aria-hidden="true">→</span>' : ''}`).join('')}</div>
-<p class="note">${x.note}</p>
+<section class="sec bg-dp how"><div class="wrap how-wrap">
+<div class="how-side"><span class="eb">${x.howEb}</span><h2 class="h2">${x.howH}</h2><div class="how-prog" aria-hidden="true"><b class="how-cur">01</b><span>/ 04</span><i class="how-bar"><i></i></i></div><p class="note">${x.note}</p></div>
+<ol class="how-steps">${x.steps.map(([h, d], i) => `<li class="how-step${i ? '' : ' on'}" data-i="${i}"><b>0${i + 1}</b><h3 class="h3">${h}</h3><p class="txt">${d}</p></li>`).join('')}</ol>
 </div></section>
 <section class="sec bg-li"><div class="wrap split split-5-7">
 <div class="stack"><div><span class="eb">${x.prEb}</span><h2 class="h2">${x.prH}</h2></div><p class="txt">${x.prLead}</p></div>
@@ -259,7 +294,7 @@ ${DOCS.map(grp => { const its = lang === 'kz' && grp.items[0].file === 'ustav-ru
   page('programs.html', p.title, p.desc, 'programs.html', `
 ${phero(p.title, p.title, p.lead)}
 <section class="sec bg-wh"><div class="wrap">${head(p.mainEb, p.mainH)}
-<div class="grid g3 pm-grid">${p.main.map(([cat, h, bud, per, d, l], mi) => `<div class="form prog-main" style="gap:16px"><span class="pm-cat"><span class="dir-ic pm-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${DIR_ICONS[mi]}</svg></span>${cat}</span><h3 class="h3">${h}</h3><dl class="pm-meta"><div><dt>${p.budgetL}</dt><dd>${bud}</dd></div><div><dt>${p.periodL}</dt><dd>${per}</dd></div></dl><div class="pm-rest"><p class="txt">${d}</p><hr style="border:0;border-top:1px solid var(--ln);margin:4px 0;width:100%">${l.slice(0, 3).map(y => `<span class="check">${y}</span>`).join('')}${l.length > 3 ? `<details class="pm-more"><summary><span class="pm-open">${{ ru: 'Подробнее', kz: 'Толығырақ', en: 'More' }[lang]} (${l.length - 3})</span><span class="pm-close">${{ ru: 'Свернуть', kz: 'Жасыру', en: 'Less' }[lang]}</span></summary><div class="pm-list">${l.slice(3).map(y => `<span class="check">${y}</span>`).join('')}</div></details>` : ''}</div></div>`).join('')}</div>
+<div class="grid g3 pm-grid">${p.main.map(([cat, h, bud, per, d, l], mi) => `<div class="form prog-main" style="gap:16px"><span class="pm-cat"><span class="dir-ic pm-ic ic-${mi}" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${DIR_ICONS[mi]}</svg></span>${cat}</span><h3 class="h3">${h}</h3><dl class="pm-meta"><div><dt>${p.budgetL}</dt><dd>${bud}</dd></div><div><dt>${p.periodL}</dt><dd>${per}</dd></div></dl><div class="pm-rest"><p class="txt">${d}</p><hr style="border:0;border-top:1px solid var(--ln);margin:4px 0;width:100%">${l.slice(0, 3).map(y => `<span class="check">${y}</span>`).join('')}${l.length > 3 ? `<details class="pm-more"><summary><span class="pm-open">${{ ru: 'Подробнее', kz: 'Толығырақ', en: 'More' }[lang]} (${l.length - 3})</span><span class="pm-close">${{ ru: 'Свернуть', kz: 'Жасыру', en: 'Less' }[lang]}</span></summary><div class="pm-list">${l.slice(3).map(y => `<span class="check">${y}</span>`).join('')}</div></details>` : ''}</div></div>`).join('')}</div>
 </div></section>
 <section class="sec bg-li"><div class="wrap">${head(p.cardsEb, p.cardsH)}
 <div class="toolbar"><div class="chips" data-filter>${FILTERS.map((v, i) => `<button class="chip${i ? '' : ' on'}" data-value="${v}">${p.filters[i]}</button>`).join('')}</div>
@@ -409,4 +444,9 @@ ${area(c.f.message, 'message', c.f.messagePh)}${agree}<button class="btn btn-gol
 <section class="phero pat pat-bg" style="padding:120px 0"><div class="wrap"><span class="thx-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><h1 class="h1-page">${t.thanks.title}</h1><p class="lead">${t.thanks.p}</p><div class="btn-row mt-40"><a class="btn btn-gold" href="index.html">${t.thanks.btn}</a></div></div></section>`);
   page('404.html', t.nf.title, t.nf.p, '', `
 <section class="phero pat pat-bg" style="padding:120px 0"><div class="wrap"><h1 class="h1-page">${t.nf.h1}</h1><p class="lead">${t.nf.p}</p><div class="btn-row mt-40"><a class="btn btn-gold" href="${R}${pre}index.html">${t.thanks.btn}</a></div></div></section>`);
+  // Поисковый индекс: документы и публикации
+  for (const g of DOCS) for (const d of g.items) sAdd({ k: TOOLS[lang].doc, t: d[lang], p: g.g[lang], u: '/docs/' + d.file, w: 3 + ((lang === 'kz' && d.file === 'ustav-kz.pdf') || (lang !== 'kz' && d.file === 'ustav-ru.pdf') ? 1 : 0) });
+  sAdd({ k: TOOLS[lang].doc, t: ({ ru: 'Шаблон заявки на грант', kz: 'Грантқа өтінім үлгісі', en: 'Grant application template' })[lang], p: t.grants.title, u: '/docs/templates/' + lang + '/' + TPL[lang][0], w: 3 });
+  for (const m of MEDIA) sAdd({ k: TOOLS[lang].news, t: m.title, p: [m.source, m.date].filter(Boolean).join(' · '), u: m.url, w: 0 });
+  fs.writeFileSync(path.join(DIR, 'search.json'), JSON.stringify(SIDX));
 }
