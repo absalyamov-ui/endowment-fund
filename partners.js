@@ -40,7 +40,7 @@ module.exports = {
     { g: 'end', mono: 'iQ', logo: L('iqanat.png'), ru: 'Образовательный фонд iQanat', kz: 'iQanat білім беру қоры', en: 'iQanat Endowment Foundation' },
     { g: 'end', mono: 'ENU', logo: L('enu.png'), ru: 'ENU Endowment Fund', kz: 'ENU Endowment Fund', en: 'ENU Endowment Fund' },
     { g: 'end', mono: 'SEF', ru: 'Shoqan Endowment Fund', kz: 'Shoqan Endowment Fund', en: 'Shoqan Endowment Fund' },
-    { g: 'end', mono: 'SYF', logo: L('yessenov.png'), ru: 'Shakhmardan Yessenov Foundation', kz: 'Shakhmardan Yessenov Foundation', en: 'Shakhmardan Yessenov Foundation' },
+    { g: 'end', mono: 'YEF', logo: L('yessenov.png'), ru: 'Yessenov Endowment Fund', kz: 'Yessenov Endowment Fund', en: 'Yessenov Endowment Fund' },
     { g: 'end', mono: 'ISEF', logo: 'https://inclusive-endowment.kz/wp-content/uploads/2026/04/Artboard-1.svg', ru: 'Inclusive Sport Endowment Foundation', kz: 'Inclusive Sport Endowment Foundation', en: 'Inclusive Sport Endowment Foundation' },
     { g: 'end', mono: 'AIU', logo: 'https://aiu.kz/logo/logo_1.svg', ru: 'Фонд целевого капитала Astana International University', kz: 'Astana International University нысаналы капитал қоры', en: 'Astana International University Endowment Fund' },
     { g: 'end', mono: 'АА', ru: 'Корпоративный фонд «Аврора-Ала»', kz: '«Аврора-Ала» корпоративтік қоры', en: 'Aurora-Ala Corporate Foundation' },
