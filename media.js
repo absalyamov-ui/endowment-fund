@@ -11,12 +11,12 @@ module.exports = [
   "date": "08.10.2026",
   "source": "aurorafund.kz",
   "title": {
-   "ru": "Образовательная программа «Основы эндаументов и фандрайзинга» (ноябрь — декабрь 2026), спикер — Тимур Макенов (Аврора-Ала)",
-   "kz": "«Эндаументтер мен фандрайзинг негіздері» білім беру бағдарламасы (2026 жылғы қараша — желтоқсан), спикер — Тимур Макенов (Аврора-Ала)",
-   "en": "“Fundamentals of Endowments and Fundraising” educational programme (November–December 2026), speaker: Timur Makenov (Aurora-Ala)"
+   "ru": "Образовательная программа «Основы эндаументов и фандрайзинга» (ноябрь — декабрь 2026)",
+   "kz": "«Эндаументтер мен фандрайзинг негіздері» білім беру бағдарламасы (2026 жылғы қараша — желтоқсан)",
+   "en": "“Fundamentals of Endowments and Fundraising” educational programme (November–December 2026)"
   },
   "url": "https://aurorafund.kz/#education",
-  "image": ""
+  "image": "local:aurora-education-program.jpg"
  },
  {
   "date": "21.09.2026",
