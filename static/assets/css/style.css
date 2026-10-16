@@ -755,3 +755,11 @@ html:is(.sc-bw,.sc-wb,.sc-bl) body .hdr .nav a:not(.active){border-bottom-color:
 .cc .btn::after{content:none}
 @media (max-width:640px){.cc{left:12px;right:12px;bottom:12px;max-width:none}.cc .btn{flex:1}}
 .pp li{list-style:disc}
+/* Путеводитель «Эндаумент-фонды в Казахстане» */
+.gd h2{margin-top:36px}
+.gd-cmp td:first-of-type{color:var(--tx);font-weight:600}
+.gd-cmp th[scope=row]{background:none;color:var(--mu);font-weight:600}
+.gd-list{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gd-list li{background:var(--sf);border:1px solid var(--ln);padding:14px 18px;font-weight:600;color:var(--tx);font-size:15px;line-height:1.35}
+@media (max-width:1024px){.gd-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.gd-list{grid-template-columns:1fr}}

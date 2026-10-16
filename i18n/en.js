@@ -2,7 +2,7 @@
 module.exports = {
   html: 'en', og: 'en_US',
   name: 'Science and Education Endowment Fund',
-  homeTitle: 'Science and Education Endowment Fund — permanent capital for Kazakhstan’s science and education',
+  homeTitle: 'Science and Education Endowment Fund — the first endowment fund in Kazakhstan under the new law',
   ui: {
     langCode: 'EN',
     nav: ['About', 'Programmes', 'How to apply', 'For contributors', 'Reports', 'Media', 'Contacts'],
@@ -30,7 +30,7 @@ module.exports = {
     ['Open-ended', 'Innovation', 'Technology commercialisation', 'Technology transfer, start-ups and IP protection in energy, EdTech, biomedicine and engineering.'],
   ],
   index: {
-    desc: 'The Science and Education Endowment Fund builds permanent capital and directs its investment income to supporting education, science and innovation in Kazakhstan.',
+    desc: 'The Science and Education Endowment Fund is the first endowment fund in Kazakhstan under the new law. We build permanent capital and invest the income in education, science and innovation.',
     h1: 'Knowledge that serves the country for generations',
     lead: 'We build permanent endowment capital and direct its investment income to supporting education, science and innovation in Kazakhstan.',
     btnGrant: 'How to apply for a grant', heroPhoto: 'Photo: researchers in a laboratory',

@@ -50,6 +50,7 @@ const IC = {
   eye: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
 };
 const DOCS = require('./docs');
+const GUIDE = require('./guide');
 const TPLT = require('./templates/texts');
 const TPL = Object.fromEntries(Object.entries(TPLT).map(([l, x]) => [l, [x.app.file, x.desc.file, x.budget.file, x.cv.file, x.letter.file]]));
 const TPLZIP = Object.fromEntries(Object.entries(TPLT).map(([l, x]) => [l, x.zip]));
@@ -175,7 +176,7 @@ ${a11yBar}${searchDlg}`;
 <div><a class="logo" href="index.html"><img src="${logoW}" alt="${t.name}" width="306" height="52"></a>
 <p>${f.about}</p>
 ${SOCIAL}</div>
-<div><h4>${f.fund}</h4><ul>${['about.html', 'about.html#board', 'about.html#team', 'about.html#docs', 'careers.html'].map((h, i) => `<li><a href="${h}">${f.fundLinks[i]}</a></li>`).join('')}</ul></div>
+<div><h4>${f.fund}</h4><ul>${['about.html', 'about.html#board', 'about.html#team', 'about.html#docs', 'careers.html'].map((h, i) => `<li><a href="${h}">${f.fundLinks[i]}</a></li>`).join('')}<li><a href="endowment-kazakhstan.html">${GUIDE[lang].nav}</a></li></ul></div>
 <div><h4>${f.work}</h4><ul>${['programs.html', 'grants.html', 'reports.html', 'press.html'].map((h, i) => `<li><a href="${h}">${f.workLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.donors}</h4><ul>${['donate.html'].map((h, i) => `<li><a href="${h}">${f.donorLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.contacts}</h4><ul><li><a href="mailto:${EMAIL}">${EMAIL}</a></li><li>${f.address}</li><li>${f.hours}</li></ul></div>
@@ -185,6 +186,16 @@ ${SOCIAL}</div>
 <div class="cc" id="cc" role="region" aria-label="${CC[lang].aria}" hidden><p>${CC[lang].text} <a class="link" href="privacy.html">${CC[lang].link}</a>.</p><div class="cc-btns"><button type="button" class="btn btn-gold" data-cc="all">${CC[lang].all}</button><button type="button" class="btn btn-outline" data-cc="necessary">${CC[lang].nec}</button></div></div>
 <script>(function(){var b=document.getElementById('cc'),v;try{v=localStorage.getItem('cookie-consent')}catch(e){}if(!v)b.hidden=false;b.addEventListener('click',function(e){var c=e.target.getAttribute&&e.target.getAttribute('data-cc');if(!c)return;try{localStorage.setItem('cookie-consent',c)}catch(e){}if(c==='necessary'){window['ga-disable-${GA_ID}']=true}else if(window.__loadAnalytics){window.__loadAnalytics()}b.hidden=true})})()</script>`;
 
+  // Структурированные данные (schema.org) для поисковиков
+  const NAMES = Object.values(LANGS).map(l => l.name);
+  const ORG = { '@type': ['NGO', 'Organization'], '@id': SITE + '/#org', name: t.name, alternateName: [...NAMES.filter(n => n !== t.name), 'Корпоративный фонд целевого капитала «Эндаумент-фонд науки и образования»', 'Endowment Fund Kazakhstan'], url: SITE + '/' + pre, logo: SITE + '/icon-512.png', image: `${SITE}/assets/img/og-${lang}-v2.jpg`, email: EMAIL, description: t.index.desc, address: { '@type': 'PostalAddress', streetAddress: { ru: 'ул. Сарайшык, 11', kz: 'Сарайшық көшесі, 11', en: '11 Saraishyk St' }[lang], addressLocality: { ru: 'Астана', kz: 'Астана', en: 'Astana' }[lang], addressCountry: 'KZ' }, areaServed: { '@type': 'Country', name: 'Kazakhstan' }, knowsAbout: ['endowment', 'эндаумент', 'целевой капитал', 'эндаумент-фонд', 'наука', 'образование', 'инновации'], founder: { '@type': 'Organization', name: 'Alageum Electric' } };
+  let pageLd = null;
+  const jsonLd = (file, url, full, desc) => {
+    const g = [ORG, { '@type': 'WebSite', '@id': SITE + '/#site', url: SITE + '/', name: t.name, inLanguage: t.html, publisher: { '@id': SITE + '/#org' } }];
+    if (file !== 'index.html') g.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: u.home, item: SITE + '/' + pre }, { '@type': 'ListItem', position: 2, name: full.split(' — ')[0], item: url }] });
+    if (pageLd) g.push(...pageLd);
+    return `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': g }).replace(/</g, '\\u003c')}</script>`;
+  };
   function page(file, title, desc, active, body) {
     const full = file === 'index.html' ? t.homeTitle : `${title} — ${t.name}`;
     const alt = Object.keys(LANGS).map(l => `<link rel="alternate" hreflang="${HREFLANG[l]}" href="${SITE}/${PREFIX[l]}${file === 'index.html' ? '' : file}">`).join('\n');
@@ -224,6 +235,7 @@ ${alt}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="${SITE}/assets/img/og-${lang}-v2.jpg">
 <meta name="theme-color" content="#2B005B">
+${jsonLd(file, url, full, desc)}
 <link rel="icon" href="${R}favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="theme-color" content="#2B005B">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -265,7 +277,7 @@ ${agree}<button class="btn btn-gold" type="submit">${t.contacts.f.submit}</butto
 </div></section>
 <section class="sec bg-li"><div class="wrap split">
 <div><span class="eb">${x.aboutEb}</span><h2 class="h2">${x.aboutH}</h2></div>
-<div class="stack pt-44"><p class="txt" style="font-size:18px">${x.aboutP1}</p><p class="txt" style="font-size:18px">${x.aboutP2}</p><a class="link" href="about.html">${x.aboutLink} →</a></div>
+<div class="stack pt-44"><p class="txt" style="font-size:18px">${x.aboutP1}</p><p class="txt" style="font-size:18px">${x.aboutP2}</p><a class="link" href="about.html">${x.aboutLink} →</a><a class="link" href="endowment-kazakhstan.html">${GUIDE[lang].nav} →</a></div>
 </div></section>
 <section class="sec bg-wh"><div class="wrap">${head(x.dirEb, x.dirH)}
 ${(() => {
@@ -472,6 +484,33 @@ ${select(c.f.topic, 'topic', c.f.topics)}
 ${area(c.f.message, 'message', c.f.messagePh)}${agree}<button class="btn btn-gold" type="submit">${c.f.submit}</button></form>
 </div></section>
 `);
+
+  // ---------- ПУТЕВОДИТЕЛЬ: ЭНДАУМЕНТ-ФОНДЫ В КАЗАХСТАНЕ ----------
+  const G = GUIDE[lang];
+  const endList = PARTNERS_ALL.items.filter(i => i.g === 'end');
+  pageLd = [{ '@type': 'FAQPage', mainEntity: G.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }, { '@type': 'Article', headline: G.title, description: G.desc, inLanguage: t.html, author: { '@id': SITE + '/#org' }, publisher: { '@id': SITE + '/#org' }, about: { '@type': 'Thing', name: 'Endowment fund' }, datePublished: '2026-10-16', dateModified: '2026-10-16', mainEntityOfPage: `${SITE}/${pre}${G.file}` }];
+  page(G.file, G.title, G.desc, '', `
+${phero(G.crumb, G.title, G.lead)}
+<section class="sec bg-wh"><div class="wrap"><div class="pp gd">
+${G.sections.map(([h, ps]) => `<h2 class="h3">${h}</h2>${ps.map(p => `<p>${p}</p>`).join('')}`).join('\n')}
+</div></div></section>
+<section class="sec bg-dp"><div class="wrap"><h2 class="h2" style="color:#fff;margin-bottom:40px">${G.howH}</h2>
+<div class="steps">${G.how.map(([h, d], i) => `${i ? '<span class="step-arr" aria-hidden="true">→</span>' : ''}<div class="step"><b>0${i + 1}</b><h3 class="h3" style="color:#fff">${h}</h3><p class="txt" style="color:rgba(255,255,255,.8)">${d}</p></div>`).join('')}</div>
+</div></section>
+<section class="sec bg-li"><div class="wrap"><h2 class="h2" style="margin-bottom:32px">${G.cmpH}</h2>
+<div class="pp" style="max-width:none"><div class="pp-tbl"><table class="gd-cmp"><thead><tr>${G.cmpHead.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${G.cmp.map(r => `<tr>${r.map((c, i) => i ? `<td>${c}</td>` : `<th scope="row">${c}</th>`).join('')}</tr>`).join('')}</tbody></table></div></div>
+</div></section>
+<section class="sec bg-wh"><div class="wrap split split-5-7">
+<div class="stack"><span class="eb">${t.name}</span><h2 class="h2">${G.ourH}</h2></div>
+<div class="stack"><p class="txt" style="font-size:18px">${G.ourP}</p><div class="btn-row"><a class="btn btn-gold" href="donate.html">${G.ourBtn}</a><a class="btn btn-outline" href="grants.html">${G.ourBtn2}</a></div></div>
+</div></section>
+<section class="sec bg-li"><div class="wrap"><h2 class="h2">${G.listH}</h2><p class="txt mt-24" style="max-width:760px">${G.listP}</p>
+<ul class="gd-list">${endList.map(i => `<li>${i[lang]}</li>`).join('')}</ul>
+<a class="btn btn-outline mt-24" href="partners.html">${G.listBtn}</a>
+</div></section>
+<section class="sec bg-wh" id="faq"><div class="wrap"><h2 class="h2">${G.faqH}</h2>${faq(G.faq)}<p class="mt-40"><a class="btn btn-gold" href="contacts.html">${G.faqMore}</a></p></div></section>
+`);
+  pageLd = null;
 
   // ---------- ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ ----------
   const PP = {
