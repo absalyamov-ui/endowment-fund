@@ -151,7 +151,9 @@ function buildLang(lang, t) {
     return `<article class="card" data-cat="${cat}">${ph(t.progs[i][2], cls, null, img)}<div class="card-b"><div class="tags"><span class="tag ${tc}">${tag}</span>${withCat ? `<span class="tag vi">${catName}</span>` : ''}</div><h3 class="h3">${h}</h3><p class="txt">${txt}</p><a class="link" href="grants.html">${u.conditions} →</a></div></article>`;
   };
   const esc = v => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
-  const newsCard = (m) => `<article class="card media" data-cat="${m.date ? 'y' + m.date.slice(-4) : 'other'}">${m.image ? `<div class="ph has-img"><img src="${esc(m.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove('has-img');this.remove()"><span>${m.source}</span></div>` : `<div class="ph"><span>${m.source}</span></div>`}<div class="card-b"><div class="tags"><span class="tag vi">${m.source}</span>${m.date ? `<span class="date">${m.date}</span>` : ''}</div><h3 class="h3"><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.title)}</a></h3><a class="link" href="${esc(m.url)}" target="_blank" rel="noopener">${t.press.readSrc} ↗</a></div></article>`;
+  const tr = v => (v && typeof v === 'object') ? (v[lang] || v.ru) : v;
+  const mImg = s => s.startsWith('local:') ? `${R}assets/img/photos/${s.slice(6)}` : s;
+  const newsCard = (m) => `<article class="card media" data-cat="${m.date ? 'y' + m.date.slice(-4) : 'other'}">${m.image ? `<div class="ph has-img"><img src="${esc(mImg(m.image))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove('has-img');this.remove()"><span>${m.source}</span></div>` : `<div class="ph"><span>${m.source}</span></div>`}<div class="card-b"><div class="tags"><span class="tag vi">${m.source}</span>${m.date ? `<span class="date">${m.date}</span>` : ''}</div><h3 class="h3"><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(tr(m.title))}</a></h3>${m.text ? `<p class="txt">${esc(tr(m.text))}</p>` : ''}<a class="link" href="${esc(m.url)}" target="_blank" rel="noopener">${t.press.readSrc} ↗</a></div></article>`;
   const partners = PARTNERS.map(([f, n, h]) => `<div class="logo-box"><img src="${R}assets/img/partners/${f}.png" alt="${n}" style="max-height:${h}px" loading="lazy"></div>`).join('');
   const people = (n, roles) => Array.from({ length: n }, (_, i) => `<div class="person">${ph(u.portrait, i % 2 ? '' : 'dark')}<h3 class="h3">${u.fullName}</h3><p class="txt">${roles[i % roles.length]}</p></div>`).join('');
 
@@ -490,6 +492,6 @@ ${phero(t.footer.privacy, t.footer.privacy, PP)}
   // Поисковый индекс: документы и публикации
   for (const g of DOCS) for (const d of g.items) sAdd({ k: TOOLS[lang].doc, t: d[lang], p: g.g[lang], u: '/docs/' + d.file, w: 3 + ((lang === 'kz' && d.file === 'ustav-kz.pdf') || (lang !== 'kz' && d.file === 'ustav-ru.pdf') ? 1 : 0) });
   sAdd({ k: TOOLS[lang].doc, t: ({ ru: 'Шаблон заявки на грант', kz: 'Грантқа өтінім үлгісі', en: 'Grant application template' })[lang], p: t.grants.title, u: '/docs/templates/' + lang + '/' + TPL[lang][0], w: 3 });
-  for (const m of MEDIA) sAdd({ k: TOOLS[lang].news, t: m.title, p: [m.source, m.date].filter(Boolean).join(' · '), u: m.url, w: 0 });
+  for (const m of MEDIA) sAdd({ k: TOOLS[lang].news, t: tr(m.title), p: [m.source, m.date].filter(Boolean).join(' · '), u: m.url, w: 0 });
   fs.writeFileSync(path.join(DIR, 'search.json'), JSON.stringify(SIDX));
 }
