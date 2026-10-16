@@ -66,8 +66,37 @@ const EMAIL = 'endowment@alageum.com';
 // Аналитика: вставьте номера счётчиков — код появится на всех страницах автоматически
 const YM_ID = '113322591'; // Яндекс Метрика, например '98765432'
 const GA_ID = 'G-1W1CD3PB50'; // Google Analytics 4, например 'G-XXXXXXXXXX'
-const ANALYTICS = (YM_ID ? `<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');ym(${YM_ID},'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});window.__ym=${YM_ID};</script><noscript><div><img src="https://mc.yandex.ru/watch/${YM_ID}" style="position:absolute;left:-9999px" alt=""></div></noscript>\n` : '')
-  + (GA_ID ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');</script>\n` : '');
+// Аналитика загружается, если посетитель не выбрал «Только необходимые» в плашке cookies (localStorage 'cookie-consent').
+// Вебвизор отключён: он записывает ввод в формы.
+const ANALYTICS_FN = 'function(){if(window.__aL)return;window.__aL=1;'
+  + (YM_ID ? `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');ym(${YM_ID},'init',{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:false});window.__ym=${YM_ID};` : '')
+  + (GA_ID ? `var g=document.createElement('script');g.async=1;g.src='https://www.googletagmanager.com/gtag/js?id=${GA_ID}';document.head.appendChild(g);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config','${GA_ID}');` : '')
+  + '}';
+const ANALYTICS = (YM_ID || GA_ID) ? `<script>window.__loadAnalytics=${ANALYTICS_FN};(function(){var c;try{c=localStorage.getItem('cookie-consent')}catch(e){}if(c!=='necessary')window.__loadAnalytics()})()</script>\n` : '';
+// Плашка cookies
+const CC = {
+  ru: { text: 'Мы используем cookies и сервисы веб-аналитики (Яндекс Метрика, Google Analytics), чтобы улучшать сайт. Подробнее — в', link: 'Политике конфиденциальности', all: 'Принять', nec: 'Только необходимые', aria: 'Уведомление о cookies' },
+  kz: { text: 'Сайтты жақсарту үшін cookies файлдары мен веб-талдау сервистерін (Яндекс Метрика, Google Analytics) пайдаланамыз. Толығырақ —', link: 'Құпиялылық саясатында', all: 'Қабылдау', nec: 'Тек қажеттілері', aria: 'Cookies туралы хабарлама' },
+  en: { text: 'We use cookies and web analytics (Yandex Metrica, Google Analytics) to improve the website. Learn more in our', link: 'Privacy policy', all: 'Accept', nec: 'Essential only', aria: 'Cookie notice' }
+};
+// Политика конфиденциальности: тексты в content/privacy/<lang>.md (заголовки ##, абзацы, списки -, таблицы |, **жирный**)
+function md(src) {
+  const esc = x => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const inl = x => esc(x).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(https?:\/\/[^\s)<]+[^\s)<.,;])/g, '<a class="link" href="$1" target="_blank" rel="noopener">$1</a>')
+    .replace(/([\w.+-]+@[\w-]+\.[\w.]+\w)/g, '<a class="link" href="mailto:$1">$1</a>');
+  return src.trim().split(/\n\s*\n/).map(b => {
+    const lines = b.split('\n');
+    if (b.startsWith('## ')) return `<h2 class="h3">${inl(b.slice(3))}</h2>`;
+    if (lines.every(l => l.startsWith('- '))) return `<ul>${lines.map(l => `<li>${inl(l.slice(2))}</li>`).join('')}</ul>`;
+    if (lines.every(l => l.startsWith('|'))) {
+      const rows = lines.filter(l => !/^\|\s*-/.test(l)).map(l => l.replace(/^\||\|$/g, '').split('|').map(c => c.trim()));
+      return `<div class="pp-tbl"><table><thead><tr>${rows[0].map(c => `<th>${inl(c)}</th>`).join('')}</tr></thead><tbody>${rows.slice(1).map(r => `<tr>${r.map(c => `<td>${inl(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+    }
+    return `<p>${inl(lines.join(' '))}</p>`;
+  }).join('\n');
+}
+const PRIVACY = Object.fromEntries(['ru', 'kz', 'en'].map(l => [l, md(fs.readFileSync(path.join(__dirname, 'content', 'privacy', `${l}.md`), 'utf8'))]));
 const FS = 'https://formsubmit.co/' + EMAIL; // пересылка форм на почту (FormSubmit)
 const FORM_SUBJ = { feedback: 'Обратная связь', contact: 'Обращение (Контакты)', contributor: 'Заявка вкладчика', 'grant-application': 'Заявка на грант', subscribe: 'Подписка на новости (СМИ)', resume: 'Резюме (Вакансии)' };
 const SOCIAL = `<div class="soc"><a class="soc-ic" href="https://www.facebook.com/timur.makenov" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 176 176" width="36" height="36" aria-hidden="true"><path fill="currentColor" d="M152 0H24A24 24 0 0 0 0 24v128a24 24 0 0 0 24 24h128a24 24 0 0 0 24-24V24a24 24 0 0 0-24-24m-36.12 77.59-1.77 15.32a2.860 2.86 0 0 1-2.82 2.57h-16l-.08 45.45a2.05 2.05 0 0 1-2 2.07H77a2 2 0 0 1-2-2.08V95.48H63a2.87 2.87 0 0 1-2.84-2.9l-.06-15.33a2.88 2.88 0 0 1 2.84-2.92H75v-14.8C75 42.350 85.2 33 100.16 33h12.26a2.88 2.88 0 0 1 2.85 2.92v12.91a2.88 2.88 0 0 1-2.85 2.92h-7.52c-8.13 0-9.71 4-9.71 9.77v12.81h17.87a2.89 2.89 0 0 1 2.82 3.26"/></svg></a><a class="soc-ic" href="https://www.instagram.com/makenov.t.k" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 512 512" width="36" height="36" aria-hidden="true"><g fill="currentColor"><path d="M301 256c0 24.852-20.148 45-45 45s-45-20.148-45-45 20.148-45 45-45 45 20.148 45 45m0 0"/><path d="M332 120H180c-33.086 0-60 26.914-60 60v152c0 33.086 26.914 60 60 60h152c33.086 0 60-26.914 60-60V180c0-33.086-26.914-60-60-60m-76 211c-41.355 0-75-33.645-75-75s33.645-75 75-75 75 33.645 75 75-33.645 75-75 75m86-146c-8.285 0-15-6.715-15-15s6.715-15 15-15 15 6.715 15 15-6.715 15-15 15m0 0"/><path d="M377 0H135C60.563 0 0 60.563 0 135v242c0 74.438 60.563 135 135 135h242c74.438 0 135-60.562 135-135V135C512 60.563 451.438 0 377 0m45 332c0 49.625-40.375 90-90 90H180c-49.625 0-90-40.375-90-90V180c0-49.625 40.375-90 90-90h152c49.625 0 90 40.375 90 90zm0 0"/></g></svg></a><a class="soc-ic" href="https://www.linkedin.com/in/timur-makenov-2b9319193" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 176 176" width="36" height="36" aria-hidden="true"><path fill="currentColor" d="M152 0H24A24 24 0 0 0 0 24v128a24 24 0 0 0 24 24h128a24 24 0 0 0 24-24V24a24 24 0 0 0-24-24M60 139.28a3.710 3.71 0 0 1-3.71 3.72H40.48a3.71 3.71 0 0 1-3.72-3.72V73a3.72 3.72 0 0 1 3.72-3.72h15.81A3.72 3.72 0 0 1 60 73zM48.38 63a15 15 0 1 1 15-15 15 15 0 0 1-15 15m94.26 76.54a3.410 3.41 0 0 1-3.42 3.42h-17a3.41 3.41 0 0 1-3.42-3.42v-31.05c0-4.64 1.36-20.32-12.13-20.32-10.45 0-12.580 10.73-13 15.55v35.86A3.42 3.42 0 0 1 90.3 143H73.88a3.41 3.41 0 0 1-3.41-3.42V72.71a3.41 3.41 0 0 1 3.41-3.42H90.3a3.42 3.42 0 0 1 3.42 3.42v5.78c3.88-5.83 9.63-10.31 21.9-10.31 27.18 0 27 25.38 27 39.320z"/></svg></a></div>`;
@@ -110,7 +139,8 @@ function buildLang(lang, t) {
   const field = (label, name, p, type = 'text') => `<div class="field"><label for="f-${name}">${label}</label><input id="f-${name}" name="${name}" type="${type}" placeholder="${p}" required></div>`;
   const select = (label, name, opts) => `<div class="field"><label for="f-${name}">${label}</label><select id="f-${name}" name="${name}" required><option value="">${u.choose}</option>${opts.map(o => `<option>${o}</option>`).join('')}</select></div>`;
   const area = (label, name, p) => `<div class="field"><label for="f-${name}">${label}</label><textarea id="f-${name}" name="${name}" placeholder="${p}" required></textarea></div>`;
-  const agree = `<label class="agree"><input type="checkbox" required> ${u.agree}</label>`;
+  const agreeTxt = `<span>${u.agree} · <a class="link" href="privacy.html" target="_blank" rel="noopener">${t.footer.privacy}</a></span>`;
+  const agree = `<label class="agree"><input type="checkbox" required> ${agreeTxt}</label>`;
   const hidden = name => `<input type="hidden" name="_subject" value="Сайт endowment-fund.kz: ${FORM_SUBJ[name]} [${lang.toUpperCase()}]"><input type="hidden" name="_next" value="${SITE}/${pre}thanks.html"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_template" value="table"><input type="hidden" name="Форма" value="${FORM_SUBJ[name]}"><input type="hidden" name="Язык" value="${lang}"><input type="text" name="_honey" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">`;
   const formOpen = (name, extra = '') => `<form class="form"${extra} name="${name}" method="POST" action="${FS}">${hidden(name)}`;
   const phero = (crumb, title, lead) => `<section class="phero pat pat-bg"><div class="wrap"><div class="crumbs"><a href="index.html">${u.home}</a> &nbsp;/&nbsp; ${crumb}</div><h1 class="h1-page">${title}</h1>${lead ? `<p class="lead">${lead}</p>` : ''}</div></section>`;
@@ -148,8 +178,10 @@ ${SOCIAL}</div>
 <div><h4>${f.donors}</h4><ul>${['donate.html'].map((h, i) => `<li><a href="${h}">${f.donorLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.contacts}</h4><ul><li><a href="mailto:${EMAIL}">${EMAIL}</a></li><li>${f.address}</li><li>${f.hours}</li></ul></div>
 </div>
-<div class="ftr-bot"><span>© <span data-year>2026</span> ${t.name}</span><span><a href="#">${f.privacy}</a> · <a href="${R}sitemap.xml">${f.sitemap}</a></span></div>
-</div></footer>`;
+<div class="ftr-bot"><span>© <span data-year>2026</span> ${t.name}</span><span><a href="privacy.html">${f.privacy}</a> · <a href="${R}sitemap.xml">${f.sitemap}</a></span></div>
+</div></footer>
+<div class="cc" id="cc" role="region" aria-label="${CC[lang].aria}" hidden><p>${CC[lang].text} <a class="link" href="privacy.html">${CC[lang].link}</a>.</p><div class="cc-btns"><button type="button" class="btn btn-gold" data-cc="all">${CC[lang].all}</button><button type="button" class="btn btn-outline" data-cc="necessary">${CC[lang].nec}</button></div></div>
+<script>(function(){var b=document.getElementById('cc'),v;try{v=localStorage.getItem('cookie-consent')}catch(e){}if(!v)b.hidden=false;b.addEventListener('click',function(e){var c=e.target.getAttribute&&e.target.getAttribute('data-cc');if(!c)return;try{localStorage.setItem('cookie-consent',c)}catch(e){}if(c==='necessary'){window['ga-disable-${GA_ID}']=true}else if(window.__loadAnalytics){window.__loadAnalytics()}b.hidden=true})})()</script>`;
 
   function page(file, title, desc, active, body) {
     const full = file === 'index.html' ? t.homeTitle : `${title} — ${t.name}`;
@@ -209,7 +241,7 @@ ${['thanks.html', '404.html'].includes(file) ? '' : `<dialog class="fb-dlg" aria
 <div class="frow"><div class="field"><label for="fb-name">${t.contacts.f.name}</label><input id="fb-name" name="name" required placeholder="${u.namePh}"></div><div class="field"><label for="fb-email">E-mail</label><input id="fb-email" name="email" type="email" required placeholder="name@mail.kz"></div></div>
 <div class="field"><label for="fb-topic">${t.contacts.f.topic}</label><select id="fb-topic" name="topic" required><option value="">${u.choose}</option>${t.contacts.f.topics.map(o => `<option>${o}</option>`).join('')}</select></div>
 <div class="field"><label for="fb-msg">${t.contacts.f.message}</label><textarea id="fb-msg" name="message" required placeholder="${t.contacts.f.messagePh}"></textarea></div>
-<label class="agree"><input type="checkbox" required> ${u.agree}</label><button class="btn btn-gold" type="submit">${t.contacts.f.submit}</button>
+${agree}<button class="btn btn-gold" type="submit">${t.contacts.f.submit}</button>
 <p class="fb-err" hidden>${FBT[lang].err} <a href="mailto:${EMAIL}">${EMAIL}</a></p></form></div>
 <div class="fb-ok" hidden><span class="fb-ok-ic" aria-hidden="true">✓</span><h2 class="h2 h2-sm">${FBT[lang].ok}</h2><p class="txt">${FBT[lang].okP}</p><button class="btn btn-outline fb-close2" type="button">${FBT[lang].close}</button></div>
 </div></dialog>`}
@@ -386,7 +418,7 @@ ${(() => { const ys = [...new Set(MEDIA.filter(m => m.date).map(m => m.date.slic
 <div class="more-wrap"><button class="btn btn-outline more-btn" type="button">${{ ru: 'Показать ещё', kz: 'Тағы көрсету', en: 'Show more' }[lang]}</button></div>
 </div></section>
 <section class="sec bg-vi" style="padding:72px 0"><div class="wrap cta"><div><span class="eb">${s.journEb}</span><h2 class="h2 h2-sm">${s.journH}</h2><p style="opacity:.8;margin-top:8px"><a href="mailto:${EMAIL}">${EMAIL}</a></p></div>
-<form class="sub" name="subscribe" method="POST" action="${FS}">${hidden('subscribe')}<label class="visually-hidden" for="sub-email">E-mail</label><input id="sub-email" type="email" name="email" placeholder="${s.subPh}" required><button class="btn btn-gold" type="submit">${s.subBtn}</button></form></div></section>
+<form class="sub" name="subscribe" method="POST" action="${FS}">${hidden('subscribe')}<label class="visually-hidden" for="sub-email">E-mail</label><input id="sub-email" type="email" name="email" placeholder="${s.subPh}" required><button class="btn btn-gold" type="submit">${s.subBtn}</button>${agree}</form></div></section>
 `);
 
   // ---------- ПАРТНЁРЫ ----------
@@ -437,6 +469,17 @@ ${formOpen('contact')}<div class="frow">${field(c.f.name, 'name', u.namePh)}${fi
 ${select(c.f.topic, 'topic', c.f.topics)}
 ${area(c.f.message, 'message', c.f.messagePh)}${agree}<button class="btn btn-gold" type="submit">${c.f.submit}</button></form>
 </div></section>
+`);
+
+  // ---------- ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ ----------
+  const PP = {
+    ru: 'Как Эндаумент-фонд науки и образования собирает, хранит и защищает персональные данные посетителей сайта.',
+    kz: 'Ғылым және білім эндаумент-қоры сайтқа келушілердің дербес деректерін қалай жинайды, сақтайды және қорғайды.',
+    en: 'How the Science and Education Endowment Fund collects, stores and protects the personal data of website visitors.'
+  }[lang];
+  page('privacy.html', t.footer.privacy, PP, '', `
+${phero(t.footer.privacy, t.footer.privacy, PP)}
+<section class="sec bg-wh"><div class="wrap"><div class="pp">${PRIVACY[lang]}</div></div></section>
 `);
 
   // ---------- СПАСИБО / 404 ----------
