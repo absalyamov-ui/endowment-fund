@@ -1,6 +1,13 @@
 // Публикации в СМИ (раздел «Масс-медиа»). Источник: перечень материалов от 01.10.2026.
 module.exports = [
  {
+  "date": "08.10.2026",
+  "source": "aurorafund.kz",
+  "title": "В Астане прошла VI Профессиональная встреча эндаумент-фондов Казахстана (Аврора-Ала)",
+  "url": "https://aurorafund.kz/tpost/u7fasokti1-v-astane-proshla-vi-professionalnaya-vst",
+  "image": "https://static.tildacdn.com/tild3736-3031-4061-a666-616236343338/noroot.png"
+ },
+ {
   "date": "21.09.2026",
   "source": "facebook.com",
   "title": {
