@@ -18,7 +18,7 @@ module.exports = {
     fundLinks: ['About the Fund', 'Board of Trustees', 'Management', 'Documents', 'Careers'],
     workLinks: ['Programmes and projects', 'How to apply', 'Reports', 'Media'],
     donorLinks: ['For contributors', 'Corporate partners', 'Our contributors'],
-    address: '11A Saraishyk St, Astana', hours: 'Mon–Fri, 9:00–18:00',
+    address: '11 Saraishyk St, Astana', hours: 'Mon–Fri, 9:00–18:00',
     privacy: 'Privacy policy', sitemap: 'Sitemap',
   },
   progs: [
@@ -158,7 +158,7 @@ module.exports = {
     title: 'Contacts', desc: 'Contacts of the Science and Education Endowment Fund: address, phone numbers, department emails and a feedback form.',
     lead: 'We welcome questions, partnership proposals and enquiries from the public.',
     allQ: 'For all enquiries',
-    mapAria: 'Map: Fund office', office: 'Fund office', addr: '11A Saraishyk St, Astana',
+    mapAria: 'Map: Fund office', office: 'Fund office', addr: '11 Saraishyk St, Astana',
     hours: 'Mon–Fri, 9:00–18:00<br>Visitors by appointment', route: 'Get directions',
     fbEb: 'Feedback', fbH: 'Write to us', fbP: 'We reply within 3 working days. Official public enquiries are handled within the time limits set by the law of Kazakhstan.',
     f: { name: 'Name', topic: 'Topic', topics: ['General question', 'Contribution', 'Partnership', 'Grant programmes', 'Public enquiry', 'Media'], message: 'Message', messagePh: 'Your message', submit: 'Send' },
