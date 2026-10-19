@@ -183,7 +183,7 @@ ${a11yBar}${searchDlg}`;
 ${SOCIAL}</div>
 <div><h4>${f.fund}</h4><ul>${['about.html', 'about.html#board', 'about.html#team', 'about.html#docs', 'careers.html'].map((h, i) => `<li><a href="${h}">${f.fundLinks[i]}</a></li>`).join('')}<li><a href="brand.html">${BRAND[lang].title}</a></li><li><a href="endowment-kazakhstan.html">${GUIDE[lang].nav}</a></li></ul></div>
 <div><h4>${f.work}</h4><ul>${['programs.html', 'grants.html', 'reports.html', 'press.html'].map((h, i) => `<li><a href="${h}">${f.workLinks[i]}</a></li>`).join('')}</ul></div>
-<div><h4>${f.donors}</h4><ul>${['donate.html'].map((h, i) => `<li><a href="${h}">${f.donorLinks[i]}</a></li>`).join('')}</ul></div>
+<div><h4>${f.donors}</h4><ul>${[1, 2, 4, 5].map(k => SUB['donate.html'][k]).map(x => `<li><a href="${x.href}">${x[lang]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.contacts}</h4><ul><li><a href="mailto:${EMAIL}">${EMAIL}</a></li><li>${f.address}</li><li>${f.hours}</li></ul></div>
 </div>
 <div class="ftr-bot"><span>© <span data-year>2026</span> ${t.name}</span><span><a href="privacy.html">${f.privacy}</a> · <a href="${R}sitemap.xml">${f.sitemap}</a></span></div>
@@ -393,7 +393,7 @@ ${phero(d.title, d.h1, d.lead)}
 <section class="sec bg-li"><div class="wrap">${head(d.whyEb, d.whyH)}
 <div class="grid g4 why">${d.why.map(([h, x], i) => `<div class="vline"><b class="why-n">0${i + 1}</b><h3 class="h3" style="font-size:20px">${h}</h3><p class="txt">${x}</p></div>`).join('')}</div></div></section>
 <section class="sec bg-wh"><div class="wrap">${head(d.fmtEb, d.fmtH, `<a class="btn btn-outline" href="#apply">${d.fmtBtn}</a>`)}
-<div class="grid g3">${d.fmts.map(([h, sub, x], i) => `<div class="mv ${['bg-li', 'bg-vi', 'bg-dp'][i]}"><span style="color:var(--go);font-weight:700;font-size:15px">${sub}</span><h3 class="h3" style="font-size:28px">${h}</h3><p class="txt">${x}</p></div>`).join('')}</div></div></section>
+<div class="grid g3">${d.fmts.map(([h, sub, x], i) => `<div class="mv ${['bg-li', 'bg-vi', 'bg-dp'][i]}"><span class="fmt-sub">${sub}</span><h3 class="h3" style="font-size:28px">${h}</h3><p class="txt">${x}</p></div>`).join('')}</div></div></section>
 <section class="sec bg-li"><div class="wrap">${head(d.reqEb, d.reqH)}
 <div class="mv bg-dp req-wide"><dl class="req" style="margin:0">${d.req.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></div></div></section>
 <section class="sec bg-wh"><div class="wrap">${head(d.faqEb, d.faqH)}${faq(d.faq)}</div></section>

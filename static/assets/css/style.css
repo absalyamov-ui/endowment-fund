@@ -850,3 +850,15 @@ html:is(.sc-bw,.sc-wb,.sc-bl) body .hdr .nav a:not(.active){border-bottom-color:
 :root[data-theme="dark"] .tpop button:hover{background:rgba(255,255,255,.08)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.tpop{background:var(--sf)}}
 html.a11y .tpop{background:var(--sf);-webkit-backdrop-filter:none;backdrop-filter:none}
+
+/* Контраст: кнопки без системной заливки; мелкий золотой текст на светлом фоне → фиолетовый (брендбук, WCAG AA) */
+button.btn{background-color:transparent;font-family:inherit}
+button.btn-gold{background-color:var(--go)}
+button.btn-dark{background-color:var(--dp)}
+.person .chair{color:var(--vt)}
+.numbox em{color:var(--vt)}
+.bg-dp .numbox em,.bg-vi .numbox em{color:var(--go)}
+.why .why-n,.vline .why-n{color:var(--vt)}
+.fmt-sub{font-weight:700;font-size:15px;color:var(--go)}
+.bg-li .fmt-sub{color:var(--vt)}
+.bg-vi .fmt-sub{color:#F7F3ED}

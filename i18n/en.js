@@ -16,7 +16,7 @@ module.exports = {
     about: 'Permanent capital whose income supports science and education in Kazakhstan.',
     fund: 'The Fund', work: 'Our work', donors: 'For contributors', contacts: 'Contacts',
     fundLinks: ['About the Fund', 'Board of Trustees', 'Management', 'Documents', 'Careers'],
-    workLinks: ['Programmes and projects', 'How to apply', 'Reports', 'Media'],
+    workLinks: ['Programmes and projects', 'Grants', 'Reports', 'Media'],
     donorLinks: ['For contributors', 'Corporate partners', 'Our contributors'],
     address: '11 Saraishyk St, Astana', hours: 'Mon–Fri, 9:00–18:00',
     privacy: 'Privacy policy', sitemap: 'Sitemap',
