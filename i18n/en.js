@@ -5,7 +5,7 @@ module.exports = {
   homeTitle: 'Science and Education Endowment Fund — the first endowment fund in Kazakhstan under the new law',
   ui: {
     langCode: 'EN',
-    nav: ['About', 'Programmes', 'How to apply', 'For contributors', 'Reports', 'Media', 'Contacts'],
+    nav: ['About', 'Programmes', 'Grants', 'For contributors', 'Reports', 'Media', 'Contacts'],
     support: 'Contribute', donate: 'Make a contribution', menu: 'Menu', mainMenu: 'Main menu', mobileMenu: 'Mobile menu',
     toHome: 'home page', home: 'Home', readMore: 'Read', allPrograms: 'All programmes', allNews: 'All news',
     conditions: 'Eligibility and terms', download: 'Download', photo: 'Photo', portrait: 'Portrait', logo: 'Logo', progPhoto: 'Programme photo',

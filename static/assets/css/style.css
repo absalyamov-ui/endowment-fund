@@ -566,13 +566,13 @@ html[lang="kk"] .nav{gap:14px}html[lang="kk"] .nav a{font-size:14.5px}
 .mtools{display:none}
 @media (max-width:1599px) and (min-width:1200px){.tool{width:32px;height:32px}.tools{gap:4px}}
 @media (max-width:1199px){
-  .hdr-act .tools{display:flex}.hdr-act .tool-wide{display:none}
+  .hdr-act .tools{display:flex}.hdr-act .tmore{display:none}
   .hdr-act .tool{width:44px;height:44px;border-color:var(--ln)}
   .mtools{display:flex;flex-direction:column;gap:10px;margin-top:20px}
   .mtools button{display:flex;align-items:center;gap:12px;background:none;border:1px solid rgba(255,255,255,.25);color:#fff;padding:12px 16px;font:600 16px var(--font);cursor:pointer;text-align:left}
 }
 html[lang="kk"] .hdr-act .tools{display:flex}
-@media (min-width:1200px) and (max-width:1365px){html[lang="kk"] .hdr-act .tool-wide{display:none}html[lang="kk"] .hdr-act .tool{width:44px;height:44px}html[lang="kk"] .mtools{display:flex;flex-direction:column;gap:10px;margin-top:20px}html[lang="kk"] .mtools button{display:flex;align-items:center;gap:12px;background:none;border:1px solid rgba(255,255,255,.25);color:#fff;padding:12px 16px;font:600 16px var(--font);cursor:pointer;text-align:left}}
+@media (min-width:1200px) and (max-width:1365px){html[lang="kk"] .hdr-act .tmore{display:none}html[lang="kk"] .hdr-act .tool-s{display:flex}html[lang="kk"] .hdr-act .tool{width:44px;height:44px}html[lang="kk"] .mtools{display:flex;flex-direction:column;gap:10px;margin-top:20px}html[lang="kk"] .mtools button{display:flex;align-items:center;gap:12px;background:none;border:1px solid rgba(255,255,255,.25);color:#fff;padding:12px 16px;font:600 16px var(--font);cursor:pointer;text-align:left}}
 
 /* ===== Тёмная тема ===== */
 :root[data-theme="dark"]{--li:#120A24;--sf:#1D1236;--ink:#E9E3F5;--mu:#B6ACCB;--ln:#352857;--tx:#F1EAFF;--vt:#C7ABF2;color-scheme:dark}
@@ -833,3 +833,20 @@ html:is(.sc-bw,.sc-wb,.sc-bl) body .hdr .nav a:not(.active){border-bottom-color:
 .mg.open .mg-l{display:block}
 .mnav .mg-l a{font-size:16px;font-weight:500;padding:11px 0;border-bottom:0;color:rgba(255,255,255,.85)}
 .mnav .mg-l a::after{content:none}
+
+/* Всплывающее меню инструментов (поиск, тема, версия для слабовидящих) */
+.tmore{position:relative}
+.tool-s{display:none}
+@media (max-width:1199px){.hdr-act .tool-s{display:flex}}
+.tpop{position:absolute;top:calc(100% + 12px);right:0;min-width:270px;padding:8px;display:flex;flex-direction:column;gap:2px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(43,0,91,.12);border-radius:14px;box-shadow:0 24px 48px -16px rgba(43,0,91,.35);z-index:70;transform-origin:top right;animation:tpop .18s ease-out}
+.tpop[hidden]{display:none}
+@keyframes tpop{from{opacity:0;transform:translateY(-4px) scale(.97)}to{opacity:1;transform:none}}
+.tpop button{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;border-radius:9px;padding:11px 14px;font:600 14px var(--font);color:var(--tx);cursor:pointer;text-align:left;white-space:nowrap}
+.tpop button svg{flex:none;color:var(--vt)}
+.tpop button:hover,.tpop button:focus-visible{background:rgba(110,63,163,.12)}
+.tpop button[aria-pressed="true"],.tpop button[aria-expanded="true"]{background:rgba(43,0,91,.9);color:#fff}
+.tpop button[aria-pressed="true"] svg,.tpop button[aria-expanded="true"] svg{color:var(--go)}
+:root[data-theme="dark"] .tpop{background:rgba(29,18,54,.7);border-color:rgba(255,255,255,.12)}
+:root[data-theme="dark"] .tpop button:hover{background:rgba(255,255,255,.08)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.tpop{background:var(--sf)}}
+html.a11y .tpop{background:var(--sf);-webkit-backdrop-filter:none;backdrop-filter:none}

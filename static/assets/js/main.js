@@ -70,6 +70,16 @@ if (mnav) mnav.addEventListener('click', e => {
   const a = e.target.closest('a[href*="#"]');
   if (a && mnav.classList.contains('open') && a.pathname === location.pathname) burger.click();
 });
+// Всплывающее меню инструментов
+(function () {
+  const btn = document.querySelector('.tool-more'), pop = document.getElementById('tpop');
+  if (!btn || !pop) return;
+  const set = o => { pop.hidden = !o; btn.setAttribute('aria-expanded', o); };
+  btn.addEventListener('click', e => { e.stopPropagation(); set(pop.hidden); if (!pop.hidden) pop.querySelector('button').focus(); });
+  pop.addEventListener('click', e => { if (e.target.closest('[data-search],[data-a11y-toggle]')) set(false); });
+  document.addEventListener('click', e => { if (!pop.hidden && !e.target.closest('.tmore')) set(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pop.hidden) { set(false); btn.focus(); } });
+})();
 // Подменю на компьютере: Esc закрывает
 document.querySelectorAll('.ni').forEach(n => n.addEventListener('keydown', e => { if (e.key === 'Escape') { document.activeElement.blur(); } }));
 
