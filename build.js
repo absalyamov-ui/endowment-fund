@@ -51,6 +51,7 @@ const IC = {
 };
 const DOCS = require('./docs');
 const GUIDE = require('./guide');
+const BRAND = require('./brandpage');
 const TPLT = require('./templates/texts');
 const TPL = Object.fromEntries(Object.entries(TPLT).map(([l, x]) => [l, [x.app.file, x.desc.file, x.budget.file, x.cv.file, x.letter.file]]));
 const TPLZIP = Object.fromEntries(Object.entries(TPLT).map(([l, x]) => [l, x.zip]));
@@ -176,7 +177,7 @@ ${a11yBar}${searchDlg}`;
 <div><a class="logo" href="index.html"><img src="${logoW}" alt="${t.name}" width="306" height="52"></a>
 <p>${f.about}</p>
 ${SOCIAL}</div>
-<div><h4>${f.fund}</h4><ul>${['about.html', 'about.html#board', 'about.html#team', 'about.html#docs', 'careers.html'].map((h, i) => `<li><a href="${h}">${f.fundLinks[i]}</a></li>`).join('')}<li><a href="endowment-kazakhstan.html">${GUIDE[lang].nav}</a></li></ul></div>
+<div><h4>${f.fund}</h4><ul>${['about.html', 'about.html#board', 'about.html#team', 'about.html#docs', 'careers.html'].map((h, i) => `<li><a href="${h}">${f.fundLinks[i]}</a></li>`).join('')}<li><a href="brand.html">${BRAND[lang].title}</a></li><li><a href="endowment-kazakhstan.html">${GUIDE[lang].nav}</a></li></ul></div>
 <div><h4>${f.work}</h4><ul>${['programs.html', 'grants.html', 'reports.html', 'press.html'].map((h, i) => `<li><a href="${h}">${f.workLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.donors}</h4><ul>${['donate.html'].map((h, i) => `<li><a href="${h}">${f.donorLinks[i]}</a></li>`).join('')}</ul></div>
 <div><h4>${f.contacts}</h4><ul><li><a href="mailto:${EMAIL}">${EMAIL}</a></li><li>${f.address}</li><li>${f.hours}</li></ul></div>
@@ -332,6 +333,7 @@ ${phero(a.title, a.title, a.lead)}
 <section class="sec bg-li" id="docs"><div class="wrap">${head(a.docsEb, a.docsH)}
 ${DOCS.map(grp => { const its = lang === 'kz' && grp.items[0].file === 'ustav-ru.pdf' ? [...grp.items].reverse() : grp.items; return `<div class="doc-group"><h3 class="doc-gh">${grp.g[lang]}</h3>${its.map(d => { const mb = (fs.statSync(path.join(STATIC, 'docs', d.file)).size / 1048576).toFixed(1).replace('.', lang === 'en' ? '.' : ','); return `<a class="rowline doc-row" href="/docs/${d.file}" target="_blank" rel="noopener" download><span class="pdf">PDF</span><span class="grow"><span class="h3 doc-t">${d[lang]}</span><span class="doc-meta">${mb} ${lang === 'en' ? 'MB' : 'МБ'}</span></span><span class="link">${u.download} ↓</span></a>`; }).join('')}</div>`; }).join('')}
 </div></section>
+<section class="sec bg-wh" id="logo"><div class="wrap"><a class="br-teaser" href="brand.html"><div class="br-teaser-img"><img src="${R}assets/img/logo-v-${lang}.svg" alt="${t.name}" loading="lazy"></div><div class="stack"><span class="eb">${({ ru: 'Фирменный стиль', kz: 'Фирмалық стиль', en: 'Brand identity' })[lang]}</span><h2 class="h2">${BRAND[lang].blockH}</h2><p class="txt">${BRAND[lang].blockP}</p><span class="link">${BRAND[lang].blockBtn} →</span></div></a></div></section>
 <section class="band bg-go" id="jobs"><div class="wrap cta"><div><h2 class="h2 h2-sm">${a.jobsH}</h2><p style="opacity:.75;margin-top:8px">${a.jobsP}</p></div><a class="btn btn-dark" href="careers.html">${a.jobsBtn}</a></div></section>
 `);
 
@@ -483,6 +485,49 @@ ${formOpen('contact')}<div class="frow">${field(c.f.name, 'name', u.namePh)}${fi
 ${select(c.f.topic, 'topic', c.f.topics)}
 ${area(c.f.message, 'message', c.f.messagePh)}${agree}<button class="btn btn-gold" type="submit">${c.f.submit}</button></form>
 </div></section>
+`);
+
+  // ---------- НАШ ЛОГОТИП (brand.html) ----------
+  const BR = BRAND[lang];
+  const LOrd = [lang, ...['kz', 'ru', 'en'].filter(l => l !== lang)];
+  const bf = (n, v, ext) => `${R}brand/${ext}/endowment-${n}-${v}.${ext}`;
+  const bimg = (src, cls = '') => `<img class="br-logo ${cls}" src="${src}" alt="${t.name}" loading="lazy">`;
+  const dlCell = (n, v) => `<a class="br-dl" href="${bf(n, v, 'svg')}" download>SVG</a><a class="br-dl" href="${bf(n, v, 'png')}" download>PNG</a>`;
+  const zipMB = (fs.statSync(path.join(STATIC, 'brand', 'endowment-fund-logo.zip')).size / 1048576).toFixed(1).replace('.', lang === 'en' ? '.' : ',');
+  const zipBtn = cls => `<a class="btn ${cls}" href="${R}brand/endowment-fund-logo.zip" download>${BR.zip}</a>`;
+  page('brand.html', BR.title, BR.desc, 'about.html', `
+${phero(`<a href="about.html">${a.title}</a> &nbsp;/&nbsp; ${BR.crumb}`, BR.title, BR.lead)}
+<section class="sec bg-wh"><div class="wrap">
+<div class="br-hero">${bimg(bf('vertical-' + lang, 'color', 'svg'))}</div>
+<div class="btn-row mt-40" style="align-items:center">${zipBtn('btn-gold')}<span class="small">${BR.zipNote} · ${zipMB} ${lang === 'en' ? 'MB' : 'МБ'}</span></div>
+</div></section>
+<section class="sec bg-li" id="versions"><div class="wrap">${head('01', BR.verH)}<p class="txt br-p">${BR.verP}</p>
+<div class="grid g3 mt-40">${[['vertical-' + lang], ['horizontal-' + lang], ['sign']].map(([n], i) => `<div class="br-card"><div class="br-tile">${bimg(bf(n, 'color', 'svg'), 'br-' + n.split('-')[0])}</div><div class="br-cap"><h3 class="h3">${BR.vers[i][0]}</h3><span class="br-tag">${BR.vers[i][1]}</span><p class="txt">${BR.vers[i][2]}</p></div></div>`).join('')}</div>
+<div class="br-langs mt-24">${LOrd.map(l => `<div class="br-tile br-tile-sm">${bimg(bf('vertical-' + l, 'color', 'svg'), 'br-vertical')}<span class="br-lang">${BR.langs[l]}</span></div>`).join('')}</div>
+</div></section>
+<section class="sec bg-wh" id="usage"><div class="wrap">${head('02', BR.useH)}<p class="txt br-p">${BR.useP}</p>
+<div class="grid g4 mt-40">${BR.uses.map(([h, d]) => `<div class="vline"><h3 class="h3">${h}</h3><p class="txt">${d}</p></div>`).join('')}</div>
+<h3 class="h3 mt-56">${BR.coH}</h3>
+<div class="grid g3 mt-24 br-co">${BR.co.map(([h, d]) => `<div><b>${h}</b><p class="txt">${d}</p></div>`).join('')}</div>
+</div></section>
+<section class="sec bg-li" id="size"><div class="wrap">${head('03', BR.sizeH)}<p class="txt br-p">${BR.sizeP}</p>
+<div class="br-sizes mt-40"><div class="br-sz"><div class="br-sz-v">${bimg(bf('horizontal-' + lang, 'color', 'svg'))}</div><b>25 мм · 160 px</b></div><div class="br-sz"><div class="br-sz-v br-sz-s">${bimg(bf('sign', 'color', 'svg'))}</div><b>10 мм · 50 px</b></div></div>
+<div class="pp mt-40" style="max-width:none"><div class="pp-tbl"><table><thead><tr>${BR.sizeHead.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${BR.sizes.map(r => `<tr>${r.map((c, i) => i ? `<td>${c}</td>` : `<td><b>${c}</b></td>`).join('')}</tr>`).join('')}</tbody></table></div></div>
+</div></section>
+<section class="sec bg-wh" id="color"><div class="wrap">${head('04', BR.colH)}<p class="txt br-p">${BR.colP}</p>
+<div class="grid g3 mt-40">${['color', 'black', 'gold'].map((v, i) => `<div class="br-card"><div class="br-tile br-bg-${v}">${bimg(bf('horizontal-' + lang, v, 'svg'), 'br-horizontal')}</div><div class="br-cap"><h3 class="h3">${BR.cols[i][0]}</h3><p class="txt">${BR.cols[i][1]}</p></div></div>`).join('')}</div>
+<h3 class="h3 mt-56">${BR.palH}</h3>
+<div class="grid g4 mt-24">${BR.pal.map(([n, hex, rgb, cmyk, pms]) => `<div class="br-sw"><i style="background:${hex}"></i><b>${n}</b><dl><dt>HEX</dt><dd>${hex}</dd><dt>RGB</dt><dd>${rgb}</dd><dt>CMYK</dt><dd>${cmyk}</dd><dt>Pantone</dt><dd>${pms}</dd></dl></div>`).join('')}</div>
+</div></section>
+<section class="sec bg-li" id="clearspace"><div class="wrap split split-5-7" style="align-items:center">
+<div class="stack">${head('05', BR.csH)}<p class="txt">${BR.csP}</p></div>
+<div class="br-cs"><div class="br-cs-box"><span class="br-x">X</span><span class="br-x">X</span><span class="br-x">X</span><span class="br-x">X</span><div class="br-cs-in">${bimg(bf('vertical-' + lang, 'color', 'svg'))}</div></div></div>
+</div></section>
+<section class="sec bg-wh" id="download"><div class="wrap">${head('06', BR.dlH)}<p class="txt br-p">${BR.dlP}</p>
+<div class="pp mt-40" style="max-width:none"><div class="pp-tbl"><table class="br-dlt"><thead><tr>${BR.dlHead.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${[...LOrd.map(l => ['vertical-' + l, BR.dlRows.vertical + ' · ' + BR.langs[l]]), ...LOrd.map(l => ['horizontal-' + l, BR.dlRows.horizontal + ' · ' + BR.langs[l]]), ['sign', BR.dlRows.sign]].map(([n, lbl]) => `<tr><td><b>${lbl}</b></td>${['color', 'black', 'gold'].map(v => `<td>${dlCell(n, v)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>
+<div class="btn-row mt-40">${zipBtn('btn-gold')}</div>
+</div></section>
+<section class="band bg-dp"><div class="wrap cta"><div><h2 class="h2 h2-sm" style="color:#fff">${BR.askH}</h2><p style="opacity:.8;margin-top:8px;max-width:720px">${BR.askP} <a class="link" style="color:var(--go)" href="mailto:${EMAIL}">${EMAIL}</a></p></div><a class="btn btn-gold" href="contacts.html">${BR.askBtn}</a></div></section>
 `);
 
   // ---------- ПУТЕВОДИТЕЛЬ: ЭНДАУМЕНТ-ФОНДЫ В КАЗАХСТАНЕ ----------

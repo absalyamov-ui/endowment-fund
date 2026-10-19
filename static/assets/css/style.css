@@ -763,3 +763,51 @@ html:is(.sc-bw,.sc-wb,.sc-bl) body .hdr .nav a:not(.active){border-bottom-color:
 .gd-list li{background:var(--sf);border:1px solid var(--ln);padding:14px 18px;font-weight:600;color:var(--tx);font-size:15px;line-height:1.35}
 @media (max-width:1024px){.gd-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.gd-list{grid-template-columns:1fr}}
+/* Наш логотип (brand.html) */
+.br-p{max-width:760px;margin-top:-8px}
+.br-hero{background:#fff;border:1px solid var(--ln);display:flex;align-items:center;justify-content:center;padding:clamp(48px,8vw,110px) 24px}
+.br-hero .br-logo{width:min(420px,80%);height:auto}
+.br-card{background:var(--sf);border:1px solid var(--ln);display:flex;flex-direction:column}
+.br-tile{background:#fff;display:flex;align-items:center;justify-content:center;aspect-ratio:16/10;padding:32px;border-bottom:1px solid var(--ln);position:relative}
+.br-tile .br-logo{max-width:100%;height:auto}
+.br-tile .br-vertical{width:min(220px,70%)}
+.br-tile .br-horizontal{width:min(300px,88%)}
+.br-tile .br-sign{width:min(96px,40%)}
+.br-cap{padding:24px 28px 28px;display:flex;flex-direction:column;gap:8px}
+.br-tag{align-self:flex-start;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ondk);background:var(--go);padding:4px 10px}
+.br-langs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.br-tile-sm{aspect-ratio:auto;padding:36px 24px;border:1px solid var(--ln)}
+.br-tile-sm .br-vertical{width:min(170px,80%)}
+.br-lang{position:absolute;top:12px;left:14px;font-size:12px;font-weight:700;color:var(--mu);letter-spacing:.08em}
+.br-co{gap:28px 32px}
+.br-co b{display:block;color:var(--tx);margin-bottom:6px}
+.br-sizes{display:flex;flex-wrap:wrap;gap:16px}
+.br-sz{background:#fff;border:1px solid var(--ln);padding:28px 32px;display:flex;flex-direction:column;align-items:flex-start;gap:16px;color:var(--tx)}
+.br-sz-v{height:60px;display:flex;align-items:flex-end}
+.br-sz-v .br-logo{width:160px;height:auto}
+.br-sz-s .br-logo{width:50px}
+.br-bg-color{background:#fff}
+.br-bg-black{background:#E9E6EE}
+.br-bg-gold{background:#2B005B}
+.br-sw{border:1px solid var(--ln);background:var(--sf);padding:0 0 20px;display:flex;flex-direction:column;gap:12px}
+.br-sw i{display:block;height:110px;border-bottom:1px solid var(--ln)}
+.br-sw b{padding:0 20px;color:var(--tx);font-size:18px}
+.br-sw dl{margin:0;padding:0 20px;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.br-sw dt{color:var(--mu)}
+.br-sw dd{margin:0;color:var(--tx);font-weight:600}
+.br-cs{display:flex;justify-content:center}
+.br-cs-box{--x:clamp(24px,4vw,40px);position:relative;background:#fff;border:1px dashed var(--vi);padding:var(--x)}
+.br-cs-in{outline:1px dashed rgba(110,63,163,.6);padding:0;line-height:0}
+.br-cs-in .br-logo{width:min(320px,58vw);height:auto}
+.br-x{position:absolute;width:var(--x);height:var(--x);background:rgba(110,63,163,.12);color:var(--vi);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.br-x:nth-child(1){top:0;left:0}.br-x:nth-child(2){top:0;right:0}.br-x:nth-child(3){bottom:0;left:0}.br-x:nth-child(4){bottom:0;right:0}
+.br-dlt td{white-space:nowrap}
+.br-dl{display:inline-block;font-size:13px;font-weight:700;color:var(--vt);border:1px solid var(--ln);padding:5px 10px;margin-right:6px;text-decoration:none}
+.br-dl:hover{border-color:var(--vi);background:var(--li)}
+.br-teaser{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:center;text-decoration:none;color:inherit}
+.br-teaser-img{background:var(--li);border:1px solid var(--ln);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;transition:border-color .3s}
+.br-teaser-img img{width:min(240px,60%);height:auto}
+.br-teaser:hover .br-teaser-img{border-color:var(--go)}
+@media (max-width:900px){.br-teaser{grid-template-columns:1fr;gap:28px}}
+@media (max-width:640px){.br-langs{grid-template-columns:1fr}.br-sz{width:100%}}
+:root[data-theme="dark"] .br-teaser-img{background:#fff}
