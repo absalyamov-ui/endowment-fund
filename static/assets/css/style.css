@@ -862,3 +862,32 @@ button.btn-dark{background-color:var(--dp)}
 .fmt-sub{font-weight:700;font-size:15px;color:var(--go)}
 .bg-li .fmt-sub{color:var(--vt)}
 .bg-vi .fmt-sub{color:#F7F3ED}
+/* Главная: «Как работает эндаумент» — четыре шага в ряд */
+.how-row{margin-top:8px}
+.how-row .step{background:rgba(255,255,255,.04)}
+.how-row .step .h3{color:#fff;font-size:22px}
+.how-row .step .txt{color:rgba(255,255,255,.75)}
+#how .note{max-width:760px}
+/* Документы: раскрывающиеся группы */
+details.doc-group > summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0 12px}
+details.doc-group > summary::-webkit-details-marker{display:none}
+details.doc-group > summary::after{content:'+';font-size:26px;line-height:1;color:var(--go);font-weight:400;letter-spacing:0}
+details.doc-group[open] > summary::after{content:'–'}
+details.doc-group > summary:hover{color:var(--tx)}
+.doc-gh .doc-n{margin-left:auto;font-size:12px;font-weight:700;color:var(--mu);letter-spacing:0;background:var(--sf);border:1px solid var(--ln);padding:2px 9px;border-radius:20px}
+details.doc-group+details.doc-group{margin-top:20px}
+/* Программы: проекты внутри карточек направлений */
+.pm-proj{display:flex;flex-direction:column;gap:10px;margin-top:12px;padding-top:16px;border-top:1px solid var(--ln)}
+.pm-proj-h{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--vt)}
+.pm-pj{display:flex;align-items:center;gap:14px;background:var(--sf);border:1px solid var(--ln);padding:8px;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}
+.pm-pj:hover{border-color:var(--go);transform:translateX(2px)}
+.pm-pj img{width:64px;height:48px;object-fit:cover;flex:none}
+.pm-pj b{display:block;font-size:15px;color:var(--tx);line-height:1.3}
+.pm-pj small{display:block;font-size:12px;color:var(--mu);margin-top:2px}
+/* Отчёты: отчёт ещё не опубликован */
+.rep-soon{display:flex;align-items:center;gap:20px;background:var(--li);border-left:3px solid var(--go);padding:24px 28px;max-width:760px}
+.rep-soon .h3{font-size:20px}
+.rep-soon .txt{margin-top:4px}
+/* Главная: подписи под цифрами */
+.stat span{color:rgba(255,255,255,.85)}
+@media (max-width:640px){.stat span{font-size:15px;line-height:1.4}.stat b{font-size:28px}}

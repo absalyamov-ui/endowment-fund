@@ -13,7 +13,6 @@ module.exports = {
   ],
   'programs.html': [
     S('Три направления поддержки', 'Қолдаудың үш бағыты', 'Three areas of support', 'programs.html#directions'),
-    S('Направления финансирования', 'Қаржыландыру бағыттары', 'Funding areas', 'programs.html#funding'),
     S('AI Sana', 'AI Sana', 'AI Sana', 'programs.html#ai-sana'),
     S('Программы в цифрах', 'Бағдарламалар сандармен', 'Programmes in numbers', 'programs.html#numbers'),
   ],
