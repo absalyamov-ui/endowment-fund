@@ -61,6 +61,17 @@ if (burger && mnav) {
     burger.setAttribute('aria-expanded', open);
   });
 }
+// Мобильное меню: раскрытие подменю; переход по якорю закрывает меню
+document.querySelectorAll('.mg-t').forEach(b => b.addEventListener('click', () => {
+  const g = b.closest('.mg'), o = g.classList.toggle('open');
+  b.setAttribute('aria-expanded', o);
+}));
+if (mnav) mnav.addEventListener('click', e => {
+  const a = e.target.closest('a[href*="#"]');
+  if (a && mnav.classList.contains('open') && a.pathname === location.pathname) burger.click();
+});
+// Подменю на компьютере: Esc закрывает
+document.querySelectorAll('.ni').forEach(n => n.addEventListener('keydown', e => { if (e.key === 'Escape') { document.activeElement.blur(); } }));
 
 // Фильтр программ
 document.querySelectorAll('[data-filter]').forEach(group => {

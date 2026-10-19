@@ -52,6 +52,9 @@ const IC = {
 const DOCS = require('./docs');
 const GUIDE = require('./guide');
 const BRAND = require('./brandpage');
+const SUB = require('./submenu');
+// id для секций без id (по порядку <section> на странице; null — пропустить)
+const SEC_IDS = { 'about.html': [null, 'mission', 'history'], 'programs.html': [null, 'directions', 'funding', 'ai-sana', 'numbers'], 'grants.html': [null, 'who', 'stages', null, 'faq'], 'donate.html': [null, 'why', 'formats', 'requisites', 'faq'], 'reports.html': [null, 'kpi', null, 'audit'], 'press.html': [null, 'news', 'press-office'] };
 const TPLT = require('./templates/texts');
 const TPL = Object.fromEntries(Object.entries(TPLT).map(([l, x]) => [l, [x.app.file, x.desc.file, x.budget.file, x.cv.file, x.letter.file]]));
 const TPLZIP = Object.fromEntries(Object.entries(TPLT).map(([l, x]) => [l, x.zip]));
@@ -164,11 +167,11 @@ function buildLang(lang, t) {
   const searchDlg = `<dialog class="sr-dlg" aria-label="${TL.search}" data-index="${R}${pre}search.json"><div class="sr-box"><div class="sr-top">${IC.search}<input type="search" class="sr-in" placeholder="${TL.searchPh}" aria-label="${TL.search}" autocomplete="off"><button type="button" class="sr-x" aria-label="${TL.close}">Esc</button></div><div class="sr-res" role="listbox"><p class="sr-hint">${TL.hint}</p></div></div></dialog>`;
   const header = (active, file) => `<header class="hdr"><div class="wrap">
 <a class="logo" href="index.html" aria-label="${t.name} — ${u.toHome}"><img class="logo-l" src="${logo}" alt="${t.name}" width="282" height="48"><img class="logo-d" src="${logoW}" alt="" width="282" height="48"></a>
-<nav class="nav" aria-label="${u.mainMenu}">${NAV_FILES.map((f, i) => `<a href="${f}"${f === active ? ' class="active"' : ''}>${[u.home, ...u.nav][i]}</a>`).join('')}</nav>
+<nav class="nav" aria-label="${u.mainMenu}">${NAV_FILES.map((f, i) => { const lbl = [u.home, ...u.nav][i], cls = f === active ? ' class="active"' : ''; const sub = SUB[f]; return sub ? `<div class="ni"><a href="${f}"${cls} aria-haspopup="true">${lbl}</a><div class="ni-sub">${sub.map(x => `<a href="${x.href}">${x[lang]}</a>`).join('')}</div></div>` : `<a href="${f}"${cls}>${lbl}</a>`; }).join('')}</nav>
 <div class="hdr-act"><div class="tools"><button class="tool" type="button" data-search aria-label="${TOOLS[lang].search}" title="${TOOLS[lang].search}">${IC.search}</button><button class="tool tool-wide" type="button" data-theme-toggle aria-label="${TOOLS[lang].dark}" title="${TOOLS[lang].dark}" data-l-dark="${TOOLS[lang].dark}" data-l-light="${TOOLS[lang].light}">${IC.moon}</button><button class="tool tool-wide" type="button" data-a11y-toggle aria-label="${TOOLS[lang].a11y}" title="${TOOLS[lang].a11y}" aria-expanded="false">${IC.eye}</button></div><div class="lang">${langLinks(file)}</div>
 <button class="burger" aria-label="${u.menu}" aria-expanded="false"><span></span><span></span><span></span></button></div>
 </div></header>
-<nav class="mnav" aria-label="${u.mobileMenu}">${NAV_FILES.map((f, i) => `<a href="${f}">${[u.home, ...u.nav][i]}</a>`).join('')}<div class="lang">${langLinks(file)}</div><div class="mtools"><button type="button" data-theme-toggle data-l-dark="${TOOLS[lang].dark}" data-l-light="${TOOLS[lang].light}">${IC.moon}<span class="lbl">${TOOLS[lang].dark}</span></button><button type="button" data-a11y-toggle>${IC.eye}<span>${TOOLS[lang].a11y}</span></button></div></nav>
+<nav class="mnav" aria-label="${u.mobileMenu}">${NAV_FILES.map((f, i) => { const lbl = [u.home, ...u.nav][i]; const sub = SUB[f]; return sub ? `<div class="mg"><div class="mg-h"><a href="${f}">${lbl}</a><button type="button" class="mg-t" aria-expanded="false" aria-label="${lbl}"><svg viewBox="0 0 10 6" width="14" height="9" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><div class="mg-l">${sub.map(x => `<a href="${x.href}">${x[lang]}</a>`).join('')}</div></div>` : `<a href="${f}">${lbl}</a>`; }).join('')}<div class="lang">${langLinks(file)}</div><div class="mtools"><button type="button" data-theme-toggle data-l-dark="${TOOLS[lang].dark}" data-l-light="${TOOLS[lang].light}">${IC.moon}<span class="lbl">${TOOLS[lang].dark}</span></button><button type="button" data-a11y-toggle>${IC.eye}<span>${TOOLS[lang].a11y}</span></button></div></nav>
 ${a11yBar}${searchDlg}`;
 
   const f = t.footer;
@@ -198,6 +201,7 @@ ${SOCIAL}</div>
     return `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': g }).replace(/</g, '\\u003c')}</script>`;
   };
   function page(file, title, desc, active, body) {
+    if (SEC_IDS[file]) { let k = 0; body = body.replace(/<section(?![^>]*\bid=)([^>]*)>|<section([^>]*\bid=[^>]*)>/g, (m, a1) => { const id = SEC_IDS[file][k++]; return a1 !== undefined && id ? `<section id="${id}"${a1}>` : m; }); }
     const full = file === 'index.html' ? t.homeTitle : `${title} — ${t.name}`;
     const alt = Object.keys(LANGS).map(l => `<link rel="alternate" hreflang="${HREFLANG[l]}" href="${SITE}/${PREFIX[l]}${file === 'index.html' ? '' : file}">`).join('\n');
     const url = `${SITE}/${pre}${file === 'index.html' ? '' : file}`;
